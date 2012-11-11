@@ -1,4 +1,4 @@
-package edu.brown.cs.rouguelike.engine.level;
+package edu.brown.cs.roguelike.engine.level;
 
 import java.util.List;
 
