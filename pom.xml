@@ -1,0 +1,108 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+    http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>roguelike</groupId>
+    <artifactId>roguelike-parent</artifactId>
+    <!-- The version number should be bumped with each project handin. A git 
+        tag should also be created before each handin. -->
+    <version>1</version>
+    <packaging>pom</packaging>
+
+    <name>Roguelike</name>
+    <description>This is the parent POM for our roguelike project.</description>
+    <url>http://cs.brown.edu/courses/cs195n/</url>
+    <inceptionYear>2012</inceptionYear>
+    <developers>
+        <developer>
+            <id>cody</id>
+            <name>Cody Mello</name>
+            <email>cody@cs.brown.edu</email>
+            <url>http://codymello.com/</url>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>-5</timezone>
+        </developer>
+        <developer>
+            <id>lelberty</id>
+            <name>Liam Elberty</name>
+            <email>lelberty@cs.brown.edu</email>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>-5</timezone>
+        </developer>
+        <developer>
+            <id>jte</id>
+            <name>Jake Ellis</name>
+            <email>jte@cs.brown.edu</email>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>-5</timezone>
+        </developer>
+    </developers>
+
+    <modules>
+        <module>support</module>
+        <module>engine</module>
+        <module>game</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Modules -->
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>support</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>engine</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>game</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+
+            <!-- Test -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.10</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.googlecode.lanterna</groupId>
+                <artifactId>lanterna</artifactId>
+                <version>2.1.1</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.target>1.6</maven.compiler.target>
+        <maven.compiler.source>1.6</maven.compiler.source>
+    </properties>
+
+    <!-- Environment Settings -->
+    <issueManagement>
+        <system>Maniphest</system>
+        <url>http://phabricator.codymello.com/maniphest/view/all/?projects=PHID-PROJ-ueyfpe4bjs46g5fdoqgt</url>
+    </issueManagement> 
+    <!-- <ciManagement>...</ciManagement> 
+        <mailingLists>...</mailingLists> <scm>...</scm> <prerequisites>...</prerequisites> 
+        <repositories>...</repositories> <pluginRepositories>...</pluginRepositories> 
+        <distributionManagement>...</distributionManagement> -->
+</project>
