@@ -1,4 +1,4 @@
-package edu.brown.cs.rouguelike.engine.proc;
+package edu.brown.cs.roguelike.engine.proc;
 
 public enum Split {
 	HOR,
