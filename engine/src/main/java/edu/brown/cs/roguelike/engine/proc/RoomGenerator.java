@@ -77,7 +77,6 @@ public class RoomGenerator {
 				float width = (curr.max.x-curr.min.x);
 				
 				int maxVal = Math.round((width*(splitMax-splitMin)));
-				if(maxVal ==0) {maxVal = 1;}
 				int splitVal = Math.round(curr.min.x + width*splitMin+ getRandom(maxVal));
 
 				//S1 gets [0-splitVal], S2 gets [SplitVal+1,Max]
@@ -89,7 +88,7 @@ public class RoomGenerator {
 				int splitVal = Math.round(curr.min.y + height*splitMin+ getRandom(Math.round((height*(splitMax-splitMin)))));
 
 				//S1 gets [0-splitVal], S2 gets [SplitVal+1,Max]
-				s1 = new SubLevel(new Vec2i(curr.min.x,curr.min.y), new Vec2i(curr.max.x,curr.max.y), curr.depth+1);
+				s1 = new SubLevel(new Vec2i(curr.min.x,curr.min.y), new Vec2i(curr.max.x,splitVal), curr.depth+1);
 				s2 = new SubLevel(new Vec2i(curr.min.x,splitVal+1), new Vec2i(curr.max.x,curr.max.y), curr.depth+1);
 			}
 
@@ -105,16 +104,17 @@ public class RoomGenerator {
 				HallwayPoint hp1 = s1.getHallwayPoint(s, true, hpt);
 				HallwayPoint hp2 = s2.getHallwayPoint(s, false, hpt);
 
-				
 				Hallway new_hallway = new Hallway(hp1.point,hp2.point);
+				paintCellRectangle(hp1.point,hp2.point,true, TileType.FLOOR);
+				
 				hp1.space.connectToHallway(new_hallway);
 				hp2.space.connectToHallway(new_hallway);
 			}
 			else{
 				//Make L-Shaped corridor
 				if(s == Split.HOR) {
-					int cx = s1.intersectMin.y + getRandom(s1.intersectMax.y - s1.intersectMin.y);
-					int cy = s2.intersectMin.x + getRandom(s2.intersectMax.x - s2.intersectMin.x);
+					int cy = s1.intersectMin.y + getRandom(s1.intersectMax.y - s1.intersectMin.y);
+					int cx = s2.intersectMin.x + getRandom(s2.intersectMax.x - s2.intersectMin.x);
 					Vec2i corner = new Vec2i(cx,cy);
 					
 					HallwayPoint hp1 = s1.getHallwayPoint(Split.VER, true, cy);

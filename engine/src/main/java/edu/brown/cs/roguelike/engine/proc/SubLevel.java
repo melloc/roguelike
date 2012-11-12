@@ -39,25 +39,25 @@ public class SubLevel {
 		if(s == Split.HOR) {
 
 			if (!(this.intersectMin.x <= other.intersectMax.x && 
-					this.intersectMax.x >= this.intersectMin.x)) 
+					this.intersectMax.x >= other.intersectMin.x)) 
 			{
 				return null;
 			}
 
 
-			smallestMax = Math.min(this.max.x, other.max.x);
-			largestMin = Math.max(this.min.x, other.min.x);
+			smallestMax = Math.min(this.intersectMax.x, other.intersectMax.x);
+			largestMin = Math.max(this.intersectMin.x, other.intersectMin.x);
 		}
 		else { //VER
 
 			if (!(this.intersectMin.y <= other.intersectMax.y && 
-					this.intersectMax.y >= this.intersectMin.y)) 
+					this.intersectMax.y >= other.intersectMin.y)) 
 			{
 				return null;
 			}
 
-			smallestMax = Math.min(this.max.y, other.max.y);
-			largestMin = Math.max(this.min.y, other.min.y);
+			smallestMax = Math.min(this.intersectMax.y, other.intersectMax.y);
+			largestMin = Math.max(this.intersectMin.y, other.intersectMin.y);
 		}
 		return new Range(largestMin,smallestMax);
 	}
