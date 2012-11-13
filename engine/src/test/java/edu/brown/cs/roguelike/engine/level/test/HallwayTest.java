@@ -14,32 +14,35 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cs195n.Vec2i;
-
+import edu.brown.cs.roguelike.engine.level.Hallway;
 import edu.brown.cs.roguelike.engine.level.Room;
 
-public class RoomTest {
+public class HallwayTest {
 	
+	private Hallway h1;
+	private Hallway h2;
 	private Room r1;
 	private Room r2;
-	private Room r3;
 	
 	@Before
 	public void setUp() {
+		h1 = new Hallway(new Vec2i(0,0), new Vec2i(1,1));
+		h2 = new Hallway(new Vec2i(2,2), new Vec2i(0,2));
 		r1 = new Room(new Vec2i(0,0), new Vec2i(10,10));
-		r2 = new Room(new Vec2i(15,15), new Vec2i(25, 25));
-		r3 = new Room(new Vec2i(30,30), new Vec2i(40,40));
+		r2 = new Room(new Vec2i(10,10), new Vec2i(20,20));
 		
-		r1.addRoom(r2);
-		r2.addRoom(r1);
-		r1.addRoom(r3);
-		r3.addRoom(r2);
+		h1.connectToRoom(r1);
+		h1.connectToRoom(r2);
+		h2.connectToRoom(r1);
+		h2.connectToRoom(r2);
 	}
 	
 	@After
 	public void tearDown() {
+		h1 = null;
+		h2 = null;
 		r1 = null;
 		r2 = null;
-		r3 = null;
 	}
 	
 	/**
@@ -54,12 +57,11 @@ public class RoomTest {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		ObjectOutputStream oos = new ObjectOutputStream(out);
 		
-		oos.writeObject(r1);
+		oos.writeObject(r2);
 		oos.close();
 		
 		assertTrue(out.toByteArray().length > 0);
 	}
-	
 	
 	/**
 	 * Round trip test succeeds
@@ -75,7 +77,7 @@ public class RoomTest {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		ObjectOutputStream oos = new ObjectOutputStream(out);
 		
-		oos.writeObject(r1);
+		oos.writeObject(h2);
 		oos.close();
 		
 		byte[] raw = out.toByteArray();
@@ -85,12 +87,10 @@ public class RoomTest {
 		Object o = ois.readObject();
 		ois.close();
 
-		assertTrue(o instanceof Room);
+		assertTrue(o instanceof Hallway);
 		
-		Room r1_ds = (Room)o;
+		Hallway h2_ds = (Hallway)o;
 		
-		assertEquals(r1_ds, r1); 
+		assertEquals(h2_ds, h2); 
 	}
-	
-
 }

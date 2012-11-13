@@ -8,13 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cs195n.Vec2i;
+import edu.brown.cs.roguelike.engine.save.IDManager;
+import edu.brown.cs.roguelike.engine.save.Saveable;
 
 /**
  * A hallway connecting two spaces.
  * @author jte
  *
  */
-public class Hallway implements Space, Serializable {
+public class Hallway implements Space, Saveable {
 
 	/**
 	 * Generated
@@ -59,28 +61,38 @@ public class Hallway implements Space, Serializable {
 	}
 	
 	
-	/*** BEGIN Serialization ***/
+	/*** BEGIN Saveable ***/
+	
+	private long id;
+	
+	{ this.id = IDManager.getNext(); }
 
-	/**
-	 * Custom writeObject
-	 * @param os the ObjectOutputStream
-	 * @throws IOException 
-	 */
-	private void writeObject(ObjectOutputStream os) throws IOException {
-		os.defaultWriteObject();
-	}
-
-	/**
-	 * Custom readObject
-	 * @param os the ObjectInputStream
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 */
-	private void readObject(ObjectInputStream os) 
-			throws IOException, ClassNotFoundException {
-		os.defaultReadObject();
+	@Override
+	public long getId() {
+		return this.id;
 	}
 	
-	/*** END Serialization ***/
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Hallway other = (Hallway) obj;
+		if (id == other.id)
+			return true;
+		return true;
+	}
+	
+	/*** END Saveable ***/
 	
 }
