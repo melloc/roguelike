@@ -247,7 +247,7 @@ public abstract class CS195NFrontEnd {
 	 * The default window size; should be passed to the constructor if the user does not specify a
 	 * window size.
 	 */
-	static final Vec2i DEFAULT_WINDOW_SIZE = new Vec2i(960, 540);
+	protected static final Vec2i DEFAULT_WINDOW_SIZE = new Vec2i(960, 540);
 	
 	/**
 	 * The minimum window size. Games are expected to work with resolutions at least this small;
