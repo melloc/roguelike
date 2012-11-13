@@ -38,11 +38,12 @@ public class SubLevel {
 		int largestMin;
 		if(s == Split.HOR) {
 
+			System.out.println("HOR");
 			System.out.println(this.intersectMin.x + " " + other.intersectMax.x );
 			System.out.println(this.intersectMax.x + " " + other.intersectMin.x );
 			System.out.println(" ");
 
-			
+
 			if (!(this.intersectMin.x <= other.intersectMax.x && 
 					this.intersectMax.x >= other.intersectMin.x)) 
 			{
@@ -55,11 +56,12 @@ public class SubLevel {
 		}
 		else { //VER
 
+			System.out.println("VER");
 			System.out.println(this.intersectMin.y + " " + other.intersectMax.y );
 			System.out.println(this.intersectMax.y + " " + other.intersectMin.y );
 			System.out.println(" ");
 
-			
+
 			if (!(this.intersectMin.y <= other.intersectMax.y && 
 					this.intersectMax.y >= other.intersectMin.y)) 
 			{
@@ -81,7 +83,7 @@ public class SubLevel {
 	public HallwayPoint getHallwayPoint(Split s, boolean maximum, int value) {
 		Space bestSpace = null;
 		Vec2i bestPoint = null;
-		
+
 		if(s == Split.HOR) {
 			//Find point with (value,f y)
 
@@ -97,9 +99,14 @@ public class SubLevel {
 					}
 				}
 				for(Hallway h : hallways) {
-					if(h.startTile.x <= value && h.endTile.x >= value) {
+					if(h.startTile.x <= value && h.endTile.x >= value || h.startTile.x >= value && h.endTile.x <= value) {
 						if(h.startTile.y > max_val) {
 							max_val = h.startTile.y;
+							bestSpace = h;
+							bestPoint = new Vec2i(value,max_val);
+						}
+						else if(h.endTile.y > max_val) {
+							max_val = h.endTile.y;
 							bestSpace = h;
 							bestPoint = new Vec2i(value,max_val);
 						}
@@ -107,21 +114,26 @@ public class SubLevel {
 				}
 			}
 
-			else{ //(minumum) 
+			else{ //(minimum) 
 				int min_val = Integer.MAX_VALUE;
 				for(Room r : rooms) {
 					if(r.max.x >= value && r.min.x <= value) {
-						if(r.max.y < min_val) {
-							min_val = r.max.y;
+						if(r.min.y < min_val) {
+							min_val = r.min.y;
 							bestSpace = r;
 							bestPoint = new Vec2i(value,min_val);
 						}
 					}
 				}
 				for(Hallway h : hallways) {
-					if(h.startTile.x <= value && h.endTile.x >= value) {
+					if(h.startTile.x <= value && h.endTile.x >= value || h.startTile.x >= value && h.endTile.x <= value) {
 						if(h.startTile.y < min_val) {
 							min_val = h.startTile.y;
+							bestSpace = h;
+							bestPoint = new Vec2i(value,min_val);
+						}
+						else if(h.endTile.y < min_val) {
+							min_val = h.endTile.y;
 							bestSpace = h;
 							bestPoint = new Vec2i(value,min_val);
 						}
@@ -143,9 +155,14 @@ public class SubLevel {
 					}
 				}
 				for(Hallway h : hallways) {
-					if(h.startTile.y <= value && h.endTile.y >= value) {
+					if(h.startTile.y <= value && h.endTile.y >= value || h.startTile.y >= value && h.endTile.y <= value) {
 						if(h.startTile.x > max_val) {
 							max_val = h.startTile.x;
+							bestSpace = h;
+							bestPoint = new Vec2i(max_val,value);
+						}
+						else if(h.endTile.x > max_val) {
+							max_val = h.endTile.x;
 							bestSpace = h;
 							bestPoint = new Vec2i(max_val,value);
 						}
@@ -157,17 +174,22 @@ public class SubLevel {
 				int min_val = Integer.MAX_VALUE;
 				for(Room r : rooms) {
 					if(r.max.y >= value && r.min.y <= value) {
-						if(r.max.x < min_val) {
-							min_val = r.max.x;
+						if(r.min.x < min_val) {
+							min_val = r.min.x;
 							bestSpace = r;
 							bestPoint = new Vec2i(min_val,value);
 						}
 					}
 				}
 				for(Hallway h : hallways) {
-					if(h.startTile.y <= value && h.endTile.y >= value) {
+					if(h.startTile.y <= value && h.endTile.y >= value || h.startTile.y >= value && h.endTile.y <= value) {
 						if(h.startTile.x < min_val) {
 							min_val = h.startTile.x;
+							bestSpace = h;
+							bestPoint = new Vec2i(min_val,value);
+						}
+						else if(h.endTile.x < min_val) {
+							min_val = h.endTile.x;
 							bestSpace = h;
 							bestPoint = new Vec2i(min_val,value);
 						}
@@ -175,6 +197,7 @@ public class SubLevel {
 				}
 			}
 		}
+
 		
 		return new HallwayPoint(bestPoint,bestSpace);
 
