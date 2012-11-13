@@ -23,8 +23,8 @@ import edu.brown.cs.roguelike.engine.proc.cs195n.Application;
 
 public class LevelGenTester extends Application {
 
-	private final int SIZEX = 80;
-	private final int SIZEY = 60;
+	private final int SIZEX = 400;
+	private final int SIZEY = 300;
 
 	RoomGenerator rg;
 	Level level;
@@ -48,8 +48,8 @@ public class LevelGenTester extends Application {
 	@Override
 	protected void onDraw(Graphics2D g) {
 
-		//if(!drawn)
-		//{
+		if(!drawn)
+		{
 			for(int i = 0; i<level.tiles.length; i++) {
 				for(int j = 0; j<level.tiles[0].length; j++) {
 					Tile t = level.tiles[i][j];
@@ -93,7 +93,7 @@ public class LevelGenTester extends Application {
 			drawn = true;
 			
 			
-		//}
+		}
 	}
 
 	@Override

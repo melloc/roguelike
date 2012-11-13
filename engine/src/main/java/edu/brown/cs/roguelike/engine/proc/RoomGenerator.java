@@ -12,7 +12,7 @@ import edu.brown.cs.roguelike.engine.level.TileType;
 import edu.brown.cs.roguelike.engine.proc.Split;
 
 public class RoomGenerator {
-	private final int depthMax = 7;
+	private final int depthMax = 25;
 
 
 	//-----------------------------------------------------------------------CONSTANTS-----------------------------------------------------------------------------------------------------------------
@@ -22,15 +22,14 @@ public class RoomGenerator {
 	private float roomBuffer; //% on each side of room must be from edge
 	 */
 
-	private final float splitMin = 0.1f; // min % to split at
-	private final float splitMax = 0.9f; // max % to split at
+	private final float splitMin = 0.01f; // min % to split at
+	private final float splitMax = 0.99f; // max % to split at
 
 	private final int minWallThickness = 3;
-			;
 
 	private int minRoomDim = 7;
 
-	private int splitTries = 5;
+	private int splitTries = 3;
 
 
 	//---------------------------------------------------------------------END CONSTANTS------------------------------------------------------------------------------------------------------
