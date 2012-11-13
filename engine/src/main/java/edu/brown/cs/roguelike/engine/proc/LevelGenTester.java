@@ -8,7 +8,9 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.geom.Rectangle2D;
 
 import cs195n.Vec2i;
+import edu.brown.cs.roguelike.engine.level.Hallway;
 import edu.brown.cs.roguelike.engine.level.Level;
+import edu.brown.cs.roguelike.engine.level.Room;
 import edu.brown.cs.roguelike.engine.level.Tile;
 import edu.brown.cs.roguelike.engine.proc.cs195n.Application;
 
@@ -63,7 +65,25 @@ public class LevelGenTester extends Application {
 					g.draw(rect);
 				}
 			}
+			for(Room r : level.getRooms()) {
+				Rectangle2D rect = new Rectangle2D.Float(r.min.x*scalex,r.min.y*scaley,(r.max.x - r.min.x + 1)*scalex,(r.max.y - r.min.y + 1)*scaley);
+				g.setColor(Color.green);
+				g.draw(rect);
+			}
+			for(Hallway h : level.getHallways()) {
+				int minX  = Math.min(h.startTile.x, h.endTile.x);
+				int minY  = Math.min(h.startTile.y, h.endTile.y);
+				int width = Math.abs(h.startTile.x- h.endTile.x) + 1;
+				int height = Math.abs(h.startTile.y- h.endTile.y) + 1;
+				Rectangle2D rect = new Rectangle2D.Float(minX*scalex,minY*scaley,width*scalex,height*scaley);
+
+				g.setColor(Color.red);
+				g.draw(rect);
+			}
+			
 			drawn = true;
+			
+			
 		//}
 	}
 
