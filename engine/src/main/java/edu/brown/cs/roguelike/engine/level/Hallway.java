@@ -24,7 +24,7 @@ public class Hallway implements Space, Saveable {
 	private static final long serialVersionUID = 4238224467162924679L;
 	
 	public Hallway(Vec2i startTile, Vec2i endTile) {
-		this.startTile = endTile;
+		this.startTile = startTile;
 		this.endTile = endTile;
 		rooms = new ArrayList<Room>();
 	}
