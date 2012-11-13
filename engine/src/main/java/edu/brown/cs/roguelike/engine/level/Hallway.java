@@ -1,5 +1,9 @@
 package edu.brown.cs.roguelike.engine.level;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +14,13 @@ import cs195n.Vec2i;
  * @author jte
  *
  */
-public class Hallway implements Space{
+public class Hallway implements Space, Serializable {
+
+	/**
+	 * Generated
+	 */
+	private static final long serialVersionUID = 4238224467162924679L;
+	
 	public Hallway(Vec2i startTile, Vec2i endTile) {
 		this.startTile = endTile;
 		this.endTile = endTile;
@@ -47,4 +57,30 @@ public class Hallway implements Space{
 			this.addRoom(r);
 		}
 	}
+	
+	
+	/*** BEGIN Serialization ***/
+
+	/**
+	 * Custom writeObject
+	 * @param os the ObjectOutputStream
+	 * @throws IOException 
+	 */
+	private void writeObject(ObjectOutputStream os) throws IOException {
+		os.defaultWriteObject();
+	}
+
+	/**
+	 * Custom readObject
+	 * @param os the ObjectInputStream
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	private void readObject(ObjectInputStream os) 
+			throws IOException, ClassNotFoundException {
+		os.defaultReadObject();
+	}
+	
+	/*** END Serialization ***/
+	
 }
