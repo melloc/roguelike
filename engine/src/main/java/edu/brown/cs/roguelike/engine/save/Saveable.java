@@ -8,6 +8,11 @@ import java.io.Serializable;
  * not Serializable. All implementing classes need to make
  * sure that getId returns a long that is globally unique
  * 
+ * Note that hashCode and equals should be overridden by
+ * implementing classes. Having this methods in this interface
+ * does not actually force implementing classes to override, but
+ * they are here for a reminder.
+ * 
  * 
  * @author lelberty
  *
@@ -25,9 +30,7 @@ public interface Saveable extends Serializable {
 	 * 
 	 * @return int hash code
 	 */
-	@Override
-	public int hashCode();
-	
+	public abstract int hashCode();
 	
 	/**
 	 * Overriding equals should use id to determine
@@ -36,6 +39,5 @@ public interface Saveable extends Serializable {
 	 * @param o
 	 * @return boolean indicating object equality
 	 */
-	@Override
-	public boolean equals(Object o);
+	public abstract boolean equals(Object o);
 }

@@ -36,7 +36,6 @@ public class TileTest {
 		assertTrue(out.toByteArray().length > 0);
 	}
 	
-	
 	/**
 	 * Round trip test succeeds
 	 * 
@@ -67,8 +66,9 @@ public class TileTest {
 		
 		Tile t1_ds = (Tile)o;
 		
-		assertEquals(t1.getType(), t1_ds.getType());
-		assertEquals(t1.isPassable(), t1_ds.isPassable());
+		assertEquals(t1_ds.getType(), t1.getType());
+		assertEquals(t1_ds.isPassable(), t1.isPassable());
+		assertEquals(t1_ds, t1);
 	}
 
 }

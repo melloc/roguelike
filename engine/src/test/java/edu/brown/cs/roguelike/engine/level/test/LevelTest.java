@@ -14,32 +14,24 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cs195n.Vec2i;
-
+import edu.brown.cs.roguelike.engine.level.Hallway;
+import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.level.Room;
+import edu.brown.cs.roguelike.engine.proc.RoomGenerator;
 
-public class RoomTest {
+public class LevelTest {
 	
-	private Room r1;
-	private Room r2;
-	private Room r3;
+	private Level l1;
 	
 	@Before
 	public void setUp() {
-		r1 = new Room(new Vec2i(0,0), new Vec2i(10,10));
-		r2 = new Room(new Vec2i(15,15), new Vec2i(25, 25));
-		r3 = new Room(new Vec2i(30,30), new Vec2i(40,40));
-		
-		r1.addRoom(r2);
-		r2.addRoom(r1);
-		r1.addRoom(r3);
-		r3.addRoom(r2);
+		RoomGenerator rg = new RoomGenerator();
+		l1 = rg.generateLevel(new Vec2i(100,150));
 	}
 	
 	@After
 	public void tearDown() {
-		r1 = null;
-		r2 = null;
-		r3 = null;
+		l1 = null;
 	}
 	
 	/**
@@ -54,12 +46,11 @@ public class RoomTest {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		ObjectOutputStream oos = new ObjectOutputStream(out);
 		
-		oos.writeObject(r1);
+		oos.writeObject(l1);
 		oos.close();
 		
 		assertTrue(out.toByteArray().length > 0);
 	}
-	
 	
 	/**
 	 * Round trip test succeeds
@@ -75,7 +66,7 @@ public class RoomTest {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		ObjectOutputStream oos = new ObjectOutputStream(out);
 		
-		oos.writeObject(r1);
+		oos.writeObject(l1);
 		oos.close();
 		
 		byte[] raw = out.toByteArray();
@@ -85,14 +76,17 @@ public class RoomTest {
 		Object o = ois.readObject();
 		ois.close();
 
-		assertTrue(o instanceof Room);
+		assertTrue(o instanceof Level);
 		
-		Room r1_ds = (Room)o;
+		Level l1_ds = (Level)o;
 		
-		assertEquals(r1_ds.max, r1.max);
-		assertEquals(r1_ds.min, r1.min);
-		assertEquals(r1_ds, r1); 
+		assertEquals(l1_ds, l1);
+		// TODO(liam) figure out why this assertEquals is deprecated...
+		assertEquals(l1_ds.getTiles(), l1.getTiles());
+		assertEquals(l1_ds.getRooms(), l1.getRooms());
+		assertEquals(l1_ds.getHallways(), l1.getHallways());
+		
+		
 	}
-	
 
 }
