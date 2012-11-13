@@ -12,7 +12,7 @@ import edu.brown.cs.roguelike.engine.level.TileType;
 import edu.brown.cs.roguelike.engine.proc.Split;
 
 public class RoomGenerator {
-	private final int depthMax = 15;
+	private final int depthMax = 12;
 
 
 	//-----------------------------------------------------------------------CONSTANTS-----------------------------------------------------------------------------------------------------------------
@@ -22,14 +22,14 @@ public class RoomGenerator {
 	private float roomBuffer; //% on each side of room must be from edge
 	 */
 
-	private final float splitMin = 0.2f; // min % to split at
-	private final float splitMax = 0.8f; // max % to split at
+	private final float splitMin = 0.4f; // min % to split at
+	private final float splitMax = 0.6f; // max % to split at
 	
-	private final int minWallThickness = 2;
+	private final int minWallThickness = 1;
 
-	private int minRoomDim = 3;
+	private int minRoomDim = 7;
 	
-	private int splitTries = 5;
+	private int splitTries = 80;
 
 
 	//---------------------------------------------------------------------END CONSTANTS------------------------------------------------------------------------------------------------------
@@ -51,7 +51,7 @@ public class RoomGenerator {
 	
 	//Returns a number between min and max, inclusive
 	private int getRandom(int min, int max){
-		return min+getRandom(max-min);
+		return min+getRandom(max-min+1);
 	}
 	
 
@@ -61,8 +61,7 @@ public class RoomGenerator {
 	public Level generateLevel(Vec2i levelSize) {
 		random = new Random(System.nanoTime());
 		tiles = new Tile[levelSize.x][levelSize.y];
-		rooms = new ArrayList<Room>();
-		hallways = new ArrayList<Hallway>();
+
 
 		//Init with solid map
 		fillWithWalls(tiles);
@@ -70,7 +69,7 @@ public class RoomGenerator {
 		SubLevel fullLevel = new SubLevel(new Vec2i(0,0), levelSize,0);
 		splitAndBuild(fullLevel);
 
-		return new Level(tiles,rooms,hallways);
+		return new Level(tiles,fullLevel.rooms,fullLevel.hallways);
 	}
 
 	/**
@@ -162,6 +161,8 @@ public class RoomGenerator {
 				
 				hp1.space.connectToHallway(new_hallway);
 				hp2.space.connectToHallway(new_hallway);
+				
+				curr.hallways.add(new_hallway);
 			}
 			else{
 				//Make L-Shaped corridor
@@ -185,6 +186,9 @@ public class RoomGenerator {
 					paintHallway(hp1.point,corner,true,TileType.FLOOR);
 					paintHallway(hp2.point,corner,true,TileType.FLOOR);
 					
+					curr.hallways.add(new_hallway1);
+					curr.hallways.add(new_hallway2);
+
 				}
 				else{ //VER
 					int cx = s1.intersectMin.x + getRandom(s1.intersectMax.x - s1.intersectMin.x);
@@ -205,6 +209,9 @@ public class RoomGenerator {
 					//Paint in
 					paintHallway(hp1.point,corner,true,TileType.FLOOR);
 					paintHallway(hp2.point,corner,true,TileType.FLOOR);
+					
+					curr.hallways.add(new_hallway1);
+					curr.hallways.add(new_hallway2);
 				}
 			}
 			//Combine into a single sublevel
@@ -233,21 +240,18 @@ public class RoomGenerator {
 
 		
 		//Randomly Select room coordinates
-		int minX = minWallThickness+getRandom(maxWidth);
+		int minX = getRandom(minWallThickness,maxWidth-minRoomDim);
+		int maxX = getRandom(minX+minRoomDim, maxWidth);
 		
-		if(maxWidth-minRoomDim < minX) {
-			minX = maxWidth-minRoomDim;
-		}
-		
-		int maxX = minX + minRoomDim + getRandom(maxWidth-minX-minRoomDim);
-		int minY = minWallThickness+getRandom(maxHeight);
-		
-		if(maxHeight-minRoomDim < minY) {
-			minY = maxHeight-minRoomDim;
-		}
-		
+		int minY = getRandom(minWallThickness,maxHeight-minRoomDim);
+		int maxY = getRandom(minY+minRoomDim, maxHeight);
+		//int maxX = minX + minRoomDim + getRandom(maxWidth-minX-minRoomDim);
+	
+		/*
+		int minY = minWallThickness+getRandom(maxHeight-minRoomDim);
 		int maxY =  minY + minRoomDim +  getRandom(maxHeight-minY-minRoomDim);
-
+		 */
+ 
 		Vec2i min = curr.min.plus(minX, minY);
 		Vec2i max = curr.min.plus(maxX, maxY);
 
@@ -255,11 +259,11 @@ public class RoomGenerator {
 		paintCellRectangle(min,max,true, TileType.FLOOR);
 
 		Room r = new Room(min,max);
-		rooms.add(r);
-
 		curr.rooms.add(r);
-		curr.intersectMin = min;
-		curr.intersectMax = max;
+		
+		 //Hallways dont got to ends of rooms
+		curr.intersectMin = min.plus(1,1);
+		curr.intersectMax = max.plus(-1,-1);
 	}
 
 	/**
@@ -290,6 +294,7 @@ public class RoomGenerator {
 		}
 	}
 
+	/**Fills the tiles with all walls **/
 	private void fillWithWalls(Tile[][] tiles) {
 		for(int i = 0; i < tiles.length; i++) {
 			for(int j = 0; j<tiles[0].length; j++) {

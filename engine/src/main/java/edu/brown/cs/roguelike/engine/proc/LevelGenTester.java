@@ -67,8 +67,12 @@ public class LevelGenTester extends Application {
 			}
 			for(Room r : level.getRooms()) {
 				Rectangle2D rect = new Rectangle2D.Float(r.min.x*scalex,r.min.y*scaley,(r.max.x - r.min.x + 1)*scalex,(r.max.y - r.min.y + 1)*scaley);
+				Rectangle2D rect2 = new Rectangle2D.Float((r.min.x+1)*scalex,(r.min.y+1)*scaley+1,(r.max.x - r.min.x -1)*scalex,(r.max.y - r.min.y -1)*scaley);
 				g.setColor(Color.green);
 				g.draw(rect);
+				
+				g.setColor(Color.yellow);
+				g.draw(rect2);
 			}
 			for(Hallway h : level.getHallways()) {
 				int minX  = Math.min(h.startTile.x, h.endTile.x);
@@ -77,8 +81,13 @@ public class LevelGenTester extends Application {
 				int height = Math.abs(h.startTile.y- h.endTile.y) + 1;
 				Rectangle2D rect = new Rectangle2D.Float(minX*scalex,minY*scaley,width*scalex,height*scaley);
 
+				
+				g.setColor(Color.darkGray.brighter());
+				g.fill(rect);
+				
 				g.setColor(Color.red);
 				g.draw(rect);
+			
 			}
 			
 			drawn = true;

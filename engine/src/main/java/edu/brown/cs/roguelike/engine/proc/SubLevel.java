@@ -38,6 +38,11 @@ public class SubLevel {
 		int largestMin;
 		if(s == Split.HOR) {
 
+			System.out.println(this.intersectMin.x + " " + other.intersectMax.x );
+			System.out.println(this.intersectMax.x + " " + other.intersectMin.x );
+			System.out.println(" ");
+
+			
 			if (!(this.intersectMin.x <= other.intersectMax.x && 
 					this.intersectMax.x >= other.intersectMin.x)) 
 			{
@@ -50,6 +55,11 @@ public class SubLevel {
 		}
 		else { //VER
 
+			System.out.println(this.intersectMin.y + " " + other.intersectMax.y );
+			System.out.println(this.intersectMax.y + " " + other.intersectMin.y );
+			System.out.println(" ");
+
+			
 			if (!(this.intersectMin.y <= other.intersectMax.y && 
 					this.intersectMax.y >= other.intersectMin.y)) 
 			{
