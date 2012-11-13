@@ -17,21 +17,27 @@ import edu.brown.cs.roguelike.engine.proc.cs195n.Application;
  * @author jte
  *
  */
+
+
 public class LevelGenTester extends Application{
+
+	private final int SIZEX = 80;
+	private final int SIZEY = 60;
 
 	RoomGenerator rg;
 	Level level;
 	int scalex;
 	int scaley;
-	
+	private boolean drawn = false;
+
 	public LevelGenTester(String title, boolean fullscreen) {
 		super(title, fullscreen);
 		rg = new RoomGenerator();
-		level = rg.generateLevel(new Vec2i(50,50));
-		scalex = DEFAULT_WINDOW_SIZE.x / 50;
-		scaley =  DEFAULT_WINDOW_SIZE.y / 50;
+		level = rg.generateLevel(new Vec2i(SIZEX,SIZEY));
+		scalex = DEFAULT_WINDOW_SIZE.x / SIZEX;
+		scaley =  DEFAULT_WINDOW_SIZE.y / SIZEY;
 	}
-	
+
 	public static void main(String[] args) {
 		LevelGenTester test = new LevelGenTester("DAT LEVELGEN!", false);
 		test.startup();
@@ -39,21 +45,26 @@ public class LevelGenTester extends Application{
 
 	@Override
 	protected void onDraw(Graphics2D g) {
-		for(int i = 0; i<level.tiles.length; i++) {
-			for(int j = 0; j<level.tiles[0].length; j++) {
-				Tile t = level.tiles[i][j];
-				Rectangle2D rect = new Rectangle2D.Float(i*scalex,j*scaley,(i+1)*scalex,(j+1)*scaley);
-				if(t.isPassable()) {
-					g.setColor(Color.gray);
+
+		//if(!drawn)
+		//{
+			for(int i = 0; i<level.tiles.length; i++) {
+				for(int j = 0; j<level.tiles[0].length; j++) {
+					Tile t = level.tiles[i][j];
+					Rectangle2D rect = new Rectangle2D.Float(i*scalex,j*scaley,(i+1)*scalex,(j+1)*scaley);
+					if(t.isPassable()) {
+						g.setColor(Color.gray);
+					}
+					else {
+						g.setColor(Color.black);
+					}
+					g.fill(rect);
+					g.setColor(Color.LIGHT_GRAY);
+					g.draw(rect);
 				}
-				else {
-					g.setColor(Color.black);
-				}
-				g.fill(rect);
-				g.setColor(Color.LIGHT_GRAY);
-				g.draw(rect);
 			}
-		}
+			drawn = true;
+		//}
 	}
 
 	@Override
@@ -62,7 +73,8 @@ public class LevelGenTester extends Application{
 
 	@Override
 	protected void onKeyPressed(KeyEvent e) {
-		level = rg.generateLevel(new Vec2i(50,50));		
+		level = rg.generateLevel(new Vec2i(SIZEX,SIZEY));
+		drawn = false;
 	}
 
 	@Override
@@ -73,43 +85,43 @@ public class LevelGenTester extends Application{
 	@Override
 	protected void onMouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void onMousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void onMouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void onMouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void onMouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void onMouseWheelMoved(MouseWheelEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void onResize(Vec2i newSize) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
