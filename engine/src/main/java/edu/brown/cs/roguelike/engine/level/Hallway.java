@@ -1,16 +1,28 @@
 package edu.brown.cs.roguelike.engine.level;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import cs195n.Vec2i;
+import edu.brown.cs.roguelike.engine.save.IDManager;
+import edu.brown.cs.roguelike.engine.save.Saveable;
 
 /**
  * A hallway connecting two spaces.
  * @author jte
  *
  */
-public class Hallway implements Space{
+public class Hallway implements Space, Saveable {
+
+	/**
+	 * Generated
+	 */
+	private static final long serialVersionUID = 4238224467162924679L;
+	
 	public Hallway(Vec2i startTile, Vec2i endTile) {
 		this.startTile = endTile;
 		this.endTile = endTile;
@@ -47,4 +59,40 @@ public class Hallway implements Space{
 			this.addRoom(r);
 		}
 	}
+	
+	
+	/*** BEGIN Saveable ***/
+	
+	private long id;
+	
+	{ this.id = IDManager.getNext(); }
+
+	@Override
+	public long getId() {
+		return this.id;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Hallway other = (Hallway) obj;
+		if (id == other.id)
+			return true;
+		return true;
+	}
+	
+	/*** END Saveable ***/
+	
 }

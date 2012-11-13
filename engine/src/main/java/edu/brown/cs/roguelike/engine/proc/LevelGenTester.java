@@ -19,7 +19,7 @@ import edu.brown.cs.roguelike.engine.proc.cs195n.Application;
  */
 
 
-public class LevelGenTester extends Application{
+public class LevelGenTester extends Application {
 
 	private final int SIZEX = 80;
 	private final int SIZEY = 60;
