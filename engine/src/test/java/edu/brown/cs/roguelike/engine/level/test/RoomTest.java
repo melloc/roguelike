@@ -89,7 +89,8 @@ public class RoomTest {
 		
 		Room r1_ds = (Room)o;
 		
-		assertEquals(r1_ds.getConnectedRooms(), r1.getConnectedRooms()); 
+		assertEquals(r1_ds.getConnectedRooms(), r1.getConnectedRooms());
+		assertEquals(r1_ds, r1); 
 	}
 	
 
