@@ -18,7 +18,7 @@ public class TestApplication extends Application {
 		return true;
 	}
 	
-    @BeforeClass
+    //@BeforeClass
     public static void main() {
         main(new String[]{});
     }

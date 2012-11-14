@@ -21,13 +21,13 @@
         <plugins>
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
-                <!-- <configuration>
+                <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>place.something.here.eventually</mainClass>
+                            <mainClass>edu.brown.cs.roguelike.game.Roguelike</mainClass>
                         </manifest>
                     </archive>
-                </configuration> -->
+                </configuration> 
             </plugin>
             <plugin>
                 <artifactId>maven-shade-plugin</artifactId>

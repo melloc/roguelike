@@ -1,4 +1,5 @@
-Run main in game.RogueLike for our Lanterna demo
+Run main in edu.brown.cs.roguelike.game.RogueLike for our Lanterna demo, or
+compile with `mvn clean package` and run the executable jar in game/target/.
 
 Commands:
 
