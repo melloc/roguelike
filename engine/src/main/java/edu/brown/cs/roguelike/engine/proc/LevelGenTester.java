@@ -7,12 +7,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.geom.Rectangle2D;
 
+import cs195n.Application;
 import cs195n.Vec2i;
 import edu.brown.cs.roguelike.engine.level.Hallway;
 import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.level.Room;
 import edu.brown.cs.roguelike.engine.level.Tile;
-import edu.brown.cs.roguelike.engine.proc.cs195n.Application;
 
 /**
  * A tester for level generation

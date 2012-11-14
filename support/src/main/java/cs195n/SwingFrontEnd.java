@@ -306,7 +306,7 @@ public abstract class SwingFrontEnd extends CS195NFrontEnd {
 		@Override
 		public void paint(Graphics g) {
 			Rectangle r = g.getClipBounds();
-			g.clearRect(r.x, r.y, r.width, r.height);
+			//g.clearRect(r.x, r.y, r.width, r.height);
 			if (resizeNotCalled) {
 				callOnResize(r.width, r.height);
 			}

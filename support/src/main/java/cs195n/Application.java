@@ -1,8 +1,6 @@
-package edu.brown.cs.roguelike.engine.proc.cs195n;
+package cs195n;
 
 import java.awt.Graphics2D;
-import cs195n.SwingFrontEnd;
-import cs195n.Vec2i;
 
 /**
  * Applications:

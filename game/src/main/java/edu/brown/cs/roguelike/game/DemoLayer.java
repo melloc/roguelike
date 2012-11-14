@@ -9,7 +9,7 @@ import edu.brown.cs.roguelike.engine.events.GameAction;
 import edu.brown.cs.roguelike.engine.graphics.Layer;
 import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.level.Tile;
-import edu.brown.cs.roguelike.engine.proc.RoomGenerator;
+import edu.brown.cs.roguelike.engine.proc.BSPLevelGenerator;
 import edu.brown.cs.roguelike.engine.save.SaveLoadException;
 import edu.brown.cs.roguelike.engine.save.SaveManager;
 
@@ -25,7 +25,7 @@ public class DemoLayer implements Layer {
 	
 	private Level currentLevel;
 	private final Vec2i levelSize;
-	private RoomGenerator rg;
+	private BSPLevelGenerator rg;
 	private SaveManager sm;
 	private String statusMsg;
 	
@@ -38,7 +38,7 @@ public class DemoLayer implements Layer {
 		this.size = size;
 		currentLevel = null;
 		levelSize = size;
-		rg = new RoomGenerator();
+		rg = new BSPLevelGenerator();
 		sm = new SaveManager("demoSave");
 		statusMsg = "No level. Press 'n' to generate a level, or press " +
 				"'s' to load the last saved level";
