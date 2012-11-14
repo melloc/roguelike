@@ -46,7 +46,7 @@ public class TileTest {
 	@Test
 	public void testRoundTripSerialization() throws IOException, ClassNotFoundException {
 		
-		Tile t1 = new Tile(TileType.WALL, true);
+		Tile t1 = new Tile(TileType.WALL_HOR, true);
 		t1.setPassable(false);
 		
 		ByteArrayOutputStream out = new ByteArrayOutputStream();

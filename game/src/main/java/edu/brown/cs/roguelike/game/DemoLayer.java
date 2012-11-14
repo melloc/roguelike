@@ -61,6 +61,7 @@ public class DemoLayer implements Layer {
 			throw new Error("Received an action for a non-demo context.");
 		try {
 			switch (action.getActionClassifier()) {
+			case 0: break; // do nothing
 			case 1: // generate new level
 				currentLevel = rg.generateLevel(levelSize);
 				break;
