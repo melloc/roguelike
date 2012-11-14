@@ -113,7 +113,13 @@ public class DemoLayer implements Layer {
 					case FLOOR:
 						sw.drawString(c, r, ".");
 						break;
-					case WALL:
+					case WALL_HOR:
+						sw.drawString(c, r, "-");
+						break;
+					case WALL_VER:
+						sw.drawString(c, r, "|");
+						break;
+					case SOLID:
 						sw.drawString(c, r, " ");
 						break;
 					}

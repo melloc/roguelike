@@ -1,6 +1,8 @@
 package edu.brown.cs.roguelike.engine.level;
 
 public enum TileType {
-	WALL,
+	WALL_HOR,
+	WALL_VER,
+	SOLID,
 	FLOOR;
 }

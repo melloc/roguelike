@@ -64,7 +64,7 @@ public class RoomGenerator {
 
 
 		//Init with solid map
-		fillWithWalls(tiles);
+		fillWithSolids(tiles);
 
 		SubLevel fullLevel = new SubLevel(new Vec2i(0,0), levelSize,0);
 		splitAndBuild(fullLevel);
@@ -274,7 +274,14 @@ public class RoomGenerator {
 		//int maxX = minX + minRoomDim + getRandom(maxWidth-minX-minRoomDim);
 
 		/*
-		int minY = minWallThickness+getRandom(maxHeight-minRoomDim);
+		int minY = minWallThickness+getRandom(maxHeightprivate void paintCellRectangle(Vec2i min, Vec2i max, boolean passable, TileType t) {
+		for(int i = min.x; i <= max.x; i++) {
+			for(int j = min.y; j <= max.y; j++) {
+				Tile x = tiles[i][j];
+				x.setPassable(passable);
+				x.setType(t);
+			}
+		}-minRoomDim);
 		int maxY =  minY + minRoomDim +  getRandom(maxHeight-minY-minRoomDim);
 		 */
 		Vec2i min = curr.min.plus(minX, minY);
@@ -282,6 +289,13 @@ public class RoomGenerator {
 
 		//Paint room to tile array
 		paintCellRectangle(min,max,true, TileType.FLOOR);
+		
+		paintCellRectangle( curr.min.plus(minX,minY), curr.min.plus(minX,maxY),false, TileType.WALL_VER);
+		paintCellRectangle( curr.min.plus(maxX,minY), curr.min.plus(maxX,maxY),false, TileType.WALL_VER);
+		paintCellRectangle( curr.min.plus(minX,minY), curr.min.plus(maxX,minY),false, TileType.WALL_HOR);
+		paintCellRectangle( curr.min.plus(minX,maxY), curr.min.plus(maxX,maxY),false, TileType.WALL_HOR);
+
+		
 
 		Room r = new Room(min,max);
 		curr.rooms.add(r);
@@ -324,10 +338,10 @@ public class RoomGenerator {
 	}
 
 	/**Fills the tiles with all walls **/
-	private void fillWithWalls(Tile[][] tiles) {
+	private void fillWithSolids(Tile[][] tiles) {
 		for(int i = 0; i < tiles.length; i++) {
 			for(int j = 0; j<tiles[0].length; j++) {
-				tiles[i][j] = new Tile(TileType.WALL,false);
+				tiles[i][j] = new Tile(TileType.SOLID,false);
 			}
 		}
 	}
