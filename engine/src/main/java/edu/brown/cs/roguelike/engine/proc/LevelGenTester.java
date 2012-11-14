@@ -26,7 +26,7 @@ public class LevelGenTester extends Application {
 	private final int SIZEX = 80;
 	private final int SIZEY = 60;
 
-	RoomGenerator rg;
+	BSPLevelGenerator rg;
 	Level level;
 	int scalex;
 	int scaley;
@@ -34,7 +34,7 @@ public class LevelGenTester extends Application {
 
 	public LevelGenTester(String title, boolean fullscreen) {
 		super(title, fullscreen);
-		rg = new RoomGenerator();
+		rg = new BSPLevelGenerator();
 		level = rg.generateLevel(new Vec2i(SIZEX,SIZEY));
 		scalex = DEFAULT_WINDOW_SIZE.x / SIZEX;
 		scaley =  DEFAULT_WINDOW_SIZE.y / SIZEY;

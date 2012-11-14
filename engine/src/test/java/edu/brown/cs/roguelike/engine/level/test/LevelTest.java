@@ -17,7 +17,7 @@ import cs195n.Vec2i;
 import edu.brown.cs.roguelike.engine.level.Hallway;
 import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.level.Room;
-import edu.brown.cs.roguelike.engine.proc.RoomGenerator;
+import edu.brown.cs.roguelike.engine.proc.BSPLevelGenerator;
 
 public class LevelTest {
 	
@@ -25,7 +25,7 @@ public class LevelTest {
 	
 	@Before
 	public void setUp() {
-		RoomGenerator rg = new RoomGenerator();
+		BSPLevelGenerator rg = new BSPLevelGenerator();
 		l1 = rg.generateLevel(new Vec2i(100,150));
 	}
 	
