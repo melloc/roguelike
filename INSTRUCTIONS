@@ -1,0 +1,13 @@
+Run main in game.RogueLike for our Lanterna demo
+
+Commands:
+
+'n' - generate a new level
+'s' - save the current level
+'l' - load the last-saved level
+'q' - quit the demo
+
+You must use either 'q' or eclipse to quit, as terminal-close event handling
+is not supported
+
+Resizing is also not supported
