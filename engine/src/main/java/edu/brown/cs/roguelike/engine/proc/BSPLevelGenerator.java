@@ -187,6 +187,11 @@ public class BSPLevelGenerator implements LevelGenerator{
 				hp1.space.connectToHallway(new_hallway);
 				hp2.space.connectToHallway(new_hallway);
 
+				if(hp1.space.needDoor())
+					makeDoor(hp1.point,s,true);
+				if(hp2.space.needDoor())
+					makeDoor(hp2.point,s,false);
+				
 				curr.hallways.add(new_hallway);
 			}
 			else{
@@ -218,6 +223,11 @@ public class BSPLevelGenerator implements LevelGenerator{
 					paintHallway(hp1.point,corner,true,TileType.FLOOR);
 					paintHallway(hp2.point,corner,true,TileType.FLOOR);
 
+					if(hp1.space.needDoor())
+						makeDoor(hp1.point,s,true);
+					if(hp2.space.needDoor())
+						makeDoor(hp2.point,s,false);
+					
 					curr.hallways.add(new_hallway1);
 					curr.hallways.add(new_hallway2);
 				}
@@ -265,6 +275,29 @@ public class BSPLevelGenerator implements LevelGenerator{
 			curr.intersectMin = new Vec2i(minIX,minIY);
 		}
 	}
+
+
+
+	/**Makes a door at location, using the split and side to accurately place it in the wall**/
+	private void makeDoor(Vec2i point, Split s, boolean b) {
+		int xOff=0;
+		int yOff=0;
+		
+		if(s == Split.HOR) 
+			yOff = 1;
+		else
+			xOff = 1;
+		if(!b) {
+			xOff *= -1;
+			yOff *= -1;
+		}
+		
+		Tile t = tiles[point.x+xOff][point.y+yOff];
+		t.setType(TileType.DOOR);
+		t.setPassable(true);
+		
+	}
+
 
 	/**
 	 * Makes a room inside the sublevel

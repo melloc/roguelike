@@ -123,6 +123,9 @@ public class DemoLayer implements Layer {
 					case SOLID:
 						sw.drawString(c, r, " ");
 						break;
+					case DOOR:
+						sw.drawString(c, r, "+");
+						break;
 					}
 				}
 			}

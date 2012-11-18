@@ -33,14 +33,6 @@ public class Room implements Space, Saveable {
 		this.max = max;
 		this.connectedRooms = new ArrayList<Room>();
 	}
-	@Override
-	public void connectToSpace(Space s) {s.connectToRoom(this);}
-	
-	@Override
-	public void connectToRoom(Room r) {
-		assert(false);
-		//This shoud never happen, only hallways connect to rooms
-	}
 	
 	@Override
 	public void connectToHallway(Hallway h) {
@@ -48,6 +40,11 @@ public class Room implements Space, Saveable {
 			this.addRoom(r);
 			h.addRoom(this);
 		}
+	}
+	
+	@Override
+	public boolean needDoor() {
+		return true;
 	}
 	
 	/*** BEGIN Saveable ***/

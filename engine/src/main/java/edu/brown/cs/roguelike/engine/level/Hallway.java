@@ -41,14 +41,7 @@ public class Hallway implements Space, Saveable {
 		}
 	public List<Room> getRooms() {return this.rooms;}
 	
-	@Override
-	public void connectToSpace(Space s) {
-		s.connectToHallway(this);
-	}
-	@Override
-	public void connectToRoom(Room r) {
-		r.connectToHallway(this);
-		}
+
 	@Override
 	public void connectToHallway(Hallway h) {
 		ArrayList<Room> other_rooms = new ArrayList<Room> (h.getRooms());
@@ -58,6 +51,11 @@ public class Hallway implements Space, Saveable {
 		for(Room r : other_rooms){
 			this.addRoom(r);
 		}
+	}
+	
+	@Override
+	public boolean needDoor() {
+		return false;
 	}
 	
 	
@@ -92,6 +90,7 @@ public class Hallway implements Space, Saveable {
 			return true;
 		return true;
 	}
+
 	
 	/*** END Saveable ***/
 	
