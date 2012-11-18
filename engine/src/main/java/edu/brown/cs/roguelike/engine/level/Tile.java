@@ -3,9 +3,8 @@ package edu.brown.cs.roguelike.engine.level;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 
-import edu.brown.cs.roguelike.engine.entities.Monster;
+import edu.brown.cs.roguelike.engine.entities.Entity;
 import edu.brown.cs.roguelike.engine.save.IDManager;
 import edu.brown.cs.roguelike.engine.save.Saveable;
 
@@ -26,9 +25,9 @@ public class Tile implements Saveable {
 		this.passable = passable;
 	}
 	
-	private Monster monster;
-	public Monster getMonster() {return monster;}
-	public void setMonster(Monster monster) {this.monster = monster;}
+	private Entity entity;
+	public Entity getEntity() {return entity;}
+	public void setEntity(Entity entity) {this.entity = entity;}
 
 	private boolean passable; //
 	public boolean isPassable() {return passable;}

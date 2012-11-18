@@ -23,7 +23,17 @@ public class RandomMonsterGenerator implements MonsterGenerator {
 	
 	private Monster getRandomMonster() {
 		//TODO: Get a random monster
-		return new Monster("M",Color.RED);
+		switch(rand.getRandom(4)) {
+		
+		case 0:
+			return new Monster("D",Color.CYAN);
+		case 1:
+			return new Monster("g",Color.GREEN);
+		case 2:
+			return new Monster("U",Color.MAGENTA);
+		 default:
+			return new Monster("M",Color.RED);
+		}
 	}
 	
 	private int getMonsterCount() {
@@ -38,8 +48,8 @@ public class RandomMonsterGenerator implements MonsterGenerator {
 			int mX = rand.getRandom(r.min.x, r.max.x);
 			int mY = rand.getRandom(r.min.y, r.max.y);
 			Tile t = l.getTiles()[mX][mY];
-			if(t.getMonster() == null) {
-				t.setMonster(m);
+			if(t.getEntity() == null) {
+				t.setEntity(m);
 				placedMonster = true;
 			}
 		}
