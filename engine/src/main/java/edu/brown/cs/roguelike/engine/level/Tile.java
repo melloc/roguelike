@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import edu.brown.cs.roguelike.engine.entities.Monster;
 import edu.brown.cs.roguelike.engine.save.IDManager;
 import edu.brown.cs.roguelike.engine.save.Saveable;
 
@@ -25,6 +26,10 @@ public class Tile implements Saveable {
 		this.passable = passable;
 	}
 	
+	private Monster monster;
+	public Monster getMonster() {return monster;}
+	public void setMonster(Monster monster) {this.monster = monster;}
+
 	private boolean passable; //
 	public boolean isPassable() {return passable;}
 	public void setPassable(boolean passable) {this.passable = passable;}
