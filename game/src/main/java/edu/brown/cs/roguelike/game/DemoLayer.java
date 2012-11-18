@@ -2,9 +2,12 @@ package edu.brown.cs.roguelike.game;
 
 import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.screen.Screen;
+import com.googlecode.lanterna.screen.ScreenCharacterStyle;
 import com.googlecode.lanterna.screen.ScreenWriter;
+import com.googlecode.lanterna.terminal.Terminal.Color;
 
 import cs195n.Vec2i;
+import edu.brown.cs.roguelike.engine.entities.Entity;
 import edu.brown.cs.roguelike.engine.events.GameAction;
 import edu.brown.cs.roguelike.engine.graphics.Layer;
 import edu.brown.cs.roguelike.engine.level.Level;
@@ -110,6 +113,15 @@ public class DemoLayer implements Layer {
 			for (int c = 0; c < tiles.length; c++) {
 				for (int r = tiles[0].length - 1; r >= 0; r--) { // flip y
 					t = tiles[c][r];
+					
+					if(t.getEntity() != null) {
+						Entity e = t.getEntity();
+						sw.setForegroundColor(e.getColor());
+						sw.drawString(c, r, e.getCharacter(), ScreenCharacterStyle.Bold);
+						continue;
+					}
+					
+					sw.setForegroundColor(Color.DEFAULT);
 					switch (t.getType()) {
 					case FLOOR:
 						sw.drawString(c, r, ".");
@@ -122,6 +134,9 @@ public class DemoLayer implements Layer {
 						break;
 					case SOLID:
 						sw.drawString(c, r, " ");
+						break;
+					case DOOR:
+						sw.drawString(c, r, "+");
 						break;
 					}
 				}

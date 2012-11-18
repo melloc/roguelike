@@ -31,10 +31,10 @@ public class HallwayTest {
 		r1 = new Room(new Vec2i(0,0), new Vec2i(10,10));
 		r2 = new Room(new Vec2i(10,10), new Vec2i(20,20));
 		
-		h1.connectToRoom(r1);
-		h1.connectToRoom(r2);
-		h2.connectToRoom(r1);
-		h2.connectToRoom(r2);
+		r1.connectToHallway(h1);
+		r2.connectToHallway(h1);
+		r1.connectToHallway(h2);
+		r2.connectToHallway(h2);
 	}
 	
 	@After
