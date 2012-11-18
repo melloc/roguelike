@@ -2,6 +2,7 @@ package edu.brown.cs.roguelike.engine.config;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.googlecode.lanterna.terminal.Terminal.Color;
 
 
 /**
@@ -14,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class MonsterTemplate {
 	public final String name;
 	public final char character;
-	public final String color;
+	public final Color color;
 	public final int startHp;
 
 	@JsonCreator
@@ -25,9 +26,23 @@ public class MonsterTemplate {
 			@JsonProperty("startHp") int startHp) {
 		this.name = name;
 		this.character = character;
-		this.color = color;
+		
+		// parse color
+		String c = color.toLowerCase();
+		
+		if (c.equals("black")) { this.color = Color.BLACK; }
+		else if (c.equals("blue")) { this.color = Color.BLUE; }
+		else if (c.equals("cyan")) { this.color = Color.CYAN; }
+		else if (c.equals("green")) { this.color = Color.GREEN; }
+		else if (c.equals("magenta")) { this.color = Color.MAGENTA; }
+		else if (c.equals("red")) { this.color = Color.RED; }
+		else if (c.equals("white")) { this.color = Color.WHITE; }
+		else if (c.equals("yellow")) { this.color = Color.YELLOW; }
+		else { this.color = Color.DEFAULT; } 
+
 		this.startHp = startHp;
 	}
+	
 
 	@Override
 	public int hashCode() {

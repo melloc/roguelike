@@ -1,6 +1,5 @@
 package edu.brown.cs.roguelike.engine.config;
 
-import java.util.List;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;

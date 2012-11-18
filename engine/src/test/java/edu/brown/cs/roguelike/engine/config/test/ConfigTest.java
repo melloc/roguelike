@@ -22,7 +22,7 @@ public class ConfigTest {
 	@Test
 	public void test() throws ConfigurationException, 
 	JsonGenerationException, JsonMappingException, IOException {
-		Config c = new Config("../config");
+		Config c = new Config("../config-test");
 		
 		MonsterTemplate mt1 = new MonsterTemplate("Rat", 'R', "Red", 10);
 		MonsterTemplate mt2 = new MonsterTemplate("Mangy Dog", 'D',"Blue", 20);
@@ -32,7 +32,7 @@ public class ConfigTest {
 		mts.add(mt2);
 		
 		ObjectMapper om = new ObjectMapper();
-		om.writeValue(new File("../config/monsters.cfg"), mts);
+		om.writeValue(new File("../config-test/monsters.cfg"), mts);
 
 		// load the monster template
 		ArrayList<MonsterTemplate> mts_loaded = c.loadMonsterTemplate();
