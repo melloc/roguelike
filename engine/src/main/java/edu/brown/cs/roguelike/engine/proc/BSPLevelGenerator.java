@@ -19,7 +19,7 @@ import edu.brown.cs.roguelike.engine.proc.Split;
  *
  */
 public class BSPLevelGenerator implements LevelGenerator{
-	private final int depthMax = 25;
+	private final int depthMax = 5;
 
 
 	//-----------------------------------------------------------------------CONSTANTS-----------------------------------------------------------------------------------------------------------------
@@ -32,7 +32,7 @@ public class BSPLevelGenerator implements LevelGenerator{
 	private final float splitMin = 0.01f; // min % to split at
 	private final float splitMax = 0.99f; // max % to split at
 
-	private final int minWallThickness = 1;
+	private final int minWallThickness = 2; //Should be >=  2
 
 	private int minRoomDim = 7;
 
@@ -62,7 +62,7 @@ public class BSPLevelGenerator implements LevelGenerator{
 
 		return new Level(tiles,fullLevel.rooms,fullLevel.hallways);
 	}
-	
+
 
 	//Returns an int between [0,n)
 	private int getRandom(int n){
@@ -171,12 +171,17 @@ public class BSPLevelGenerator implements LevelGenerator{
 			if(range != null)
 			{
 				int hpt;
-				hpt = getRandom(range.min,range.max);
-
-				HallwayPoint hp1 = s1.getHallwayPoint(s, true, hpt);
-				HallwayPoint hp2 = s2.getHallwayPoint(s, false, hpt);
-
+				HallwayPoint hp1;
+				HallwayPoint hp2;
+				do{
+					hpt = getRandom(range.min,range.max);
+					hp1 = s1.getHallwayPoint(s, true, hpt);
+					hp2 = s2.getHallwayPoint(s, false, hpt);
+				}
+				while (!testHallway(hp1.point,hp2.point));
+				
 				Hallway new_hallway = new Hallway(hp1.point,hp2.point);
+
 				paintHallway(hp1.point,hp2.point,true, TileType.FLOOR);
 
 				hp1.space.connectToHallway(new_hallway);
@@ -266,8 +271,8 @@ public class BSPLevelGenerator implements LevelGenerator{
 	 * @param curr - the area to make the room in
 	 */
 	private void makeRoom(SubLevel curr) {
-		int maxWidth = curr.max.x - curr.min.x- 1*minWallThickness;
-		int maxHeight = curr.max.y - curr.min.y - 1*minWallThickness;
+		int maxWidth = curr.max.x - curr.min.x- 1*minWallThickness - 1;
+		int maxHeight = curr.max.y - curr.min.y - 1*minWallThickness - 1;
 
 
 		//Randomly Select room coordinates
@@ -276,7 +281,6 @@ public class BSPLevelGenerator implements LevelGenerator{
 
 		int minY = getRandom(minWallThickness,maxHeight-minRoomDim);
 		int maxY = getRandom(minY+minRoomDim, maxHeight);
-		//int maxX = minX + minRoomDim + getRandom(maxWidth-minX-minRoomDim);
 
 		/*
 		int minY = minWallThickness+getRandom(maxHeightprivate void paintCellRectangle(Vec2i min, Vec2i max, boolean passable, TileType t) {
@@ -289,16 +293,19 @@ public class BSPLevelGenerator implements LevelGenerator{
 		}-minRoomDim);
 		int maxY =  minY + minRoomDim +  getRandom(maxHeight-minY-minRoomDim);
 		 */
+
 		Vec2i min = curr.min.plus(minX, minY);
 		Vec2i max = curr.min.plus(maxX, maxY);
+
+
 
 		//Paint room to tile array
 		paintCellRectangle(min,max,true, TileType.FLOOR);
 
-		paintCellRectangle( curr.min.plus(minX,minY), curr.min.plus(minX,maxY),false, TileType.WALL_VER);
-		paintCellRectangle( curr.min.plus(maxX,minY), curr.min.plus(maxX,maxY),false, TileType.WALL_VER);
-		paintCellRectangle( curr.min.plus(minX,minY), curr.min.plus(maxX,minY),false, TileType.WALL_HOR);
-		paintCellRectangle( curr.min.plus(minX,maxY), curr.min.plus(maxX,maxY),false, TileType.WALL_HOR);
+		paintCellRectangle( curr.min.plus(minX-1,minY-1), curr.min.plus(minX-1,maxY+1),false, TileType.WALL_VER);
+		paintCellRectangle( curr.min.plus(maxX+1,minY-1), curr.min.plus(maxX+1,maxY+1),false, TileType.WALL_VER);
+		paintCellRectangle( curr.min.plus(minX-1,minY-1), curr.min.plus(maxX+1,minY-1),false, TileType.WALL_HOR);
+		paintCellRectangle( curr.min.plus(minX-1,maxY+1), curr.min.plus(maxX+1,maxY+1),false, TileType.WALL_HOR);
 
 
 
@@ -326,6 +333,36 @@ public class BSPLevelGenerator implements LevelGenerator{
 				x.setType(t);
 			}
 		}
+	}
+
+	/**Tests to see if a hallway can be laid. returns true if there are no problems**/
+	private boolean testHallway(Vec2i a, Vec2i b) {
+		if(a.x > b.x || a.y > b.y) {
+			testHallway(b,a);
+		}
+
+		if(a.x == b.x) {
+			for(int i = a.x-1; i <= a.x+1; i++) {
+				for(int j = a.y+2; j <= b.y-2; j++) {
+					Tile x = tiles[i][j];
+					if(x.getType() != TileType.SOLID) {
+						return false;
+					}
+				}
+			}
+		}
+		else{
+			for(int y = a.y-1; y <= a.y+1; y++) {
+				for(int x = a.x+2; x <= b.x-2; x++) {
+					Tile t = tiles[x][y];
+					if(t.getType() != TileType.SOLID) {
+						return false;
+					}
+				}
+			}
+		}
+
+		return true;
 	}
 
 	/**Paints a hallway onto the tile array**/
