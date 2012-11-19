@@ -6,6 +6,7 @@ import com.googlecode.lanterna.screen.ScreenCharacterStyle;
 import com.googlecode.lanterna.screen.ScreenWriter;
 
 import cs195n.Vec2i;
+import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.events.GameAction;
 import edu.brown.cs.roguelike.engine.graphics.Layer;
 import edu.brown.cs.roguelike.engine.level.Level;
@@ -109,7 +110,10 @@ public class DemoLayer implements Layer {
         } catch (SaveLoadException e) {
             statusMsg = e.getMessage();
             currentLevel = null;
-        }
+        } catch (ConfigurationException e) {
+        	statusMsg = e.getMessage();
+            currentLevel = null;
+		}
     }
 
     @Override

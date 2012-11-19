@@ -16,6 +16,7 @@ public class Level implements Saveable {
 	public final Tile[][] tiles;
 	private List<Room> rooms;
 	private List<Hallway> hallways;
+	public int depth; //The depth of the level
 	
 	public Level(Tile[][] tiles, List<Room> rooms, List<Hallway> hallways) {
 		this.tiles = tiles;
@@ -26,6 +27,9 @@ public class Level implements Saveable {
 	public Tile[][] getTiles() { return this.tiles; }
 	public List<Room> getRooms() { return this.rooms; }
 	public List<Hallway> getHallways() { return this.hallways; }	
+	public int getDepth(){return depth;}
+	
+	public void setDepth(int depth) {this.depth = depth;}
 	
 	/*** BEGIN Saveable ***/
 	

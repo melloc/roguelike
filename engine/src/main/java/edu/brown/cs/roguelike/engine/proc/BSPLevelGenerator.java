@@ -1,6 +1,7 @@
 package edu.brown.cs.roguelike.engine.proc;
 
 import cs195n.Vec2i;
+import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.level.Hallway;
 import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.level.Room;
@@ -43,8 +44,9 @@ public class BSPLevelGenerator implements LevelGenerator{
 
 	/**
 	 * Generates a full level whose size is levelSize
+	 * @throws ConfigurationException 
 	 */
-	public Level generateLevel(Vec2i levelSize) {
+	public Level generateLevel(Vec2i levelSize) throws ConfigurationException {
 		rand = new RandomGen(System.nanoTime());
 		tiles = new Tile[levelSize.x][levelSize.y];
 
@@ -55,8 +57,11 @@ public class BSPLevelGenerator implements LevelGenerator{
 		splitAndBuild(fullLevel);
 
 		Level level = new Level(tiles,fullLevel.rooms,fullLevel.hallways);
-		MonsterGenerator mg = new RandomMonsterGenerator();
+		MonsterGenerator mg = new ProgressiveMonsterGenerator();
 		mg.populateLevel(level);
+		
+		//TESTING PURPOSES: ALWAYS DEPTH 3
+		level.setDepth(3); 
 		
 		return level;
 	}

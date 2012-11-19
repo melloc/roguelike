@@ -9,6 +9,7 @@ import java.awt.geom.Rectangle2D;
 
 import cs195n.Application;
 import cs195n.Vec2i;
+import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.level.Hallway;
 import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.level.Room;
@@ -32,7 +33,7 @@ public class LevelGenTester extends Application {
 	int scaley;
 	private boolean drawn = false;
 
-	public LevelGenTester(String title, boolean fullscreen) {
+	public LevelGenTester(String title, boolean fullscreen) throws ConfigurationException {
 		super(title, fullscreen);
 		rg = new BSPLevelGenerator();
 		level = rg.generateLevel(new Vec2i(SIZEX,SIZEY));
@@ -40,7 +41,7 @@ public class LevelGenTester extends Application {
 		scaley =  DEFAULT_WINDOW_SIZE.y / SIZEY;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ConfigurationException {
 		LevelGenTester test = new LevelGenTester("DAT LEVELGEN!", false);
 		test.startup();
 	}
@@ -102,7 +103,12 @@ public class LevelGenTester extends Application {
 
 	@Override
 	protected void onKeyPressed(KeyEvent e) {
-		level = rg.generateLevel(new Vec2i(SIZEX,SIZEY));
+		try {
+			level = rg.generateLevel(new Vec2i(SIZEX,SIZEY));
+		} catch (ConfigurationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		drawn = false;
 	}
 
