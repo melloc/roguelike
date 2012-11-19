@@ -80,8 +80,8 @@ public class ProgressiveMonsterGenerator implements MonsterGenerator {
 	 */
 	private Monster getRandomMonster(Level level) {
 		
-		int tier = (int) (1 + Math.floor(level.depth/tierStepSize));
-		int tierDiff = tierStepSize*tier - level.depth;
+		int tier = (1 + (level.depth/tierStepSize));
+		int tierDiff = tierStepSize*(tier-1) - level.depth + 1;
 		
 		if(Math.random() <= lowerChance/tierDiff)
 			tier -= 1;
