@@ -22,7 +22,9 @@ public class ProgressiveMonsterGenerator implements MonsterGenerator {
 	private static final int maxRoomCount = 6;
 	
 	private static final float lowerChance = 0.05f;
-	private static final float higherChance = 0.05f;
+	private static final float higherChance = 0.02f;
+	
+	private static final int tierStepSize = 5;
 	//END CONSTANTS
 	
 	ArrayList<MonsterTemplate> templates;
@@ -78,11 +80,12 @@ public class ProgressiveMonsterGenerator implements MonsterGenerator {
 	 */
 	private Monster getRandomMonster(Level level) {
 		
-		int tier = (int) (1 + Math.floor(level.depth/5));
+		int tier = (int) (1 + Math.floor(level.depth/tierStepSize));
+		int tierDiff = tierStepSize*tier - level.depth;
 		
-		if(Math.random() <= lowerChance)
+		if(Math.random() <= lowerChance/tierDiff)
 			tier -= 1;
-		else if(Math.random() <= higherChance)
+		else if(Math.random() <= higherChance*tierDiff)
 			tier += 1;
 		
 		if(tier == 0) {
