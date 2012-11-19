@@ -57,11 +57,15 @@ public class BSPLevelGenerator implements LevelGenerator{
 		splitAndBuild(fullLevel);
 
 		Level level = new Level(tiles,fullLevel.rooms,fullLevel.hallways);
+		
+		
+		//TESTING PURPOSES: ALWAYS CONSTANT DEPTH
+		level.setDepth(3); 
+		//TESTING
+		
 		MonsterGenerator mg = new ProgressiveMonsterGenerator();
 		mg.populateLevel(level);
-		
-		//TESTING PURPOSES: ALWAYS DEPTH 3
-		level.setDepth(3); 
+
 		
 		return level;
 	}
