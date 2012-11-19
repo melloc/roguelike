@@ -8,5 +8,5 @@ public abstract class Entity {
 	
 	public String getCharacter() {return character;}
 	public Color getColor() {return color;}
- 
+	
 }
