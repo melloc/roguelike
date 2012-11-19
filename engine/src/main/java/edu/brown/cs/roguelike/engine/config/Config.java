@@ -108,7 +108,6 @@ public class Config {
 			String file = dir.getAbsolutePath() + "/" +
 					REQUIRED_FILES.get(ConfigType.MONSTER).concat(CFG_EXT);
 			
-			// TODO(liam) how to validate this is the correct class?
 			ret = om.readValue(
 					new File(file), t.constructCollectionType(ArrayList.class,MonsterTemplate.class));
 
