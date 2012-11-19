@@ -2,11 +2,12 @@ package edu.brown.cs.roguelike.engine.graphics;
 
 import java.util.Date;
 
-import cs195n.Vec2i;
 import com.googlecode.lanterna.TerminalFacade;
+import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.TerminalSize;
-import com.googlecode.lanterna.input.Key;
+
+import cs195n.Vec2i;
 
 /**
  * This class provides a framework in which we can develop an application that

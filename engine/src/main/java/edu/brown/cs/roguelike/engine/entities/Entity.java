@@ -10,5 +10,5 @@ public abstract class Entity implements Drawable {
 	
 	public char getCharacter() {return character;}
 	public Color getColor() {return color;}
- 
+	
 }

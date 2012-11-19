@@ -4,7 +4,6 @@ import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.screen.Screen;
 
 import cs195n.Vec2i;
-
 import edu.brown.cs.roguelike.engine.events.GameAction;
 
 /**
