@@ -12,8 +12,8 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 import edu.brown.cs.roguelike.engine.config.Config;
+import edu.brown.cs.roguelike.engine.config.Config.ConfigType;
 import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.config.MonsterTemplate;
 
@@ -22,10 +22,22 @@ public class ConfigTest {
 	@Test
 	public void test() throws ConfigurationException, 
 	JsonGenerationException, JsonMappingException, IOException {
+		
+		File cd = new File("../config-test");
+		if (!cd.exists()) cd.mkdir();
+		if (!cd.isDirectory()) { cd.delete(); cd.mkdir(); }
+		
+		File mf = new File("../config-test/" + 
+				Config.REQUIRED_FILES.get(ConfigType.MONSTER) + Config.CFG_EXT);
+		
+		if (mf.exists()) mf.delete(); 
+		
+		mf.createNewFile();
+		
 		Config c = new Config("../config-test");
 		
-		MonsterTemplate mt1 = new MonsterTemplate("Rat", 'R', "Red", 10);
-		MonsterTemplate mt2 = new MonsterTemplate("Mangy Dog", 'D',"Blue", 20);
+		MonsterTemplate mt1 = new MonsterTemplate("Rat", 'R', "Red", 10, 3, 11);
+		MonsterTemplate mt2 = new MonsterTemplate("Mangy Dog", 'D',"Blue", 20, 3, 5);
 		
 		ArrayList<MonsterTemplate> mts = new ArrayList<MonsterTemplate>();
 		mts.add(mt1);
