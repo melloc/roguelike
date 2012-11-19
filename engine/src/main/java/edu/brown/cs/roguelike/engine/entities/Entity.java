@@ -2,11 +2,13 @@ package edu.brown.cs.roguelike.engine.entities;
 
 import com.googlecode.lanterna.terminal.Terminal.Color;
 
-public abstract class Entity {
-	protected String character;
+import edu.brown.cs.roguelike.engine.graphics.Drawable;
+
+public abstract class Entity implements Drawable {
+	protected char character;
 	protected Color color;
 	
-	public String getCharacter() {return character;}
+	public char getCharacter() {return character;}
 	public Color getColor() {return color;}
  
 }

@@ -26,13 +26,13 @@ public class RandomMonsterGenerator implements MonsterGenerator {
 		switch(rand.getRandom(4)) {
 		
 		case 0:
-			return new Monster("D",Color.CYAN);
+			return new Monster('D',Color.CYAN);
 		case 1:
-			return new Monster("g",Color.GREEN);
+			return new Monster('g',Color.GREEN);
 		case 2:
-			return new Monster("U",Color.MAGENTA);
+			return new Monster('U',Color.MAGENTA);
 		 default:
-			return new Monster("M",Color.RED);
+			return new Monster('M',Color.RED);
 		}
 	}
 	
