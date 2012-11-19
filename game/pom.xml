@@ -8,7 +8,7 @@
     <artifactId>game</artifactId>
 
     <name>Roguelike (Game)</name>
-    <description>This is the actual rogulike game</description>
+    <description>This is the actual roguelike game</description>
 
     <dependencies>
         <dependency>
