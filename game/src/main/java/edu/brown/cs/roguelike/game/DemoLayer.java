@@ -1,17 +1,23 @@
 package edu.brown.cs.roguelike.game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.ScreenCharacterStyle;
 import com.googlecode.lanterna.screen.ScreenWriter;
 
 import cs195n.Vec2i;
+import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
 import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.events.GameAction;
 import edu.brown.cs.roguelike.engine.graphics.Layer;
+import edu.brown.cs.roguelike.engine.level.Direction;
 import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.level.Tile;
 import edu.brown.cs.roguelike.engine.proc.BSPLevelGenerator;
+import edu.brown.cs.roguelike.engine.proc.LevelGenerator;
 import edu.brown.cs.roguelike.engine.save.SaveLoadException;
 import edu.brown.cs.roguelike.engine.save.SaveManager;
 
@@ -26,7 +32,7 @@ public class DemoLayer implements Layer {
 
     private Level currentLevel;
     private final Vec2i levelSize;
-    private BSPLevelGenerator rg;
+    private LevelGenerator rg;
     private SaveManager sm;
     private String statusMsg;
 
@@ -85,8 +91,13 @@ public class DemoLayer implements Layer {
 
     @Override
     public void propagateAction(GameAction action) {
+		List<EntityActionManager> managers = null;
+		if (currentLevel != null)
+			managers =  currentLevel.getManager().getEntity("keyboard");
+		if (managers == null)
+			managers = new ArrayList<EntityActionManager>();
         if (action.getContextClassifier() != 1)
-            throw new Error("Received an action for a non-demo context.");
+            throw new Error("Received an action for a non-gameplay context.");
         try {
             switch (action.getActionClassifier()) {
             case 0:
@@ -103,9 +114,26 @@ public class DemoLayer implements Layer {
             case 4: // quit
                 app.shutdown();
                 break;
+			case 5:
+				for (EntityActionManager manager : managers)
+					manager.sendMove(Direction.LEFT);
+				break;
+			case 6:
+				for (EntityActionManager manager : managers)
+					manager.sendMove(Direction.UP);
+				break;
+			case 7:
+				for (EntityActionManager manager : managers)
+					manager.sendMove(Direction.DOWN);
+				break;
+			case 8:
+				for (EntityActionManager manager : managers)
+					manager.sendMove(Direction.RIGHT);
+				break;
             default:
-                throw new Error("This shouldn't happen. Received a "
-                        + action.getActionClassifier() + "...");
+                throw new Error("This shouldn't happen and indicates an unhandled case. Received: "
+                        + action.toString()
+					   	+ "...");
             }
         } catch (SaveLoadException e) {
             statusMsg = e.getMessage();

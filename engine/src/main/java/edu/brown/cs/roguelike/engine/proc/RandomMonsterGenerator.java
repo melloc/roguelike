@@ -42,6 +42,9 @@ public class RandomMonsterGenerator implements MonsterGenerator {
 	}
 
 	private void addMonster(Level l, Room r, Monster m) {
+		// Register the Monster with the level's EntityManager.
+		l.getManager().register(m);
+
 		//TODO: Randomly place a monster on a tile in the room
 		boolean placedMonster = false;
 		do {
@@ -50,6 +53,7 @@ public class RandomMonsterGenerator implements MonsterGenerator {
 			Tile t = l.getTiles()[mX][mY];
 			if(t.getEntity() == null) {
 				t.setEntity(m);
+				m.setLocation(t);
 				placedMonster = true;
 			}
 		}

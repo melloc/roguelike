@@ -44,5 +44,10 @@ public class GameAction {
 	public int getActionClassifier() {
 		return actionClassifier;
 	}
+
+	@Override
+	public String toString() {
+		return "GameAction(context=" + this.contextClassifier + ", action=" + this.actionClassifier + ")";
+	}
 	
 }

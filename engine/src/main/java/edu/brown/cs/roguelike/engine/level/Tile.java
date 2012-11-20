@@ -44,6 +44,7 @@ public class Tile implements Saveable, Drawable {
 	}
 
 	public void setEntity(Entity entity) {
+		entity.setLocation(this);
 		this.entity = entity;
 	}
 
