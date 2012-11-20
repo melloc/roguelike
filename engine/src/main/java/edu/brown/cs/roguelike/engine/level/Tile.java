@@ -3,10 +3,12 @@ package edu.brown.cs.roguelike.engine.level;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.HashSet;
 
 import com.googlecode.lanterna.terminal.Terminal.Color;
 
 import edu.brown.cs.roguelike.engine.entities.Entity;
+import edu.brown.cs.roguelike.engine.entities.Stackable;
 import edu.brown.cs.roguelike.engine.graphics.Drawable;
 import edu.brown.cs.roguelike.engine.save.IDManager;
 import edu.brown.cs.roguelike.engine.save.Saveable;
@@ -29,7 +31,12 @@ public class Tile implements Saveable, Drawable {
 		this.type = type;
 		this.passable = passable;
 	}
-
+	
+	private HashSet<Stackable> stackables = new HashSet<Stackable>();
+	public HashSet<Stackable> getStackables() {
+		return stackables;
+	}
+	
 	private Entity entity;
 
 	public Entity getEntity() {
