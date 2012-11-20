@@ -29,6 +29,9 @@ public class Level implements Saveable {
 
 	public Level(Tile[][] tiles, List<Room> rooms, List<Hallway> hallways) {
 		this.tiles = tiles;
+		for (Tile[] tiles2 : tiles)
+			for (Tile tile : tiles2)
+				tile.setLevel(this);
 		this.rooms = rooms;
 		this.hallways = hallways;
 	}

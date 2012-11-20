@@ -5,13 +5,12 @@ import java.util.List;
 import com.googlecode.lanterna.terminal.Terminal.Color;
 
 import edu.brown.cs.roguelike.engine.graphics.Drawable;
-import edu.brown.cs.roguelike.engine.level.Tile;
+import edu.brown.cs.roguelike.engine.level.Mappable;
 
 public abstract class Entity implements Drawable, Mappable {
 
 	protected char character;
 	protected Color color;
-	protected Tile location;
 
 	@Override
 	public char getCharacter() {
@@ -25,19 +24,4 @@ public abstract class Entity implements Drawable, Mappable {
 
 	public abstract List<String> getCategories();
 
-	/**
-	 * @return the location
-	 */
-	@Override
-	public Tile getLocation() {
-		return location;
-	}
-
-	/**
-	 * @param location the location to set
-	 */
-	public void setLocation(Tile location) {
-		this.location = location;
-	}
-	
 }

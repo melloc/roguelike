@@ -26,7 +26,7 @@ public class LocalEntityActionManager implements EntityActionManager {
 
 	@Override
 	public void sendMove(Direction dir) {
-		
+		entity.move(dir);
 	}
 
 	@Override

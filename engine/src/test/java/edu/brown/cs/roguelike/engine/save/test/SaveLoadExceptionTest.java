@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import cs195n.Vec2i;
 
+import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.proc.BSPLevelGenerator;
 import edu.brown.cs.roguelike.engine.save.SaveLoadException;
@@ -17,7 +18,7 @@ public class SaveLoadExceptionTest {
 	 * Tests a round trip save-and-load
 	 */
 	@Test
-	public void roundTrip() throws SaveLoadException {
+	public void roundTrip() throws SaveLoadException, ConfigurationException {
 		
 		String saveFile = "testSave.rog";
 		

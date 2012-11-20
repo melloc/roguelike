@@ -15,7 +15,7 @@ public class Monster extends Combatable {
 	List<String> categories = null;
 	{
 		categories = new ArrayList<String>();
-		categories.add("monster");
+		categories.add("keyboard");
 	}
 
 	public Monster(char c, Color color) {

@@ -25,7 +25,7 @@ public class TileTest {
 	@Test
 	public void testIsSerializable() throws IOException {
 		
-		Tile t1 = new Tile(TileType.FLOOR, true);
+		Tile t1 = new Tile(TileType.FLOOR);
 
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		ObjectOutputStream oos = new ObjectOutputStream(out);
@@ -46,8 +46,7 @@ public class TileTest {
 	@Test
 	public void testRoundTripSerialization() throws IOException, ClassNotFoundException {
 		
-		Tile t1 = new Tile(TileType.WALL_HOR, true);
-		t1.setPassable(false);
+		Tile t1 = new Tile(TileType.WALL_HOR);
 		
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		ObjectOutputStream oos = new ObjectOutputStream(out);

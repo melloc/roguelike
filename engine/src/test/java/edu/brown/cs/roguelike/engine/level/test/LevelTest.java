@@ -14,9 +14,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cs195n.Vec2i;
-import edu.brown.cs.roguelike.engine.level.Hallway;
+
+import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.level.Level;
-import edu.brown.cs.roguelike.engine.level.Room;
 import edu.brown.cs.roguelike.engine.proc.BSPLevelGenerator;
 
 public class LevelTest {
@@ -24,7 +24,7 @@ public class LevelTest {
 	private Level l1;
 	
 	@Before
-	public void setUp() {
+	public void setUp() throws ConfigurationException {
 		BSPLevelGenerator rg = new BSPLevelGenerator();
 		l1 = rg.generateLevel(new Vec2i(100,150));
 	}
