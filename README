@@ -6,33 +6,44 @@ Week 1
 
 cody, jte, lelberty
 
-*** Current bugs: ***
+=== Current bugs: ===
 
 - Terminal resizing isn't supported.
 - Terminal close isn't supported. You need to either press 'q' to quit or
   use eclipse to stop the process
 
 
+=== Package structure: === 
 
-*** Package structure: *** 
+All below are prefixed with edu.brown.cs.roguelike
 
-all below are prefixed with edu.brown.cs.roguelike
+==== Engine ====
 
-engine.events - action/event handling abstraction
-engine.graphics - graphics (Lanterna) classes
-engine.level - all classes that collectively make up a Level
-engine.proc - procedural generation
-engine.save - all save-game logic
+This is code for the engine, which should be code more general to roguelikes:
 
-engine.graphics.test - a simple test implementation of Application and Layer
-engine.level.test - unit tests for level classes - primarily serialization
-engine.save.test - unit tests for save-game logic classes
+* engine.events - action/event handling abstraction
+* engine.graphics - graphics (Lanterna) classes
+* engine.level - all classes that collectively make up a Level
+* engine.proc - procedural generation
+* engine.save - all save-game logic
 
-game - a simple Lanterna demo of the features we've implemented
+Testing:
+
+* engine.graphics.test - a simple test implementation of Application and Layer
+* engine.level.test - unit tests for level classes - primarily serialization
+* engine.save.test - unit tests for save-game logic classes
+
+==== Game ====
+
+This is code related to the actual game:
+
+* game - a simple Lanterna demo of the features we've implemented
+
+==== Support ====
 
 Then we also have some support classes, all located in (with no prefix):
 
-cs195n - TA support code we use
+* cs195n - TA support code we use
 
 
 === Engine reqs: === 
