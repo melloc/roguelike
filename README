@@ -35,43 +35,20 @@ Then we also have some support classes, all located in (with no prefix):
 cs195n - TA support code we use
 
 
-*** Engine reqs: *** 
+=== Engine reqs: === 
 
-- Some interface exists to wrap the frontend
-
-engine.graphics.LanternaFrontend
-
-- A Lanterna frontend implements this interface
-
-engine.graphics.Application
-
-- Engine has some concept of a level
-
-engine.level.Level
-
-- Engine has some concept of a level generator
-
-engine.proc.LevelGenerator
-
-- At least one level generator implementation exists in the engine
-
-engine.proc.BSPLevelGenerator
-
-- Levels can be saved and loaded
-
-engine.save.SaveManager is responsible for serializing and deserializing Levels
+| Some interface exists to wrap the frontend                       | engine.graphics.LanternaFrontend
+| A Lanterna frontend implements this interface                    | engine.graphics.Application
+| Engine has some concept of a level                               | engine.level.Level
+| Engine has some concept of a level generator                     | engine.proc.LevelGenerator
+| At least one level generator implementation exists in the engine | engine.proc.BSPLevelGenerator
+| Levels can be saved and loaded                                   | engine.save.SaveManager is responsible for serializing and deserializing Levels
 
 
+=== Game reqs: ===
 
-*** Game reqs: ***
-
-- Some use of Lanterna is demonstrated
-
-Run main in game.RogueLike, which is our Lanterna demo
-
-- A saved level can be loaded to demonstrate the engine feature
-
-You can save/load levels using 's' and 'l' (see instructions for details)
+| Some use of Lanterna is demonstrated                             | Run main in game.RogueLike, which is our Lanterna demo
+| A saved level can be loaded to demonstrate the engine feature    | You can save/load levels using 's' and 'L' (see instructions for details)
 
 
 Approximate number of hours:
