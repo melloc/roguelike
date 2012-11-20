@@ -2,6 +2,7 @@ package edu.brown.cs.roguelike.engine.level;
 
 import java.util.List;
 
+import edu.brown.cs.roguelike.engine.entities.EntityManager;
 import edu.brown.cs.roguelike.engine.save.IDManager;
 import edu.brown.cs.roguelike.engine.save.Saveable;
 
@@ -16,7 +17,15 @@ public class Level implements Saveable {
 	public final Tile[][] tiles;
 	private List<Room> rooms;
 	private List<Hallway> hallways;
+	protected EntityManager manager = new EntityManager();
 	
+	/**
+	 * @return The entity manager for this {@link Level}.
+	 */
+	public EntityManager getManager() {
+		return manager;
+	}
+
 	public Level(Tile[][] tiles, List<Room> rooms, List<Hallway> hallways) {
 		this.tiles = tiles;
 		this.rooms = rooms;
@@ -36,6 +45,7 @@ public class Level implements Saveable {
 		this.id = IDManager.getNext();
 	}
 	
+
 	@Override
 	public long getId() {
 		return this.id;

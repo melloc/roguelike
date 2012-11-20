@@ -4,6 +4,7 @@ public abstract class Combatable extends Entity{
 	
 	protected int HP;
 	protected Stats stats;
+	protected EntityActionManager manager;
 	
 	protected abstract void die();
 	
@@ -28,20 +29,35 @@ public abstract class Combatable extends Entity{
 		opp.takeDamage(new Attack(this,attackPower));
 	}
 
-	/**Takes damage, applies attack effects, checks to see if dead**/
-	private void takeDamage(Attack attack) {
-		HP-= attack.power;
+	/**
+	 * Takes damage, applies attack effects, checks to see if dead
+	 */
+	public void takeDamage(Attack attack) {
+		changeHP(attack.power);
 		if(HP <= 0) {
 			die();
-			attack.opponenet.onKillEntity(this);
+			attack.opponent.onKillEntity(this);
 		}
 		//TODO: Attack effects
 	}
 
+	/**
+	 * @return the stats
+	 */
+	public Stats getStats() {
+		return stats;
+	}
 
-	
+	/**
+	 * @param manager the manager to set
+	 */
+	public void setManager(EntityActionManager manager) {
+		this.manager = manager;
+	}
 
 
-	
+	public void changeHP(int delta) {
+		this.HP += delta;
+	}
 	
 }
