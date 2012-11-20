@@ -18,6 +18,7 @@ public class Level implements Saveable {
 	private List<Room> rooms;
 	private List<Hallway> hallways;
 	protected EntityManager manager = new EntityManager();
+	public int depth; //The depth of the level
 	
 	/**
 	 * @return The entity manager for this {@link Level}.
@@ -35,6 +36,9 @@ public class Level implements Saveable {
 	public Tile[][] getTiles() { return this.tiles; }
 	public List<Room> getRooms() { return this.rooms; }
 	public List<Hallway> getHallways() { return this.hallways; }	
+	public int getDepth(){return depth;}
+	
+	public void setDepth(int depth) {this.depth = depth;}
 	
 	/*** BEGIN Saveable ***/
 	

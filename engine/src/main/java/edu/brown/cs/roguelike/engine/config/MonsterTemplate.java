@@ -17,13 +17,19 @@ public class MonsterTemplate {
 	public final char character;
 	public final Color color;
 	public final int startHp;
+	public final int attack;
+	public final int defense;
+	public final int tier;
 
 	@JsonCreator
 	public MonsterTemplate(
 			@JsonProperty("name") String name, 
 			@JsonProperty("char") char character,
 			@JsonProperty("color") String color, 
-			@JsonProperty("startHp") int startHp) {
+			@JsonProperty("startHp") int startHp,
+			@JsonProperty("attack") int attack,
+			@JsonProperty("defense") int defense,
+			@JsonProperty("tier") int tier) {
 		this.name = name;
 		this.character = character;
 		
@@ -41,6 +47,9 @@ public class MonsterTemplate {
 		else { this.color = Color.DEFAULT; } 
 
 		this.startHp = startHp;
+		this.attack = attack;
+		this.defense = defense;
+		this.tier = tier;
 	}
 	
 
@@ -78,6 +87,14 @@ public class MonsterTemplate {
 			return false;
 		if (startHp != other.startHp)
 			return false;
+		
+		if (attack != other.attack)
+			return false;
+		if (defense != other.defense)
+			return false;
+		if (tier != other.tier)
+			return false;
+		
 		return true;
 	}
 	

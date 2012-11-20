@@ -1,7 +1,12 @@
 package edu.brown.cs.roguelike.engine.proc;
 
+import java.util.ArrayList;
+
 import com.googlecode.lanterna.terminal.Terminal.Color;
 
+import edu.brown.cs.roguelike.engine.config.Config;
+import edu.brown.cs.roguelike.engine.config.ConfigurationException;
+import edu.brown.cs.roguelike.engine.config.MonsterTemplate;
 import edu.brown.cs.roguelike.engine.entities.Monster;
 import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.level.Room;
@@ -9,11 +14,17 @@ import edu.brown.cs.roguelike.engine.level.Tile;
 
 public class RandomMonsterGenerator implements MonsterGenerator {
 
+
+	ArrayList<MonsterTemplate> templates;
 	RandomGen rand = new RandomGen(System.nanoTime());
 	
 	@Override
-	public void populateLevel(Level level) {
+	public void populateLevel(Level level) throws ConfigurationException {
 		int roomNum;
+		
+		Config c = new Config("../config");
+		templates = c.loadMonsterTemplate();
+		
 		for (int i = 0 ; i < getMonsterCount(); i++) {
 			roomNum = rand.getRandom(level.getRooms().size());
 			Room r = level.getRooms().get(roomNum);
@@ -22,18 +33,7 @@ public class RandomMonsterGenerator implements MonsterGenerator {
 	}
 	
 	private Monster getRandomMonster() {
-		//TODO: Get a random monster
-		switch(rand.getRandom(4)) {
-		
-		case 0:
-			return new Monster('D',Color.CYAN);
-		case 1:
-			return new Monster('g',Color.GREEN);
-		case 2:
-			return new Monster('U',Color.MAGENTA);
-		 default:
-			return new Monster('M',Color.RED);
-		}
+		return (new Monster(templates.get(rand.getRandom(templates.size()))));
 	}
 	
 	private int getMonsterCount() {

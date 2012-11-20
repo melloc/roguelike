@@ -19,16 +19,16 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
  */
 public class Config {
 	
-	private enum ConfigType {
+	public enum ConfigType {
 		MONSTER,
 	}
 	
-	private static final String CFG_EXT = ".cfg";
+	public static final String CFG_EXT = ".cfg";
 	
 	/**
 	 * All of the required configuration files
 	 */
-	private static final HashMap<ConfigType,String> REQUIRED_FILES = 
+	public static final HashMap<ConfigType,String> REQUIRED_FILES = 
 			new HashMap<ConfigType, String>();
 	
 	static {
@@ -108,7 +108,6 @@ public class Config {
 			String file = dir.getAbsolutePath() + "/" +
 					REQUIRED_FILES.get(ConfigType.MONSTER).concat(CFG_EXT);
 			
-			// TODO(liam) how to validate this is the correct class?
 			ret = om.readValue(
 					new File(file), t.constructCollectionType(ArrayList.class,MonsterTemplate.class));
 

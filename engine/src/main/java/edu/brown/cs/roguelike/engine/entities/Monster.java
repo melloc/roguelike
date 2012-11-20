@@ -8,6 +8,7 @@ import com.googlecode.lanterna.terminal.Terminal.Color;
 import cs195n.Vec2i;
 
 import edu.brown.cs.roguelike.engine.level.Tile;
+import edu.brown.cs.roguelike.engine.config.MonsterTemplate;
 
 public class Monster extends Combatable {
 
@@ -21,6 +22,15 @@ public class Monster extends Combatable {
 		this.character = c;
 		this.color = color;
 	}
+	
+	public Monster(MonsterTemplate mt) {
+		this.character = mt.character;
+		this.color = mt.color;
+		this.HP = mt.startHp;
+		this.stats = new Stats(.75f,mt.attack,mt.defense); 
+		//TODO: Hit chance varies between monsters
+	}
+	
 
 	@Override
 	protected void die() {

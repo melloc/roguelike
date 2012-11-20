@@ -6,6 +6,7 @@ public abstract class Combatable extends Entity{
 	protected Stats stats;
 	protected EntityActionManager manager;
 	
+	/** #Dies **/
 	protected abstract void die();
 	
 	/**Processes an Enemy kill, gaining xp etc**/
