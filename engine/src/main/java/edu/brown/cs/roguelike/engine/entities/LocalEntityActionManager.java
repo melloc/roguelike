@@ -31,7 +31,7 @@ public class LocalEntityActionManager implements EntityActionManager {
 
 	@Override
 	public void changeHP(int delta) {
-		
+		entity.HP += delta;
 	}
 
 	@Override

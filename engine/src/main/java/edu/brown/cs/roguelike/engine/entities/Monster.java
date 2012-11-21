@@ -28,13 +28,15 @@ public class Monster extends Combatable {
 		this.color = mt.color;
 		this.HP = mt.startHp;
 		this.stats = new Stats(.75f,mt.attack,mt.defense); 
+		this.team = 0;
 		//TODO: Hit chance varies between monsters
 	}
 	
 
 	@Override
 	protected void die() {
-		// TODO Have the monster die and remove its references
+		this.location.setEntity(null);
+		//TODO: Unregister from manager
 	}
 
 	@Override

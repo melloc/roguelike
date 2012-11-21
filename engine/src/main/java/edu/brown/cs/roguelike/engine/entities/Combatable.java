@@ -8,6 +8,7 @@ import edu.brown.cs.roguelike.engine.level.Tile;
 public abstract class Combatable extends Entity implements Movable {
 	
 	protected int HP;
+	protected int team;
 	protected Stats stats;
 	protected EntityActionManager manager;
 	protected Tile location;
@@ -29,7 +30,7 @@ public abstract class Combatable extends Entity implements Movable {
 	 * Does a roll to see whether the this can hit opp
 	 */
 	private boolean tryHit(Combatable opp) {
-		return Math.random() < (this.stats.getAttack() / (this.stats.getAttack() + opp.stats.getDefense()));
+		return Math.random() < (((double) this.stats.getAttack()) / (this.stats.getAttack() + opp.stats.getDefense()));
 	}
 	
 	/**
@@ -37,6 +38,9 @@ public abstract class Combatable extends Entity implements Movable {
 	 */
 	private void dealDamage(Combatable opp) {
 		int attackPower = (int) Math.round(Math.random()*stats.attack);
+		
+		System.out.println(attackPower);
+		
 		opp.takeDamage(new Attack(this,attackPower));
 	}
 
@@ -44,7 +48,7 @@ public abstract class Combatable extends Entity implements Movable {
 	 * Takes damage, applies attack effects, checks to see if dead
 	 */
 	public void takeDamage(Attack attack) {
-		changeHP(attack.power);
+		changeHP(-attack.power);
 		if(HP <= 0) {
 			die();
 			attack.opponent.onKillEntity(this);
@@ -95,6 +99,11 @@ public abstract class Combatable extends Entity implements Movable {
 		if (nextTile != null && nextTile.isPassable()) {
 			location.setEntity(null);
 			nextTile.setEntity(this);
+		} else if(nextTile != null && nextTile.getEntity() != null && (nextTile.getEntity() instanceof Combatable)) {
+			Combatable opp = (Combatable) nextTile.getEntity();
+			if(opp.team == this.team) {
+				this.attack(opp);
+			}
 		}
 
 	}
