@@ -1,5 +1,6 @@
 package edu.brown.cs.roguelike.engine.level;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import edu.brown.cs.roguelike.engine.entities.EntityManager;
@@ -77,6 +78,24 @@ public class Level implements Saveable {
 		Level other = (Level) obj;
 		if (id == other.id) return true;
 		return false;
+	}
+
+	public List<Tile> getNeighbors(Tile current) {
+		List<Tile> neighbors = new LinkedList<Tile>();
+		
+		if(current.getLocation().x != 0) {
+			neighbors.add(tiles[current.getLocation().x-1][current.getLocation().y]);
+		}
+		if(current.getLocation().x != tiles.length) {
+			neighbors.add(tiles[current.getLocation().x+1][current.getLocation().y]);
+		}
+		if(current.getLocation().y != 0) {
+			neighbors.add(tiles[current.getLocation().x][current.getLocation().y-1]);
+		}
+		if(current.getLocation().y != tiles[0].length) {
+			neighbors.add(tiles[current.getLocation().x][current.getLocation().y+1]);
+		}
+		return neighbors;
 	}
 	
 	/*** END Saveable ***/
