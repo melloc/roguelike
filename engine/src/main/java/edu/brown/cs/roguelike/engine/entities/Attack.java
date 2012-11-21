@@ -2,7 +2,7 @@ package edu.brown.cs.roguelike.engine.entities;
 
 public class Attack {
 	/**The entity that the performed the attack**/
-	public final Combatable opponenet; 
+	public final Combatable opponent; 
 	
 	/**The Attack's Power**/
 	public final int power;
@@ -11,7 +11,7 @@ public class Attack {
 	//TODO: Effects
 	
 	public Attack(Combatable o, int power) {
-		this.opponenet = o;
+		this.opponent = o;
 		this.power = power;
 	}
 	

@@ -61,6 +61,7 @@ public class BSPLevelGenerator implements LevelGenerator{
 		
 		//TESTING PURPOSES: ALWAYS CONSTANT DEPTH
 		level.setDepth(3); 
+
 		//TESTING
 		
 		MonsterGenerator mg = new ProgressiveMonsterGenerator();
@@ -313,7 +314,6 @@ public class BSPLevelGenerator implements LevelGenerator{
 
 		Tile t = tiles[point.x+xOff][point.y+yOff];
 		t.setType(TileType.DOOR);
-		t.setPassable(true);
 
 	}
 
@@ -339,7 +339,6 @@ public class BSPLevelGenerator implements LevelGenerator{
 		for(int i = min.x; i <= max.x; i++) {
 			for(int j = min.y; j <= max.y; j++) {
 				Tile x = tiles[i][j];
-				x.setPassable(passable);
 				x.setType(t);
 			}
 		}-minRoomDim);
@@ -381,7 +380,6 @@ public class BSPLevelGenerator implements LevelGenerator{
 		for(int i = min.x; i <= max.x; i++) {
 			for(int j = min.y; j <= max.y; j++) {
 				Tile x = tiles[i][j];
-				x.setPassable(passable);
 				x.setType(t);
 			}
 		}
@@ -425,7 +423,6 @@ public class BSPLevelGenerator implements LevelGenerator{
 		for(int i = a.x; i <= b.x; i++) {
 			for(int j = a.y; j <= b.y; j++) {
 				Tile x = tiles[i][j];
-				x.setPassable(passable);
 				x.setType(t);
 			}
 		}
@@ -435,7 +432,8 @@ public class BSPLevelGenerator implements LevelGenerator{
 	private void fillWithSolids(Tile[][] tiles) {
 		for(int i = 0; i < tiles.length; i++) {
 			for(int j = 0; j<tiles[0].length; j++) {
-				tiles[i][j] = new Tile(TileType.SOLID,false);
+				tiles[i][j] = new Tile(TileType.SOLID);
+				tiles[i][j].setLocation(new Vec2i(i,j));
 			}
 		}
 	}

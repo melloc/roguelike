@@ -36,8 +36,8 @@ public class ConfigTest {
 		
 		Config c = new Config("../config-test");
 		
-		MonsterTemplate mt1 = new MonsterTemplate("Rat", 'R', "Red", 10, 3, 11);
-		MonsterTemplate mt2 = new MonsterTemplate("Mangy Dog", 'D',"Blue", 20, 3, 5);
+		MonsterTemplate mt1 = new MonsterTemplate("Rat", 'R', "Red", 10, 3, 11, 1);
+		MonsterTemplate mt2 = new MonsterTemplate("Mangy Dog", 'D',"Blue", 20, 3, 5, 1);
 		
 		ArrayList<MonsterTemplate> mts = new ArrayList<MonsterTemplate>();
 		mts.add(mt1);

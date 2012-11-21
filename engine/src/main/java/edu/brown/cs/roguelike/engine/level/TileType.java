@@ -5,18 +5,20 @@ import com.googlecode.lanterna.terminal.Terminal.Color;
 import edu.brown.cs.roguelike.engine.graphics.Drawable;
 
 public enum TileType implements Drawable {
-	WALL_HOR('-',Color.DEFAULT),
-	WALL_VER('|',Color.DEFAULT),
-	SOLID(' ',Color.DEFAULT),
-	DOOR('+',Color.DEFAULT),
-	FLOOR('.',Color.DEFAULT);
+	WALL_HOR('-',Color.DEFAULT, false),
+	WALL_VER('|',Color.DEFAULT, false),
+	SOLID(' ',Color.DEFAULT, false),
+	DOOR('+',Color.DEFAULT, true),
+	FLOOR('.',Color.DEFAULT, true);
 
 	protected char character;
 	protected Color color;
+	protected boolean passable;
 
-	TileType(char character, Color color) {
+	TileType(char character, Color color, boolean passable) {
 		this.character = character;
 		this.color = color;
+		this.passable = passable;
 	}
 
 	/**
@@ -31,5 +33,9 @@ public enum TileType implements Drawable {
 	 */
 	public Color getColor() {
 		return color;
+	}
+
+	public boolean isPassable() {
+		return passable;
 	}
 }

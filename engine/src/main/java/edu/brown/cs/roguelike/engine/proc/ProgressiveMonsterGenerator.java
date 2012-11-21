@@ -82,6 +82,7 @@ public class ProgressiveMonsterGenerator implements MonsterGenerator {
 		
 		int tier = (1 + (level.depth/tierStepSize));
 		int tierDiff =level.depth + 1 -  tierStepSize*(tier-1);
+
 		
 		if(Math.random() <= lowerChance/tierDiff)
 			tier -= 1;
@@ -114,6 +115,7 @@ public class ProgressiveMonsterGenerator implements MonsterGenerator {
 			Tile t = l.getTiles()[mX][mY];
 			if(t.getEntity() == null) {
 				t.setEntity(m);
+				l.getManager().register(m);
 				placedMonster = true;
 			}
 		}
