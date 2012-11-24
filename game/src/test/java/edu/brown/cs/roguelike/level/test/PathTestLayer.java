@@ -102,7 +102,7 @@ public class PathTestLayer implements Layer {
                 //TEST
                 //Draw a path of monsters between two random rooms 
                 RandomGen rand = new RandomGen(System.nanoTime());
-                Room r1 = currentLevel.getRooms().get()
+                Room r1 = currentLevel.getRooms().get(0);
       
                 
                 
