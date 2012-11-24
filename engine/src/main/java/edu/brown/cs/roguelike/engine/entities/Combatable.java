@@ -57,10 +57,24 @@ public abstract class Combatable extends Entity implements Movable {
 	}
 
 	/**
+	 * @return the hP
+	 */
+	public int getHP() {
+		return HP;
+	}
+
+	/**
 	 * @return the stats
 	 */
 	public Stats getStats() {
 		return stats;
+	}
+
+	/**
+	 * @return the manager
+	 */
+	public EntityActionManager getManager() {
+		return manager;
 	}
 
 	/**
@@ -76,7 +90,8 @@ public abstract class Combatable extends Entity implements Movable {
 	}
 	
 	/**
-	 * @return the location
+	 * Gets the {@link Combatable}'s location on the map.
+	 * @return The location of this {@link Combatable} on the {@link Level}
 	 */
 	@Override
 	public Tile getLocation() {
@@ -84,7 +99,8 @@ public abstract class Combatable extends Entity implements Movable {
 	}
 
 	/**
-	 * @param location the location to set
+	 * Sets the {@link Combatable}'s location on the map.
+	 * @param location The new location of this {@link Combatable}.
 	 */
 	public void setLocation(Tile location) {
 		this.location = location;

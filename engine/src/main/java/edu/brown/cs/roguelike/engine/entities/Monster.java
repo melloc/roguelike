@@ -36,6 +36,8 @@ public class Monster extends Combatable {
 	@Override
 	protected void die() {
 		this.location.setEntity(null);
+		//this.location = null;
+		this.manager.call(Event.DEATH);
 		//TODO: Unregister from manager
 	}
 
@@ -43,10 +45,6 @@ public class Monster extends Combatable {
 	protected void onKillEntity(Combatable combatable) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	public Tile getLocation() {
-		return null;
 	}
 
 	public List<String> getCategories() {
