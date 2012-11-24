@@ -50,7 +50,7 @@ public interface Layer {
      * {@link Screen} object is passed in which should be used to draw this 
      * {@link Layer}.
      */
-	public void doDraw(Screen s);
+	public void doDraw(Section s);
 	
     /**
      * Used to alert this layer that time has passed. It can decide if it cares

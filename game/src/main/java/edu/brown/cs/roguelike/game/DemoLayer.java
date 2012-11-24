@@ -13,6 +13,7 @@ import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
 import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.events.GameAction;
 import edu.brown.cs.roguelike.engine.graphics.Layer;
+import edu.brown.cs.roguelike.engine.graphics.Section;
 import edu.brown.cs.roguelike.engine.level.Direction;
 import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.level.Tile;
@@ -150,9 +151,8 @@ public class DemoLayer implements Layer {
     }
 
     @Override
-    public void doDraw(Screen s) {
+    public void doDraw(Section sw) {
 
-        ScreenWriter sw = new ScreenWriter(s);
 
         Vec2i middle = size.sdiv(2);
 

@@ -36,7 +36,7 @@ public abstract class LanternaFrontend {
      *
 	 * @param s		A {@link Screen} object used for writing characters to the terminal.
 	 */
-	protected abstract void onDraw(Screen s);
+	protected abstract void onDraw(Section s);
 	
 	/**
      * This method is called with a Lanterna {@link Key} event each time 
@@ -114,7 +114,7 @@ public abstract class LanternaFrontend {
             // First do anything that we need to do for updating screen size.
             // Then we draw the screen.
             screen.clear();
-            onDraw(screen);
+            onDraw(new Section(screen));
             screen.refresh();
             
             // We can now give the program any key presses

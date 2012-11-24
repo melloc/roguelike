@@ -31,7 +31,7 @@ public abstract class Application extends LanternaFrontend {
 	}
 
 	@Override
-	protected void onDraw(Screen s) {
+	protected void onDraw(Section s) {
 		for (Layer layer : layers)
 			layer.doDraw(s);
 	}

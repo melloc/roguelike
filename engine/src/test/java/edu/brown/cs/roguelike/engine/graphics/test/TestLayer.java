@@ -7,6 +7,7 @@ import com.googlecode.lanterna.screen.ScreenWriter;
 import cs195n.Vec2i;
 import edu.brown.cs.roguelike.engine.events.GameAction;
 import edu.brown.cs.roguelike.engine.graphics.Layer;
+import edu.brown.cs.roguelike.engine.graphics.Section;
 
 import org.junit.Test;
 
@@ -41,8 +42,7 @@ public class TestLayer implements Layer {
 	}
 
 	@Override
-	public void doDraw(Screen s) {
-		ScreenWriter writer = new ScreenWriter(s);
+	public void doDraw(Section writer) {
         //writer.drawString(0,0,str);
         int x = (this.size.x - str.length()) / 2;
         if (x < 0) x = 0;
