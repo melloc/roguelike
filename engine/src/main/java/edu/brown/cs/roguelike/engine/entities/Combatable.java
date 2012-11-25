@@ -117,7 +117,7 @@ public abstract class Combatable extends Entity implements Movable {
 			nextTile.setEntity(this);
 		} else if(nextTile != null && nextTile.getEntity() != null && (nextTile.getEntity() instanceof Combatable)) {
 			Combatable opp = (Combatable) nextTile.getEntity();
-			if(opp.team == this.team) {
+			if(opp.team != this.team) {
 				this.attack(opp);
 			}
 		}

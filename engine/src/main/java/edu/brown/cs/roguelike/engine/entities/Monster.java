@@ -15,7 +15,7 @@ public class Monster extends Combatable {
 	List<String> categories = null;
 	{
 		categories = new ArrayList<String>();
-		categories.add("keyboard");
+		categories.add("monster");
 	}
 
 	public Monster(char c, Color color) {
@@ -36,9 +36,7 @@ public class Monster extends Combatable {
 	@Override
 	protected void die() {
 		this.location.setEntity(null);
-		//this.location = null;
 		this.manager.call(Event.DEATH);
-		//TODO: Unregister from manager
 	}
 
 	@Override

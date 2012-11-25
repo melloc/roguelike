@@ -11,6 +11,8 @@ import edu.brown.cs.roguelike.engine.config.Config;
 import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.config.MonsterTemplate;
 import edu.brown.cs.roguelike.engine.entities.Monster;
+import edu.brown.cs.roguelike.engine.entities.Combatable;
+import edu.brown.cs.roguelike.engine.entities.MainCharacter;
 import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.level.Room;
 import edu.brown.cs.roguelike.engine.level.Tile;
@@ -66,6 +68,14 @@ public class ProgressiveMonsterGenerator implements MonsterGenerator {
 				populatedRooms.clear(); //Clears the set in the case where the number of rooms is less then the ammount we want to populate
 			}
 		}
+
+        {
+            // TODO: Actually place main character at UP_STAIRS
+            roomNum = rand.getRandom(level.getRooms().size());
+            Room r = level.getRooms().get(roomNum);
+            Combatable m = new MainCharacter();
+            addMonster(level,r, m);
+        }
 	}
 
 	/**Gets a random monster that is pplicable to the level:
@@ -106,7 +116,7 @@ public class ProgressiveMonsterGenerator implements MonsterGenerator {
 	}
 
 	/**Adds a monster to a random tile in the room**/
-	private void addMonster(Level l, Room r, Monster m) {
+	private void addMonster(Level l, Room r, Combatable m) {
 		//TODO: Randomly place a monster on a tile in the room
 		boolean placedMonster = false;
 		do {
