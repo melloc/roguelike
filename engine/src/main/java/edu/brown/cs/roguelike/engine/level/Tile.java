@@ -164,4 +164,9 @@ public class Tile implements Saveable, Drawable {
 
 	/*** END Saveable ***/
 
+    @Override
+    public String toString() {
+        return "Tile" + location.toString();
+    }
+
 }
