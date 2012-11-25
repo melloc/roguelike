@@ -49,7 +49,12 @@ public class EntityManager {
 
 	public List<EntityActionManager> getEntity(String category) {
 		List<EntityActionManager> ret = new ArrayList<EntityActionManager>();
-		for (EntityActionManager manager : map.get(category)) 
+		List<EntityActionManager> lst = map.get(category);
+		if (lst == null) {
+			lst = new ArrayList<EntityActionManager>();
+			map.put(category, lst);
+		}
+		for (EntityActionManager manager : lst) 
 			ret.add(manager);
 		return ret;
 	}
