@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.lanterna.input.Key;
-import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.ScreenCharacterStyle;
 import com.googlecode.lanterna.screen.ScreenWriter;
 
 import cs195n.Vec2i;
+
+import edu.brown.cs.roguelike.engine.entities.Action;
 import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
+import edu.brown.cs.roguelike.engine.entities.EntityManager;
+import edu.brown.cs.roguelike.engine.entities.Event;
+import edu.brown.cs.roguelike.engine.entities.events.ChaseMainCharacter;
 import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.events.GameAction;
 import edu.brown.cs.roguelike.engine.graphics.Layer;
@@ -115,6 +119,11 @@ public class MainLayer implements Layer {
 				break;
 			case 3: // load saved level
 				currentLevel = sm.loadLevel();
+				EntityManager m= currentLevel.getManager();
+				Action chaser = new ChaseMainCharacter(m);
+				for (EntityActionManager monster : m.getEntity("monster")) {
+					monster.on(Event.ATTACKED, chaser);
+				}
 				break;
 			case 4: // quit
 				app.shutdown();

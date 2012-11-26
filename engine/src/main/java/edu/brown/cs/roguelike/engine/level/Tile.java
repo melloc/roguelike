@@ -50,6 +50,21 @@ public class Tile implements Saveable, Drawable {
 	}
 
 	/**
+	 *
+	 */
+	public Direction dirTo(Tile other) {
+		Vec2i otherLoc = other.getLocation();
+		if (location.x < otherLoc.x)
+			return Direction.RIGHT;
+		else if (location.x > otherLoc.x)
+			return Direction.LEFT;
+		else if (location.y < otherLoc.y)
+			return Direction.UP;
+		else 
+			return Direction.DOWN;
+	}
+
+	/**
 	 * @return the level
 	 */
 	public Level getLevel() {

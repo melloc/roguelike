@@ -22,7 +22,7 @@ public class MainCharacter extends Combatable {
 	public MainCharacter() {
 		this.character = '@';
 		this.color = Color.DEFAULT;
-		this.HP = 100;
+		this.HP = 4;
 		this.stats = new Stats(.75f,6,2);
 		this.team = 1;
 	}
