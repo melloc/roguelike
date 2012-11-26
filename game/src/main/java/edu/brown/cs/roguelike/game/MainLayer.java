@@ -9,6 +9,7 @@ import com.googlecode.lanterna.screen.ScreenCharacterStyle;
 import com.googlecode.lanterna.screen.ScreenWriter;
 
 import cs195n.Vec2i;
+import edu.brown.cs.roguelike.engine.entities.Combatable;
 import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
 import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.events.GameAction;
@@ -168,7 +169,7 @@ public class MainLayer implements Layer {
 	}
 
 	private void drawStats(ScreenWriter sw) {
-		//Draw the divider
+		//Draw the divider		
 		String divider = "";
 		for(int i = 0; i < size.x ; i++) {
 			divider += '_';
@@ -176,13 +177,39 @@ public class MainLayer implements Layer {
 		sw.drawString(0, ANNOUNCE_OFFSET+MAP_SIZE.y, divider);
 		int statStart = ANNOUNCE_OFFSET+MAP_SIZE.y+1;
 		int xOffset = 0;
-		//DRAW THE STATS
-		sw.drawString(0, statStart, "Robert the Rogue");
-		sw.drawString(name.length()+5, statStart, "HP: ");
-		xOffset = name.length()+ 5 + "HP: ".length();
 		
-		sw.drawString(xOffset, statStart, "20/27");
-		sw.drawString(0, statStart+1, "More stats will go here");
+		//CHECK FOR WIN/LOSE
+		List<EntityActionManager> monsters = this.currentLevel.getManager().getEntity("monster");
+		List<EntityActionManager> main = this.currentLevel.getManager().getEntity("main");
+		
+		if(monsters.isEmpty()) {
+			sw.drawString(0, statStart, "You win!");
+			return;
+		}
+		else if(main.isEmpty()) {
+			sw.drawString(0, statStart, "You lost!");
+			return;
+		}
+		
+		Combatable player = main.get(0).getEntity();
+		
+		//DRAW THE STATS
+		String line1 = "";
+		line1 += "Robert the Rogue   ";
+		line1 += "HP: ";
+		line1 += player.getHP();
+		line1 += "/";
+		line1 += player.getStartHP();
+		sw.drawString(0, statStart, line1);
+
+		
+		//LINE 2
+		String line2 = "";
+		line2 += "Attack: ";
+		line2 += player.getStats().getAttack();
+		line2 += "  Defense: ";
+		line2 += String.valueOf(player.getStats().getDefense());
+		sw.drawString(0, statStart+1, line2);
 
 	}
 
