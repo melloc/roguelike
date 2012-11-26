@@ -7,6 +7,11 @@ import edu.brown.cs.roguelike.engine.level.Tile;
 
 public abstract class Combatable extends Entity implements Movable {
 	
+	/**
+	 * Generated
+	 */
+	private static final long serialVersionUID = -7402313976569195377L;
+	
 	protected int HP;
 	protected int team;
 	protected Stats stats;
@@ -39,7 +44,7 @@ public abstract class Combatable extends Entity implements Movable {
 	private void dealDamage(Combatable opp) {
 		int attackPower = (int) Math.round(Math.random()*stats.attack);
 		
-		System.out.println(attackPower);
+		//System.out.println(attackPower);
 		
 		opp.takeDamage(new Attack(this,attackPower));
 	}

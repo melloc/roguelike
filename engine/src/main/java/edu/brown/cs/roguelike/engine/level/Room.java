@@ -1,13 +1,10 @@
 package edu.brown.cs.roguelike.engine.level;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import cs195n.Vec2i;
-import edu.brown.cs.roguelike.engine.save.IDManager;
 import edu.brown.cs.roguelike.engine.save.Saveable;
 
 public class Room implements Space, Saveable {
@@ -47,33 +44,19 @@ public class Room implements Space, Saveable {
 	}
 	
 	/*** BEGIN Saveable ***/
-	
-	private long id;
-	
-	/**
-	 * init block for assigning id
-	 */
-	{
-		this.id = IDManager.getNext();
-	}
-	
-	private void writeObject(ObjectOutputStream os) throws IOException {
-		os.defaultWriteObject();
-	}
 
-	private void readObject(ObjectInputStream os) 
-			throws IOException, ClassNotFoundException {
-		os.defaultReadObject();
-	}
+	private UUID id;
 	
-	@Override
-	public long getId() { return this.id; }
+	/** initialize id **/
+	{
+		this.id = UUID.randomUUID();
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 	
@@ -86,9 +69,18 @@ public class Room implements Space, Saveable {
 		if (getClass() != obj.getClass())
 			return false;
 		Room other = (Room) obj;
-		if (id == other.id) {  return true; }
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (id.equals(other.id))
+			// return true if ids are the same
+			return true;
 		return false;
 	}
-	
-	/*** END Saveable ***/
+
+	@Override
+	public UUID getId() {
+		return this.id;
+	}
+
 }

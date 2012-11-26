@@ -7,6 +7,11 @@ import com.googlecode.lanterna.terminal.Terminal.Color;
 
 public class MainCharacter extends Combatable {
 
+	/**
+	 * Generated 
+	 */
+	private static final long serialVersionUID = -4240615722468534343L;
+	
 	List<String> categories = null;
 	{
 		categories = new ArrayList<String>();
@@ -37,6 +42,5 @@ public class MainCharacter extends Combatable {
 	public List<String> getCategories() {
 		return categories;
 	}
-
-
+	
 }

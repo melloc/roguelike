@@ -1,35 +1,31 @@
-package edu.brown.cs.roguelike.engine.entities;
+package edu.brown.cs.roguelike.engine.entities.events;
 
-import java.util.List;
 import java.util.UUID;
 
-import com.googlecode.lanterna.terminal.Terminal.Color;
-
-import edu.brown.cs.roguelike.engine.graphics.Drawable;
-import edu.brown.cs.roguelike.engine.level.Mappable;
+import edu.brown.cs.roguelike.engine.entities.Action;
+import edu.brown.cs.roguelike.engine.entities.Combatable;
+import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
+import edu.brown.cs.roguelike.engine.entities.EntityManager;
 import edu.brown.cs.roguelike.engine.save.Saveable;
 
-public abstract class Entity implements Drawable, Mappable, Saveable {
+public class Remove implements Action, Saveable {
 
 	/**
 	 * Generated
 	 */
-	private static final long serialVersionUID = 7459179832955737667L;
+	private static final long serialVersionUID = -7692501119493771815L;
 	
-	protected char character;
-	protected Color color;
+	Combatable entity = null;
+	EntityManager manager = null;
 
-	@Override
-	public char getCharacter() {
-		return character;
+	public Remove(Combatable entity, EntityManager manager) {
+		this.entity = entity;
+		this.manager = manager;
 	}
 
-	@Override
-	public Color getColor() {
-		return color;
+	public void apply(EntityActionManager queue) {
+		this.manager.unregister(this.entity);
 	}
-
-	public abstract List<String> getCategories();
 	
 	/*** BEGIN Saveable ***/
 
@@ -56,7 +52,7 @@ public abstract class Entity implements Drawable, Mappable, Saveable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Entity other = (Entity) obj;
+		Remove other = (Remove) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -70,9 +66,5 @@ public abstract class Entity implements Drawable, Mappable, Saveable {
 	public UUID getId() {
 		return this.id;
 	}
-
-	/*** END Saveable ***/
 	
-	
-
 }
