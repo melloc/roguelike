@@ -8,7 +8,7 @@ import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
 import edu.brown.cs.roguelike.engine.entities.EntityManager;
 import edu.brown.cs.roguelike.engine.save.Saveable;
 
-public class RemoveOnDeath implements Action, Saveable {
+public class Remove implements Action, Saveable {
 
 	/**
 	 * Generated
@@ -18,7 +18,7 @@ public class RemoveOnDeath implements Action, Saveable {
 	Combatable entity = null;
 	EntityManager manager = null;
 
-	public RemoveOnDeath(Combatable entity, EntityManager manager) {
+	public Remove(Combatable entity, EntityManager manager) {
 		this.entity = entity;
 		this.manager = manager;
 	}
@@ -52,7 +52,7 @@ public class RemoveOnDeath implements Action, Saveable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		RemoveOnDeath other = (RemoveOnDeath) obj;
+		Remove other = (Remove) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

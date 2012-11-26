@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import edu.brown.cs.roguelike.engine.entities.events.RemoveOnDeath;
+import edu.brown.cs.roguelike.engine.entities.events.Remove;
 import edu.brown.cs.roguelike.engine.save.Saveable;
 
 public class EntityManager implements Saveable {
@@ -33,7 +33,7 @@ public class EntityManager implements Saveable {
 
 	public EntityActionManager register(Combatable entity) {
 		EntityActionManager manager = new LocalEntityActionManager(entity);
-		manager.on(Event.DEATH, new RemoveOnDeath(entity, this));
+		manager.on(Event.DEATH, new Remove(entity, this));
 		entity.setManager(manager);
 		for (String category : entity.getCategories())
 			addToCategory(category, manager);
