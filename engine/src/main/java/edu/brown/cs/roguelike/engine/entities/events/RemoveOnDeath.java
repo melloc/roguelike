@@ -1,11 +1,11 @@
 package edu.brown.cs.roguelike.engine.entities.events;
 
+import java.util.UUID;
+
 import edu.brown.cs.roguelike.engine.entities.Action;
 import edu.brown.cs.roguelike.engine.entities.Combatable;
 import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
 import edu.brown.cs.roguelike.engine.entities.EntityManager;
-import edu.brown.cs.roguelike.engine.entities.MainCharacter;
-import edu.brown.cs.roguelike.engine.save.IDManager;
 import edu.brown.cs.roguelike.engine.save.Saveable;
 
 public class RemoveOnDeath implements Action, Saveable {
@@ -28,22 +28,22 @@ public class RemoveOnDeath implements Action, Saveable {
 	}
 	
 	/*** BEGIN Saveable ***/
-	
-	private long id;
+
+	private UUID id;
 	
 	/** initialize id **/
 	{
-		this.id = IDManager.getNext();
+		this.id = UUID.randomUUID();
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -53,16 +53,18 @@ public class RemoveOnDeath implements Action, Saveable {
 		if (getClass() != obj.getClass())
 			return false;
 		RemoveOnDeath other = (RemoveOnDeath) obj;
-		if (id == other.id) return true;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (id.equals(other.id))
+			// return true if ids are the same
+			return true;
 		return false;
 	}
 
 	@Override
-	public long getId() {
+	public UUID getId() {
 		return this.id;
 	}
-	
-	/*** END Saveable ***/
-			
 	
 }

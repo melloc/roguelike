@@ -1,6 +1,7 @@
 package edu.brown.cs.roguelike.engine.save;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 
 /**
@@ -20,10 +21,9 @@ import java.io.Serializable;
 public interface Saveable extends Serializable {
 	
 	/**
-	 * Must return a long that is globally unique
-	 * @return long globally unique id
+	 * @return globally unique UUID
 	 */
-	public long getId();
+	public UUID getId();
 
 	/**
 	 * Hash based on this classes id

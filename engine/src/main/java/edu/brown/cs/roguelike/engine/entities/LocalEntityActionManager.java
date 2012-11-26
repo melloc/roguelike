@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import edu.brown.cs.roguelike.engine.level.Direction;
 import edu.brown.cs.roguelike.engine.level.Tile;
-import edu.brown.cs.roguelike.engine.save.IDManager;
 import edu.brown.cs.roguelike.engine.save.Saveable;
 
 public class LocalEntityActionManager implements EntityActionManager, Saveable {
@@ -76,18 +76,18 @@ public class LocalEntityActionManager implements EntityActionManager, Saveable {
 	
 	/*** BEGIN Saveable ***/
 	
-	private long id;
+	private UUID id;
 	
 	/** initialize id **/
 	{
-		this.id = IDManager.getNext();
+		this.id = UUID.randomUUID();
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -99,17 +99,21 @@ public class LocalEntityActionManager implements EntityActionManager, Saveable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		LocalEntityActionManager other = (LocalEntityActionManager) obj;
-		if (id == other.id) return true;
+		LocalEntityActionManager other = (LocalEntityActionManager)obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (id.equals(other.id))
+			// return true if ids are the same
+			return true;
 		return false;
 	}
 
 	@Override
-	public long getId() {
+	public UUID getId() {
 		return this.id;
 	}
-	
-	
+
 	/*** END Saveable ***/
 
 }

@@ -2,9 +2,9 @@ package edu.brown.cs.roguelike.engine.level;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 import edu.brown.cs.roguelike.engine.entities.EntityManager;
-import edu.brown.cs.roguelike.engine.save.IDManager;
 import edu.brown.cs.roguelike.engine.save.Saveable;
 
 
@@ -45,28 +45,22 @@ public class Level implements Saveable {
 	public void setDepth(int depth) {this.depth = depth;}
 	
 	/*** BEGIN Saveable ***/
-	
-	private long id;
 
+	private UUID id;
+	
 	/** initialize id **/
 	{
-		this.id = IDManager.getNext();
-	}
-	
-
-	@Override
-	public long getId() {
-		return this.id;
+		this.id = UUID.randomUUID();
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -76,9 +70,21 @@ public class Level implements Saveable {
 		if (getClass() != obj.getClass())
 			return false;
 		Level other = (Level) obj;
-		if (id == other.id) return true;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (id.equals(other.id))
+			// return true if ids are the same
+			return true;
 		return false;
 	}
+
+	@Override
+	public UUID getId() {
+		return this.id;
+	}
+
+	/*** END Saveable ***/
 
 	public List<Tile> getNeighbors(Tile current) {
 		List<Tile> neighbors = new LinkedList<Tile>();
@@ -98,5 +104,4 @@ public class Level implements Saveable {
 		return neighbors;
 	}
 	
-	/*** END Saveable ***/
 }

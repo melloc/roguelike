@@ -1,9 +1,7 @@
 package edu.brown.cs.roguelike.engine.level;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.HashSet;
+import java.util.UUID;
 
 import com.googlecode.lanterna.terminal.Terminal.Color;
 
@@ -12,7 +10,6 @@ import cs195n.Vec2i;
 import edu.brown.cs.roguelike.engine.entities.Entity;
 import edu.brown.cs.roguelike.engine.entities.Stackable;
 import edu.brown.cs.roguelike.engine.graphics.Drawable;
-import edu.brown.cs.roguelike.engine.save.IDManager;
 import edu.brown.cs.roguelike.engine.save.Saveable;
 
 /**
@@ -101,37 +98,21 @@ public class Tile implements Saveable, Drawable {
 
 	/*** BEGIN Saveable ***/
 
-	private long id;
-
-	/**
-	 * init block for assigning id
-	 */
+	private UUID id;
+	
+	/** initialize id **/
 	{
-		this.id = IDManager.getNext();
-	}
-
-	private void writeObject(ObjectOutputStream os) throws IOException {
-		os.defaultWriteObject();
-	}
-
-	private void readObject(ObjectInputStream os) throws IOException,
-			ClassNotFoundException {
-		os.defaultReadObject();
-	}
-
-	@Override
-	public long getId() {
-		return this.id;
+		this.id = UUID.randomUUID();
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -141,11 +122,20 @@ public class Tile implements Saveable, Drawable {
 		if (getClass() != obj.getClass())
 			return false;
 		Tile other = (Tile) obj;
-		if (id == other.id) {
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (id.equals(other.id))
+			// return true if ids are the same
 			return true;
-		}
 		return false;
 	}
+
+	@Override
+	public UUID getId() {
+		return this.id;
+	}
+
 
 	public char getCharacter() {
 		return getCurrent().getCharacter();
@@ -161,8 +151,6 @@ public class Tile implements Saveable, Drawable {
 		else
 			return getType();
 	}
-
-	/*** END Saveable ***/
 
     @Override
     public String toString() {
