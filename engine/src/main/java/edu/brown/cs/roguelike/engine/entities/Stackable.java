@@ -2,6 +2,8 @@ package edu.brown.cs.roguelike.engine.entities;
 
 import com.googlecode.lanterna.terminal.Terminal.Color;
 
+import edu.brown.cs.roguelike.engine.graphics.Drawable;
+
 /**
  * Anything that can be on a tile in a "pile"
  * Any number of stackables can be on a tile, along with an entity
@@ -9,7 +11,8 @@ import com.googlecode.lanterna.terminal.Terminal.Color;
  * @author Jake
  *
  */
-public abstract class Stackable {
+
+public abstract class Stackable implements Drawable {
 	protected char character;
 	protected Color color;
 	
