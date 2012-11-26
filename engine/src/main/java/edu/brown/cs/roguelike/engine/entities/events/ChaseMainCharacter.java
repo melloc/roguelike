@@ -18,7 +18,6 @@ public class ChaseMainCharacter implements Action {
 	}
 
 	public void apply(EntityActionManager queue) {
-		System.out.println("chasing");
 		List<EntityActionManager> mains = this.manager.getEntity("main");
 		if (mains.size() > 0) {
 			Tile myLoc = queue.getLocation();
