@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.lanterna.terminal.Terminal.Color;
-
-import cs195n.Vec2i;
-
-import edu.brown.cs.roguelike.engine.level.Tile;
 import edu.brown.cs.roguelike.engine.config.MonsterTemplate;
 
 public class Monster extends Combatable {
 
+	/**
+	 * Generated
+	 */
+	private static final long serialVersionUID = 78534419381534560L;
+	
 	List<String> categories = null;
 	{
 		categories = new ArrayList<String>();
@@ -48,4 +49,5 @@ public class Monster extends Combatable {
 	public List<String> getCategories() {
 		return categories;
 	}
+	
 }

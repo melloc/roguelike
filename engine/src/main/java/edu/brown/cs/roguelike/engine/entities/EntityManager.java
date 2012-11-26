@@ -5,9 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 
 import edu.brown.cs.roguelike.engine.entities.events.RemoveOnDeath;
+import edu.brown.cs.roguelike.engine.save.IDManager;
+import edu.brown.cs.roguelike.engine.save.Saveable;
 
-public class EntityManager {
+public class EntityManager implements Saveable {
 
+	/**
+	 * Generated 
+	 */
+	private static final long serialVersionUID = 6538908714623761737L;
+	
 	protected HashMap<String,List<EntityActionManager>> map = new HashMap<String,List<EntityActionManager>>();
 
 	public EntityManager() {
@@ -58,6 +65,42 @@ public class EntityManager {
 			ret.add(manager);
 		return ret;
 	}
+	
+	/*** BEGIsN Saveable ***/
+	
+	private long id;
+	
+	/** initialize id **/
+	{
+		this.id = IDManager.getNext();
+	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EntityManager other = (EntityManager) obj;
+		if (id == other.id) return true;
+		return false;
+	}
+
+	@Override
+	public long getId() {
+		return this.id;
+	}
+	
+	
+	/*** END Saveable ***/
 }
