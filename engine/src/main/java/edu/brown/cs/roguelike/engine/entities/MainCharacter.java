@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.googlecode.lanterna.terminal.Terminal.Color;
 
+import edu.brown.cs.roguelike.engine.level.Direction;
+
 public class MainCharacter extends Combatable {
 
 	/**
@@ -43,5 +45,13 @@ public class MainCharacter extends Combatable {
 	public List<String> getCategories() {
 		return categories;
 	}
+	
+	@Override 
+	public void move(Direction dir) {
+		super.move(dir);
+		this.inventory.addAll(this.location.getStackables());
+		this.location.getStackables().clear();
+	}
+
 	
 }

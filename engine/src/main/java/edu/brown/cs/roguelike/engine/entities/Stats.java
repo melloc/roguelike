@@ -2,7 +2,6 @@ package edu.brown.cs.roguelike.engine.entities;
 
 import java.util.UUID;
 
-import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.save.Saveable;
 
 /**The Stats of a Combatable Entity. Affects player combat**/

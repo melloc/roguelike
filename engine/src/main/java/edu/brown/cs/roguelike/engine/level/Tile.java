@@ -1,13 +1,11 @@
 package edu.brown.cs.roguelike.engine.level;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.UUID;
 
 import com.googlecode.lanterna.terminal.Terminal.Color;
 
 import cs195n.Vec2i;
-
 import edu.brown.cs.roguelike.engine.entities.Entity;
 import edu.brown.cs.roguelike.engine.entities.Stackable;
 import edu.brown.cs.roguelike.engine.graphics.Drawable;

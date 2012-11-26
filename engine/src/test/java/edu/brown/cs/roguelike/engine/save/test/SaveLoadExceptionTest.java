@@ -1,11 +1,10 @@
 package edu.brown.cs.roguelike.engine.save.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import cs195n.Vec2i;
-
 import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.proc.BSPLevelGenerator;

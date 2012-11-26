@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.lanterna.input.Key;
-import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.ScreenCharacterStyle;
 import com.googlecode.lanterna.screen.ScreenWriter;
 
 import cs195n.Vec2i;
+import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.entities.Combatable;
 import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
-import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.events.GameAction;
 import edu.brown.cs.roguelike.engine.graphics.Layer;
 import edu.brown.cs.roguelike.engine.graphics.Section;
@@ -78,6 +77,8 @@ public class MainLayer implements Layer {
 				return new GameAction(1, 6); // Move up
 			case 'l':
 				return new GameAction(1, 8); // Move right
+			case 'i':
+				return new GameAction(1, 9); // Open Inventory
 			default:
 				return new GameAction(1, 0); // do nothing
 			}
@@ -135,6 +136,9 @@ public class MainLayer implements Layer {
 			case 8:
 				for (EntityActionManager manager : managers)
 					manager.sendMove(Direction.RIGHT);
+				break;
+			case 9:
+				app.getLayers().push(new InventoryLayer(app,size,currentLevel));
 				break;
 			default:
 				throw new Error("This shouldn't happen and indicates an unhandled case. Received: "

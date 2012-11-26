@@ -1,7 +1,6 @@
 package edu.brown.cs.roguelike.engine.entities;
 
 import cs195n.Vec2i;
-
 import edu.brown.cs.roguelike.engine.level.Direction;
 import edu.brown.cs.roguelike.engine.level.Tile;
 

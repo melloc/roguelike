@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.lanterna.terminal.Terminal.Color;
+
 import edu.brown.cs.roguelike.engine.config.MonsterTemplate;
 
 public class Monster extends Combatable {

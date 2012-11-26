@@ -1,9 +1,9 @@
 package edu.brown.cs.roguelike.engine.graphics.test;
 
+import org.junit.Test;
+
 import cs195n.Vec2i;
 import edu.brown.cs.roguelike.engine.graphics.Application;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 
 public class TestApplication extends Application {
