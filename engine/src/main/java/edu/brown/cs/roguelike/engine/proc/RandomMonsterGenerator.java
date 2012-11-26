@@ -2,8 +2,6 @@ package edu.brown.cs.roguelike.engine.proc;
 
 import java.util.ArrayList;
 
-import com.googlecode.lanterna.terminal.Terminal.Color;
-
 import edu.brown.cs.roguelike.engine.config.Config;
 import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.config.MonsterTemplate;

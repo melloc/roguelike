@@ -1,9 +1,7 @@
 package edu.brown.cs.roguelike.level.test;
 
 import com.googlecode.lanterna.input.Key;
-import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.ScreenCharacterStyle;
-import com.googlecode.lanterna.screen.ScreenWriter;
 
 import cs195n.Vec2i;
 import edu.brown.cs.roguelike.engine.config.ConfigurationException;
@@ -17,7 +15,6 @@ import edu.brown.cs.roguelike.engine.proc.BSPLevelGenerator;
 import edu.brown.cs.roguelike.engine.proc.RandomGen;
 import edu.brown.cs.roguelike.engine.save.SaveLoadException;
 import edu.brown.cs.roguelike.engine.save.SaveManager;
-import edu.brown.cs.roguelike.game.DemoApplication;
 
 /**
  * A simple demo layer that shows basic rendering of levels, saving/loading, and

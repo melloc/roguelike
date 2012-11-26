@@ -1,13 +1,11 @@
 package edu.brown.cs.roguelike.engine.level;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.UUID;
 
 import com.googlecode.lanterna.terminal.Terminal.Color;
 
 import cs195n.Vec2i;
-
 import edu.brown.cs.roguelike.engine.entities.Entity;
 import edu.brown.cs.roguelike.engine.entities.Stackable;
 import edu.brown.cs.roguelike.engine.graphics.Drawable;
@@ -59,9 +57,9 @@ public class Tile implements Saveable, Drawable {
 		else if (location.x > otherLoc.x)
 			return Direction.LEFT;
 		else if (location.y < otherLoc.y)
-			return Direction.UP;
-		else 
 			return Direction.DOWN;
+		else 
+			return Direction.UP;
 	}
 
 	/**

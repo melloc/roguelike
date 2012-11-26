@@ -3,7 +3,6 @@ package edu.brown.cs.roguelike.engine.graphics;
 import java.util.Stack;
 
 import com.googlecode.lanterna.input.Key;
-import com.googlecode.lanterna.screen.Screen;
 
 import cs195n.Vec2i;
 
@@ -19,6 +18,8 @@ public abstract class Application extends LanternaFrontend {
      * and receives all key presses.
      */
 	protected Stack<Layer> layers = new Stack<Layer>();
+	
+	public Stack<Layer> getLayers() {return layers;}
 	
 	public Application(String title) {
 		super(title);

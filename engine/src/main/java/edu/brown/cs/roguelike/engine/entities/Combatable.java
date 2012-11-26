@@ -1,7 +1,6 @@
 package edu.brown.cs.roguelike.engine.entities;
 
 import cs195n.Vec2i;
-
 import edu.brown.cs.roguelike.engine.level.Direction;
 import edu.brown.cs.roguelike.engine.level.Tile;
 
@@ -13,6 +12,7 @@ public abstract class Combatable extends Entity implements Movable {
 	private static final long serialVersionUID = -7402313976569195377L;
 	
 	protected int HP;
+	protected int startHP;
 	protected int team;
 	protected Stats stats;
 	protected EntityActionManager manager;
@@ -29,6 +29,7 @@ public abstract class Combatable extends Entity implements Movable {
 		if(tryHit(opp)) {
 			dealDamage(opp);
 		}
+		this.manager.call(Event.ATTACK);
 	}
 	
 	/**
@@ -58,16 +59,24 @@ public abstract class Combatable extends Entity implements Movable {
 			die();
 			attack.opponent.onKillEntity(this);
 		}
+		this.manager.call(Event.ATTACKED);
 		//TODO: Attack effects
 	}
 
 	/**
 	 * @return the hP
 	 */
-	public int getHP() {
+	public Integer getHP() {
 		return HP;
 	}
 
+	/**
+	 * @return the Start HP 
+	 */
+	public Integer getStartHP() {
+		return startHP;
+	}
+	
 	/**
 	 * @return the stats
 	 */

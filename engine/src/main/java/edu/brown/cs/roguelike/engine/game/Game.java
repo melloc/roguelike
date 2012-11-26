@@ -2,7 +2,6 @@ package edu.brown.cs.roguelike.engine.game;
 
 import edu.brown.cs.roguelike.engine.entities.Entity;
 import edu.brown.cs.roguelike.engine.level.Level;
-import static edu.brown.cs.roguelike.engine.level.Direction.*;
 
 public class Game {
 

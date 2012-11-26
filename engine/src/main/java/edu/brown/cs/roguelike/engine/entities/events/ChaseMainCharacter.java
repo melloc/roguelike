@@ -18,12 +18,15 @@ public class ChaseMainCharacter implements Action {
 	}
 
 	public void apply(EntityActionManager queue) {
+		System.out.println("chasing");
 		List<EntityActionManager> mains = this.manager.getEntity("main");
 		if (mains.size() > 0) {
 			Tile myLoc = queue.getLocation();
 			Tile mainLoc = mains.get(0).getLocation();
-			List<Tile> path = Pathfinder.findPath(myLoc, mainLoc, myLoc.getLevel());
-			Direction dir = path.size() > 0 ? myLoc.dirTo(path.get(0)) : Direction.UP;
+			// Actually pathfind?
+			//List<Tile> path = Pathfinder.findPath(myLoc, mainLoc, myLoc.getLevel());
+			//Direction dir = path.size() > 0 ? myLoc.dirTo(mainLoc) : Direction.UP;
+			Direction dir = myLoc.dirTo(mainLoc); 
 			queue.sendMove(dir);
 		}
 	};

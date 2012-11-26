@@ -1,6 +1,8 @@
 package edu.brown.cs.roguelike.engine.entities;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import com.googlecode.lanterna.terminal.Terminal.Color;
@@ -18,6 +20,7 @@ public abstract class Entity implements Drawable, Mappable, Saveable {
 	
 	protected char character;
 	protected Color color;
+	protected Set<Stackable> inventory = new HashSet<Stackable>();
 
 	@Override
 	public char getCharacter() {
@@ -28,6 +31,10 @@ public abstract class Entity implements Drawable, Mappable, Saveable {
 	public Color getColor() {
 		return color;
 	}
+	
+	public Set<Stackable> getInventory() {return inventory;}
+	public void addToInventory(Stackable item) {inventory.add(item);}
+	public void removeFromInventory(Stackable item) {inventory.remove(item);}
 
 	public abstract List<String> getCategories();
 	

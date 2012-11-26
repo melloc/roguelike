@@ -18,4 +18,6 @@ public abstract class Stackable implements Drawable {
 	
 	public char getCharacter() {return character;}
 	public Color getColor() {return color;}
+	
+	public abstract String getDescription();
 }

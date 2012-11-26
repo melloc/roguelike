@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.lanterna.input.Key;
-import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.ScreenCharacterStyle;
-import com.googlecode.lanterna.screen.ScreenWriter;
 
 import cs195n.Vec2i;
-import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
 import edu.brown.cs.roguelike.engine.config.ConfigurationException;
+import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
 import edu.brown.cs.roguelike.engine.events.GameAction;
 import edu.brown.cs.roguelike.engine.graphics.Layer;
 import edu.brown.cs.roguelike.engine.graphics.Section;
