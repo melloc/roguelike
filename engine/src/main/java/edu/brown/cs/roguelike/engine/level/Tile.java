@@ -1,6 +1,7 @@
 package edu.brown.cs.roguelike.engine.level;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.UUID;
 
 import com.googlecode.lanterna.terminal.Terminal.Color;
@@ -32,7 +33,7 @@ public class Tile implements Saveable, Drawable {
 		this.type = type;
 	}
 	
-	private HashSet<Stackable> stackables = new HashSet<Stackable>();
+	private LinkedList<Stackable> stackables = new LinkedList<Stackable>();
 
 	/**
 	 * @return the location
@@ -62,7 +63,7 @@ public class Tile implements Saveable, Drawable {
 		this.level = level;
 	}
 
-	public HashSet<Stackable> getStackables() {
+	public LinkedList<Stackable> getStackables() {
 		return stackables;
 	}
 	
@@ -148,6 +149,8 @@ public class Tile implements Saveable, Drawable {
 	protected Drawable getCurrent() {
 		if (this.entity != null)
 			return entity;
+		else if(stackables.size() > 0)
+			return stackables.getFirst();
 		else
 			return getType();
 	}

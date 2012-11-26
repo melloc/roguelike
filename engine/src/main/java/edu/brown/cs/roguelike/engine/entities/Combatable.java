@@ -44,7 +44,7 @@ public abstract class Combatable extends Entity implements Movable {
 	private void dealDamage(Combatable opp) {
 		int attackPower = (int) Math.round(Math.random()*stats.attack);
 		
-		System.out.println(attackPower);
+		//System.out.println(attackPower);
 		
 		opp.takeDamage(new Attack(this,attackPower));
 	}
