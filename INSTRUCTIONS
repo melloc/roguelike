@@ -1,14 +1,30 @@
-Run main in edu.brown.cs.roguelike.game.RogueLike for our Lanterna demo, or
-compile with `mvn clean package` and run the executable jar in game/target/.
+Run game by:
+
+  1) Running main in edu.brown.cs.roguelike.game.rogueLike.game.Roguelike
+  2) Compiling with 'mvn clean package' and running the executable jar in game/target:
+
+        java -Djava.awt.headless=true -jar target/game-1.jar
 
 Commands:
 
-'n' - generate a new level
-'s' - save the current level
-'l' - load the last-saved level
+'N' - generate a new level
+'S' - save the current level
+'L' - load the last-saved level
 'q' - quit the demo
 
-You must use either 'q' or eclipse to quit, as terminal-close event handling
-is not supported
+'i' - bring up inventory
+'space' - exit inventory
 
-Resizing is also not supported
+Move with arrow keys or hjkl
+
+Collect items by moving over them. The only items are jewels, and their only
+function is to look pretty. They perform this function very well. Bring up your
+inventory to see.
+
+Fight monsters by moving into them. They will not follow you, but will fight
+back when attacked. You win if you kill all monsters in a level, and lose if
+your hp reaches 0.
+
+You must use either 'q' or eclipse's 'terminate' to quit if running from eclipse,
+as terminal-close event handling is not supported.
+
