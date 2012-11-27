@@ -15,10 +15,14 @@ public class EntityManager implements Saveable {
 	 */
 	private static final long serialVersionUID = 6538908714623761737L;
 	
+	/**
+	 * Every EntityActionManager that truly exists.
+	 */
+	protected List<EntityActionManager> everything = new ArrayList<EntityActionManager>();
+	
 	protected HashMap<String,List<EntityActionManager>> map = new HashMap<String,List<EntityActionManager>>();
 
 	public EntityManager() {
-
 	}
 
 	protected void addToCategory(String category, EntityActionManager manager) {
@@ -31,22 +35,44 @@ public class EntityManager implements Saveable {
 	}
 
 
+	/**
+	 * Convenience method that creates an EntityActionManager for entity
+	 * and adds it to map and everything
+	 * 
+	 * @param entity the Compatable to be registered
+	 * @return the EntityActionManager created for entity and then added
+	 */
 	public EntityActionManager register(Combatable entity) {
 		EntityActionManager manager = new LocalEntityActionManager(entity);
 		manager.on(Event.DEATH, new Remove(entity, this));
 		entity.setManager(manager);
 		for (String category : entity.getCategories())
 			addToCategory(category, manager);
+		// add to everything
+		everything.add(manager);
 		return manager;
 	}
 
+	/**
+	 * Register an EntityActionManager by adding it to map and to
+	 * everything
+	 * 
+	 * @param manager EntityActionManager to add
+	 * @param categories categories to add manager to
+	 */
 	public void register(EntityActionManager manager, List<String> categories) {
 		for (String category : categories)
 			addToCategory(category, manager);
+		everything.add(manager);
 	}
 
+	/**
+	 * Unregister an entity. Remove it from both map and everything.
+	 * @param entity the {@link Combatable} to remove
+	 */
 	public void unregister(Combatable entity) {
 		unregister(entity.getManager(), entity.getCategories());
+		everything.remove(entity);
 	}
 
 	public void unregister(EntityActionManager manager, List<String> categories) {
@@ -54,6 +80,11 @@ public class EntityManager implements Saveable {
 			map.get(category).remove(manager);
 	}
 
+	/**
+	 * @param category, String category of the EntityActionManagers to get
+	 * @return a copy of the List<EntityActionManager> in map with the given
+	 * category
+	 */
 	public List<EntityActionManager> getEntity(String category) {
 		List<EntityActionManager> ret = new ArrayList<EntityActionManager>();
 		List<EntityActionManager> lst = map.get(category);
@@ -64,6 +95,18 @@ public class EntityManager implements Saveable {
 		for (EntityActionManager manager : lst) 
 			ret.add(manager);
 		return ret;
+	}
+	
+	/**
+	 * Returns a boolean indicating whether or not an EntityActionManager
+	 * really exists. True existence is determined by presence in the
+	 * everything list, as the List returned by getEntity is just a copy.
+	 * Rogue meets existentialism. Boom.
+	 * 
+	 * @return boolean indicating if an EntityActionManager really exists!
+	 */
+	public boolean reallyExists(EntityActionManager manager) {
+		return everything.contains(manager);
 	}
 	
 	/*** BEGIN Saveable ***/
