@@ -41,7 +41,7 @@ Testing:
 
 This is code related to the actual game:
 
-* game - DemoApplication is a simple DemoApp, and Roguelike is our actual game
+* game - GUIApp is the in-progress implementation of Application, and Roguelike is our actual game
 
 ==== Support ====
 
@@ -51,18 +51,20 @@ Then we also have some support classes, all located in (with no prefix):
 
 Engine requirements
 ========================================
-The Lanterna frontend can display a level             | engine.graphics.DefaultMainLayer
-Engine has some concept of a character                | engine.entities.MainCharacter
-Engine has some concept of combat                     | engine.entities.Combatable
-Engine supports auto-marshalling monsters from files  | engine.config.Config
+
+| The Lanterna frontend can display a level             | engine.graphics.DefaultMainLayer
+| Engine has some concept of a character                | engine.entities.MainCharacter
+| Engine has some concept of combat                     | engine.entities.Combatable
+| Engine supports auto-marshalling monsters from files  | engine.config.Config
 
 Game requirements
 ========================================
-A player-controlled character exists in the level | move with arrow keys or hjkl
-Monsters exist in the level                       | all monsters procedurally generated with levels
-Player can fight monsters                         | fight monsters by moving into them
-Monster data is loaded from files                 | Monster configuration in config/monsters.cfg
-Game has a lose condition                         | You lose when your hp <= 0.
+
+| A player-controlled character exists in the level | move with arrow keys or hjkl
+| Monsters exist in the level                       | all monsters procedurally generated with levels
+| Player can fight monsters                         | fight monsters by moving into them
+| Monster data is loaded from files                 | Monster configuration in config/monsters.cfg
+| Game has a lose condition                         | You lose when your hp <= 0.
 
 Approximate number of hours:
 

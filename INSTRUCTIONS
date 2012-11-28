@@ -13,7 +13,7 @@ Commands:
 'q' - quit the demo
 
 'i' - bring up inventory
-'space' - exit inventory
+'space' - exit inventory (only works when inventory is open)
 
 Move with arrow keys or hjkl
 
