@@ -11,7 +11,8 @@ public enum TileType implements Drawable {
 	DOOR('+',Color.DEFAULT, true),
 	UP_STAIRS('<',Color.DEFAULT, true),
 	DOWN_STAIRS('>',Color.DEFAULT, true),
-	FLOOR('.',Color.DEFAULT, true);
+	FLOOR('.',Color.DEFAULT, true), 
+	HIDDEN(' ', Color.DEFAULT, true);
 
 	protected char character;
 	protected Color color;
