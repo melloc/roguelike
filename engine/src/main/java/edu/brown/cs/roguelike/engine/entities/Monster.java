@@ -31,6 +31,7 @@ public class Monster extends Combatable {
 		this.HP = mt.startHp;
 		this.startHP = mt.startHp;
 		this.stats = new Stats(.75f,mt.attack,mt.defense); 
+		baseStats = stats;
 		this.team = 0;
 		//TODO: Hit chance varies between monsters
 	}

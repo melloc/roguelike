@@ -66,6 +66,14 @@ public class Stats implements Saveable {
 		return this.id;
 	}
 
+	public Stats invert() {
+		return new Stats (
+				hitChance*-1,
+				attack *1,
+				defense *1
+				);
+	}
+
 	/*** END Saveable ***/
 
 

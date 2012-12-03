@@ -16,6 +16,7 @@ import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.events.GameAction;
 import edu.brown.cs.roguelike.engine.graphics.DefaultMainLayer;
 import edu.brown.cs.roguelike.engine.graphics.PotionLayer;
+import edu.brown.cs.roguelike.engine.graphics.WeaponLayer;
 import edu.brown.cs.roguelike.engine.level.Direction;
 import edu.brown.cs.roguelike.engine.save.SaveLoadException;
 
@@ -57,6 +58,8 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				return new GameAction(1, 9); // Open Inventory
 			case 'q':
 				return new GameAction(1, 10); // QuaffPotion
+			case 'w':
+				return new GameAction(1, 11); // Wield
 			default:
 				return new GameAction(1, 0); // do nothing
 			}
@@ -136,7 +139,11 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				break;
 			case 10:
 				app.getLayers().push(
-						new PotionLayer(app, size, currentLevel));
+						new PotionLayer<GUIApp>(app, size, currentLevel));
+				break;
+			case 11:
+				app.getLayers().push(
+						new WeaponLayer<GUIApp>(app, size, currentLevel));
 				break;
 			default:
 				throw new Error(

@@ -1,5 +1,7 @@
 package edu.brown.cs.roguelike.engine.entities;
 
+import java.util.HashMap;
+
 import cs195n.Vec2i;
 import edu.brown.cs.roguelike.engine.level.Direction;
 import edu.brown.cs.roguelike.engine.level.Tile;
@@ -14,15 +16,20 @@ public abstract class Combatable extends Entity implements Movable {
 	protected int HP;
 	protected int startHP;
 	protected int team;
+	protected Stats baseStats;
 	protected Stats stats;
 	protected EntityActionManager manager;
 	protected Tile location;
+	protected HashMap<EquipType,Stackable> equipment = new HashMap<EquipType,Stackable>();
 	
 	/** #Dies **/
 	protected abstract void die();
 	
 	/**Processes an Enemy kill, gaining xp etc**/
 	protected abstract void onKillEntity(Combatable combatable);
+	
+	/**Gets the equipment of the combatable*/
+	public HashMap<EquipType,Stackable> getEquipment() {return equipment;}
 	
 	/**Attacks an opponent**/
 	public void attack(Combatable opp) {
@@ -82,6 +89,19 @@ public abstract class Combatable extends Entity implements Movable {
 	 */
 	public Stats getStats() {
 		return stats;
+	}
+	
+	
+	public void setStats(Stats s) {
+		stats = s;
+	}
+	
+	
+	/**
+	 * @return the base stats
+	 */
+	public Stats getBaseStats() {
+		return baseStats;
 	}
 
 	/**

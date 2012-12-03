@@ -1,9 +1,7 @@
 package edu.brown.cs.roguelike.engine.proc;
 
-import edu.brown.cs.roguelike.engine.config.Config;
 import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.entities.Jewel;
-import edu.brown.cs.roguelike.engine.entities.Monster;
 import edu.brown.cs.roguelike.engine.entities.Stackable;
 import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.level.Room;

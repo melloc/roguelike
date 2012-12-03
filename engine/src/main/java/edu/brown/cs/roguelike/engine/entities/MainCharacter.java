@@ -27,6 +27,7 @@ public class MainCharacter extends Combatable {
 		this.HP = 100;
 		this.startHP = this.HP;
 		this.stats = new Stats(.75f,10,4);
+		baseStats = stats;
 		this.team = 1;
 	}
 
