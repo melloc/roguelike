@@ -32,6 +32,8 @@ public abstract class Entity implements Drawable, Mappable, Saveable {
 		return color;
 	}
 	
+	public abstract String getDescription();
+	
 	public Set<Stackable> getInventory() {return inventory;}
 	public void addToInventory(Stackable item) {inventory.add(item);}
 	public void removeFromInventory(Stackable item) {inventory.remove(item);}

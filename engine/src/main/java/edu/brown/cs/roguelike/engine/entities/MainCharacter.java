@@ -54,5 +54,10 @@ public class MainCharacter extends Combatable {
 		this.location.getStackables().clear();
 	}
 
+	@Override
+	public String getDescription() {
+		return "You.";
+	}
+
 	
 }

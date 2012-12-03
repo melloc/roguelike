@@ -15,6 +15,7 @@ import edu.brown.cs.roguelike.engine.entities.events.ChaseMainCharacter;
 import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.events.GameAction;
 import edu.brown.cs.roguelike.engine.graphics.DefaultMainLayer;
+import edu.brown.cs.roguelike.engine.graphics.LookLayer;
 import edu.brown.cs.roguelike.engine.graphics.PotionLayer;
 import edu.brown.cs.roguelike.engine.graphics.WeaponLayer;
 import edu.brown.cs.roguelike.engine.level.Direction;
@@ -62,6 +63,8 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				return new GameAction(1, 10); // QuaffPotion
 			case 'w':
 				return new GameAction(1, 11); // Wield
+			case 'o':
+				return new GameAction(1, 12); // observe
 			default:
 				return new GameAction(1, 0); // do nothing
 			}
@@ -79,7 +82,6 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void propagateAction(GameAction action) {
 		List<EntityActionManager> managers = null;
@@ -151,6 +153,10 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 			case 11:
 				app.getLayers().push(
 						new WeaponLayer<GUIApp>(app, size, currentLevel));
+				break;
+			case 12:
+				app.getLayers().push(
+						new LookLayer<GUIApp>(app, size, currentLevel));
 				break;
 			default:
 				throw new Error(
