@@ -33,6 +33,9 @@ public abstract class Stackable implements Drawable, Saveable {
 	/*** BEGIN Saveable ***/
 
 	private UUID id;
+
+	protected ItemType type;
+	protected Action action;
 	
 	/** initialize id **/
 	{
@@ -69,6 +72,10 @@ public abstract class Stackable implements Drawable, Saveable {
 	public UUID getId() {
 		return this.id;
 	}
+	public ItemType getType() {
+		return type;
+	}
+	
 
 	/*** END Saveable ***/
 }

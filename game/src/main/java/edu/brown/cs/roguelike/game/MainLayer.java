@@ -15,6 +15,7 @@ import edu.brown.cs.roguelike.engine.entities.events.ChaseMainCharacter;
 import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.events.GameAction;
 import edu.brown.cs.roguelike.engine.graphics.DefaultMainLayer;
+import edu.brown.cs.roguelike.engine.graphics.PotionLayer;
 import edu.brown.cs.roguelike.engine.level.Direction;
 import edu.brown.cs.roguelike.engine.save.SaveLoadException;
 
@@ -42,7 +43,7 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				return new GameAction(1, 2); // save current level
 			case 'L':
 				return new GameAction(1, 3); // load saved level
-			case 'q':
+			case 'Q':
 				return new GameAction(1, 4); // quit
 			case 'h':
 				return new GameAction(1, 5); // Move left
@@ -54,6 +55,8 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				return new GameAction(1, 8); // Move right
 			case 'i':
 				return new GameAction(1, 9); // Open Inventory
+			case 'q':
+				return new GameAction(1, 10); // QuaffPotion
 			default:
 				return new GameAction(1, 0); // do nothing
 			}
@@ -71,6 +74,7 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void propagateAction(GameAction action) {
 		List<EntityActionManager> managers = null;
@@ -129,6 +133,10 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 			case 9:
 				app.getLayers().push(
 						new InventoryLayer(app, size, currentLevel));
+				break;
+			case 10:
+				app.getLayers().push(
+						new PotionLayer(app, size, currentLevel));
 				break;
 			default:
 				throw new Error(

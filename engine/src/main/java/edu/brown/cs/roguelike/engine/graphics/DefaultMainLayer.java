@@ -114,7 +114,7 @@ public abstract class DefaultMainLayer<A extends Application> implements Layer {
 
 	}
 
-	private void drawLevel(ScreenWriter sw) {
+	private void drawLevel(Section sw) {
 		Tile[][] tiles = currentLevel.tiles;
 
 		Tile t;
