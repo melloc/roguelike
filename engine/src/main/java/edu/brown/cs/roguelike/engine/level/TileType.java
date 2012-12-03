@@ -14,6 +14,7 @@ public enum TileType implements Drawable {
 	FLOOR('.',Color.DEFAULT, true, null), 
 	HIDDEN(' ', Color.DEFAULT, true, null);
 
+
 	protected char character;
 	protected Color color;
 	protected boolean passable;
