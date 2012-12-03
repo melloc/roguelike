@@ -18,6 +18,8 @@ import edu.brown.cs.roguelike.engine.graphics.DefaultMainLayer;
 import edu.brown.cs.roguelike.engine.graphics.PotionLayer;
 import edu.brown.cs.roguelike.engine.graphics.WeaponLayer;
 import edu.brown.cs.roguelike.engine.level.Direction;
+import edu.brown.cs.roguelike.engine.level.Room;
+import edu.brown.cs.roguelike.engine.level.Tile;
 import edu.brown.cs.roguelike.engine.save.SaveLoadException;
 
 /**
@@ -99,6 +101,7 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				for (EntityActionManager monster : m.getEntity("monster")) {
 					monster.on(Event.ATTACKED, chaser);
 				}
+				checkReveal();
 			}
 				break;
 			case 2: // save current level
@@ -120,18 +123,22 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 			case 5:
 				for (EntityActionManager manager : managers)
 					manager.sendMove(Direction.LEFT);
+				checkReveal();
 				break;
 			case 6:
 				for (EntityActionManager manager : managers)
 					manager.sendMove(Direction.UP);
+				checkReveal();
 				break;
 			case 7:
 				for (EntityActionManager manager : managers)
 					manager.sendMove(Direction.DOWN);
+				checkReveal();
 				break;
 			case 8:
 				for (EntityActionManager manager : managers)
 					manager.sendMove(Direction.RIGHT);
+				checkReveal();
 				break;
 			case 9:
 				app.getLayers().push(
@@ -160,6 +167,22 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 	}
 
 	
+	private void checkReveal() {
+		List<EntityActionManager> mainMangr = currentLevel.getManager().getEntity("main");
+		if(mainMangr.size() < 1) 
+			return;
+		
+		Tile playerLoc = mainMangr.get(0).getLocation();
+		
+		for(Room r : currentLevel.getRooms()) {
+			if(r.containsTile(playerLoc)) {
+				currentLevel.revealRoom(r);
+			}
+		}
+		
+		currentLevel.revealAround(playerLoc);
+	}
+
 	@Override
 	public void tick(long nanosSincePreviousTick) {
 		// Do nothing on tick
