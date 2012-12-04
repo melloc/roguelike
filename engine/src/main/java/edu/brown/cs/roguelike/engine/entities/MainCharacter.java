@@ -27,6 +27,7 @@ public class MainCharacter extends Combatable {
 		this.HP = 100;
 		this.startHP = this.HP;
 		this.stats = new Stats(.75f,10,4);
+		baseStats = stats;
 		this.team = 1;
 	}
 
@@ -51,6 +52,11 @@ public class MainCharacter extends Combatable {
 		super.move(dir);
 		this.inventory.addAll(this.location.getStackables());
 		this.location.getStackables().clear();
+	}
+
+	@Override
+	public String getDescription() {
+		return "You.";
 	}
 
 	

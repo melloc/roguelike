@@ -1,42 +1,35 @@
-package edu.brown.cs.roguelike.engine.entities;
-
+package edu.brown.cs.roguelike.engine.entities.events;
 import java.util.UUID;
 
-import com.googlecode.lanterna.terminal.Terminal.Color;
-
-import edu.brown.cs.roguelike.engine.graphics.Drawable;
+import edu.brown.cs.roguelike.engine.entities.Action;
+import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
+import edu.brown.cs.roguelike.engine.entities.EntityManager;
+import edu.brown.cs.roguelike.engine.entities.Stats;
 import edu.brown.cs.roguelike.engine.save.Saveable;
 
-/**
- * Anything that can be on a tile in a "pile"
- * Any number of stackables can be on a tile, along with an entity
- * 
- * @author Jake
- *
- */
-public abstract class Stackable implements Drawable, Saveable {
-	
+public class ChangeStats implements Action,Saveable {
+
+
 	/**
-	 * Generated 
+	 * Generated
 	 */
-	private static final long serialVersionUID = -4791198502696211551L;
-	
-	protected char character;
-	protected Color color;
-	
-	public char getCharacter() {return character;}
-	public Color getColor() {return color;}
-	
-	public abstract String getDescription();
-	
-	
+	private static final long serialVersionUID = 187342592937715063L;
+	EntityManager manager = null;
+
+	private Stats delta;
+
+	public ChangeStats(Stats delta) {
+		this.delta = delta;
+	}
+
+	public void apply(EntityActionManager queue) {
+		queue.changeStats(delta);
+	};
+
 	/*** BEGIN Saveable ***/
 
 	private UUID id;
 
-	protected ItemType type;
-	protected Action action;
-	
 	/** initialize id **/
 	{
 		this.id = UUID.randomUUID();
@@ -49,7 +42,7 @@ public abstract class Stackable implements Drawable, Saveable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -58,7 +51,7 @@ public abstract class Stackable implements Drawable, Saveable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Stackable other = (Stackable) obj;
+		ChangeStats other = (ChangeStats) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -72,10 +65,7 @@ public abstract class Stackable implements Drawable, Saveable {
 	public UUID getId() {
 		return this.id;
 	}
-	public ItemType getType() {
-		return type;
-	}
-	
 
 	/*** END Saveable ***/
+
 }

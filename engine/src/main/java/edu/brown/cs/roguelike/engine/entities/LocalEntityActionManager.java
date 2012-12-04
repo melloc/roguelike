@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import cs195n.Vec2i;
+
 import edu.brown.cs.roguelike.engine.level.Direction;
 import edu.brown.cs.roguelike.engine.level.Tile;
 import edu.brown.cs.roguelike.engine.save.Saveable;
@@ -39,9 +41,20 @@ public class LocalEntityActionManager implements EntityActionManager, Saveable {
 	}
 
 	@Override
+	public void changeStats(Stats delta) {
+		Stats s = entity.getStats();
+		entity.setStats(new Stats (
+				s.hitChance + delta.hitChance,
+				s.attack + delta.attack,
+				s.defense + delta.defense
+				));
+	}
+	
+	@Override
 	public void changeHP(int delta) {
 		entity.HP += delta;
 	}
+	
 
 	@Override
 	public void toggleVisibility() {
@@ -113,6 +126,7 @@ public class LocalEntityActionManager implements EntityActionManager, Saveable {
 	public UUID getId() {
 		return this.id;
 	}
+
 
 	/*** END Saveable ***/
 

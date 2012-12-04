@@ -20,6 +20,8 @@ public class Monster extends Combatable {
 		categories.add("monster");
 	}
 
+	private String name;
+
 	public Monster(char c, Color color) {
 		this.character = c;
 		this.color = color;
@@ -31,8 +33,9 @@ public class Monster extends Combatable {
 		this.HP = mt.startHp;
 		this.startHP = mt.startHp;
 		this.stats = new Stats(.75f,mt.attack,mt.defense); 
+		baseStats = stats;
 		this.team = 0;
-		//TODO: Hit chance varies between monsters
+		this.name = mt.name;
 	}
 	
 
@@ -50,6 +53,11 @@ public class Monster extends Combatable {
 
 	public List<String> getCategories() {
 		return categories;
+	}
+
+	@Override
+	public String getDescription() {
+		return name;
 	}
 	
 }

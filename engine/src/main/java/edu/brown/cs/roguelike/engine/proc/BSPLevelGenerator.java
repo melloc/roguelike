@@ -67,7 +67,7 @@ public class BSPLevelGenerator implements LevelGenerator{
 		MonsterGenerator mg = new ProgressiveMonsterGenerator();
 		mg.populateLevel(level);
 
-		ItemGenerator ig = new JewelGenerator(); 
+		ItemGenerator ig = new RandomItemGenerator(); 
 		ig.populateLevel(level);
 		
 		return level;

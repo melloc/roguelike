@@ -107,14 +107,14 @@ public abstract class DefaultMainLayer<A extends Application> implements Layer {
 		// LINE 2
 		String line2 = "";
 		line2 += "Attack: ";
-		line2 += player.getStats().getAttack();
+		line2 += player.getBaseStats().getAttack();
 		line2 += "  Defense: ";
-		line2 += String.valueOf(player.getStats().getDefense());
+		line2 += String.valueOf(player.getBaseStats().getDefense());
 		sw.drawString(0, statStart + 1, line2);
 
 	}
 
-	private void drawLevel(ScreenWriter sw) {
+	private void drawLevel(Section sw) {
 		Tile[][] tiles = currentLevel.tiles;
 
 		Tile t;

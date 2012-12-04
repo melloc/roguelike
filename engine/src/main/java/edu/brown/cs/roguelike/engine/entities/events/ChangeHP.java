@@ -1,30 +1,30 @@
-package edu.brown.cs.roguelike.engine.entities;
+package edu.brown.cs.roguelike.engine.entities.events;
 
 import java.util.UUID;
 
+import edu.brown.cs.roguelike.engine.entities.Action;
+import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
+import edu.brown.cs.roguelike.engine.entities.EntityManager;
 import edu.brown.cs.roguelike.engine.save.Saveable;
 
-/**The Stats of a Combatable Entity. Affects player combat**/
-public class Stats implements Saveable {
-	
+public class ChangeHP implements Action, Saveable {
+
+
 	/**
 	 * Generated
 	 */
-	private static final long serialVersionUID = -3044267314709997781L;
+	private static final long serialVersionUID = 187342592937715063L;
+	EntityManager manager = null;
 	
-	protected float hitChance; //Chance to hit [0-1]
-	protected int   attack;	   //Attack power
-	protected int	defense;   //Defense toughness
+	private int delta;
 
-	public Stats(float hc, int atk, int def) {
-		this.hitChance = hc;
-		this.attack = atk;
-		this.defense = def;
+	public ChangeHP(int delta) {
+		this.delta = delta;
 	}
-	
-	public int getAttack() 	 {return attack;}
-	public int getDefense()  {return defense;}
-	public float getHitChance() {return hitChance;}
+
+	public void apply(EntityActionManager queue) {
+		queue.changeHP(delta);
+	};
 	
 	/*** BEGIN Saveable ***/
 
@@ -51,7 +51,7 @@ public class Stats implements Saveable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Stats other = (Stats) obj;
+		ChangeHP other = (ChangeHP) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -66,15 +66,6 @@ public class Stats implements Saveable {
 		return this.id;
 	}
 
-	public Stats invert() {
-		return new Stats (
-				hitChance*-1,
-				attack *1,
-				defense *1
-				);
-	}
-
 	/*** END Saveable ***/
-
 
 }

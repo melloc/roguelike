@@ -30,6 +30,10 @@ public class Room implements Space, Saveable {
 		this.connectedRooms = new ArrayList<Room>();
 	}
 	
+	public boolean containsTile(Tile t) {
+		return (t.location.x >= min.x && t.location.x <= max.x && t.location.y >= min.y && t.location.y <= max.y);
+	}
+	
 	@Override
 	public void connectToHallway(Hallway h) {
 		for(Room r : h.getRooms()) {
@@ -37,6 +41,7 @@ public class Room implements Space, Saveable {
 			h.addRoom(this);
 		}
 	}
+
 	
 	@Override
 	public boolean needDoor() {

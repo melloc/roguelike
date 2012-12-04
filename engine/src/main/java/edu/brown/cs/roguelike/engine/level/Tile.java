@@ -7,6 +7,7 @@ import com.googlecode.lanterna.terminal.Terminal.Color;
 
 import cs195n.Vec2i;
 import edu.brown.cs.roguelike.engine.entities.Entity;
+import edu.brown.cs.roguelike.engine.entities.MainCharacter;
 import edu.brown.cs.roguelike.engine.entities.Stackable;
 import edu.brown.cs.roguelike.engine.graphics.Drawable;
 import edu.brown.cs.roguelike.engine.save.Saveable;
@@ -21,7 +22,13 @@ public class Tile implements Saveable, Drawable {
 
 	protected Vec2i location = null;
 	protected Level level = null;
+	protected boolean reveal = false;
 
+	/**Allows you to reveal/hide a tile**/
+	public void setReveal(boolean r) {
+		this.reveal = r;
+	}
+	
 	/**
 	 * Generated
 	 */
@@ -160,6 +167,9 @@ public class Tile implements Saveable, Drawable {
 	}
 
 	protected Drawable getCurrent() {
+		if(this.reveal == false && !(entity instanceof MainCharacter)) {
+			return TileType.HIDDEN;
+		}
 		if (this.entity != null)
 			return entity;
 		else if(stackables.size() > 0)

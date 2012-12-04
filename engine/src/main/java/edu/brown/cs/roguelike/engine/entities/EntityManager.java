@@ -97,6 +97,19 @@ public class EntityManager implements Saveable {
 		return ret;
 	}
 	
+	/** Gets the nth manager from the main character.
+	 *  If the player does not exist, null is returned.
+	 * @param n - the number of the player to get (starts at 0)
+	 * @return - player #n
+	 */
+	public EntityActionManager getPlayer(int n) {
+		List<EntityActionManager> mains = getEntity("main");
+		if(n >= mains.size()) 
+			return null;
+		
+		return mains.get(n);
+	}
+	
 	/**
 	 * Returns a boolean indicating whether or not an EntityActionManager
 	 * really exists. True existence is determined by presence in the
