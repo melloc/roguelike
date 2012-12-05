@@ -6,25 +6,29 @@ Run game by:
         java -Djava.awt.headless=true -jar target/game-1.jar
 
 Commands:
-
-'N' - generate a new level
-'S' - save the current level
-'L' - load the last-saved level
-'q' - quit the demo
+'o' - observe the world, move the cursor to see what is on a tile
+'q' - quaff potion, press the letter key of the potion
+'w' - wield weapon, press the letter key of the weapon
 
 'i' - bring up inventory
 'space' - exit inventory (only works when inventory is open)
 
-Move with arrow keys or hjkl
+'N' - generate a new level
+'S' - save the current level
+'L' - load the last-saved level
+'Q' - quit the demo
 
-Collect items by moving over them. The only items are jewels, and their only
-function is to look pretty. They perform this function very well. Bring up your
-inventory to see.
+Move with arrow keys or jkl
+
+
+
+
+Collect items by moving over them. Bring up your inventory to see your items with i.
 
 Fight monsters by moving into them. They will not follow you, but will fight
 back when attacked. You win if you kill all monsters in a level, and lose if
 your hp reaches 0.
 
-You must use either 'q' or eclipse's 'terminate' to quit if running from eclipse,
+You must use either 'Q' or eclipse's 'terminate' to quit if running from eclipse,
 as terminal-close event handling is not supported.
 

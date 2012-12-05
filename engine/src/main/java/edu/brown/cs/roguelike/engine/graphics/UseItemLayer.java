@@ -40,6 +40,7 @@ public abstract class UseItemLayer<A extends Application> implements Layer  {
 		if(action.getActionClassifier() == -1) {
 			//TODO: Display announcement of incorrect key
 			app.getLayers().pop(); //Remove this layer from stack
+			app.getLayers().pop(); //Remove Inventory layer from stack
 		}
 		else if(isValidSlot(action.getActionClassifier())){
 			useItem(action.getActionClassifier());
