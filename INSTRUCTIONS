@@ -11,7 +11,7 @@ Commands:
 'w' - wield weapon, press the letter key of the weapon
 
 'i' - bring up inventory
-'space' - exit inventory (only works when inventory is open)
+'space' - exit inventory and observe screens
 
 'N' - generate a new level
 'S' - save the current level
