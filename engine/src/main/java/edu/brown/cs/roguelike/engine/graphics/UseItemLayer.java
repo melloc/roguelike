@@ -44,6 +44,8 @@ public abstract class UseItemLayer<A extends Application> implements Layer  {
 		else if(isValidSlot(action.getActionClassifier())){
 			useItem(action.getActionClassifier());
 			app.getLayers().pop(); //Remove this layer from stack
+			app.getLayers().pop(); //Remove Inventory layer from stack
+
 		}
 		else {
 			throw new Error("This shouldn't happen and indicates an unhandled case. Received: "
@@ -53,7 +55,7 @@ public abstract class UseItemLayer<A extends Application> implements Layer  {
 
 	private void useItem(int slot) {
 
-		System.out.println(slot);
+		//System.out.println(slot);
 
 		List<EntityActionManager> mainCharList = currentLevel.getManager().getEntity("main");
 		if(mainCharList.size() < 1) {

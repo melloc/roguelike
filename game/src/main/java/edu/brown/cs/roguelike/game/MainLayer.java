@@ -148,9 +148,13 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				break;
 			case 10:
 				app.getLayers().push(
+						new InventoryLayer(app, size, currentLevel));
+				app.getLayers().push(
 						new PotionLayer<GUIApp>(app, size, currentLevel));
 				break;
 			case 11:
+				app.getLayers().push(
+						new InventoryLayer(app, size, currentLevel));
 				app.getLayers().push(
 						new WeaponLayer<GUIApp>(app, size, currentLevel));
 				break;
