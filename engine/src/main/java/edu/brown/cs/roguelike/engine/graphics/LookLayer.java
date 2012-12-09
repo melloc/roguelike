@@ -71,7 +71,7 @@ public class LookLayer<A extends Application> implements Layer {
 			currentY++;
 		}
 		
-		if(loc.getType().getDescription() != null) {
+		if(loc.getType().getDescription() != null && loc.getReveal()) {
 			sw.drawString(startX, currentY, loc.getType().getDescription());
 			currentY++;
 		}
