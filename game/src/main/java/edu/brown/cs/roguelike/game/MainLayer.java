@@ -19,9 +19,12 @@ import edu.brown.cs.roguelike.engine.graphics.LookLayer;
 import edu.brown.cs.roguelike.engine.graphics.PotionLayer;
 import edu.brown.cs.roguelike.engine.graphics.WeaponLayer;
 import edu.brown.cs.roguelike.engine.level.Direction;
+import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.level.Room;
 import edu.brown.cs.roguelike.engine.level.Tile;
+import edu.brown.cs.roguelike.engine.proc.BSPLevelGenerator;
 import edu.brown.cs.roguelike.engine.save.SaveLoadException;
+import edu.brown.cs.roguelike.engine.save.SaveManager;
 
 /**
  * A simple demo layer that shows basic rendering of levels, saving/loading, and
@@ -32,8 +35,8 @@ import edu.brown.cs.roguelike.engine.save.SaveLoadException;
  */
 public class MainLayer extends DefaultMainLayer<GUIApp> {
 	
-	public MainLayer(GUIApp guiApp, Vec2i size) {
-		super(guiApp, size, "Robert The Rogue");
+	public MainLayer(GUIApp guiApp, RogueGame game, Vec2i size, String startMessage) {
+		super(guiApp, game, size, startMessage);
 	}
 
 	@Override
@@ -84,6 +87,8 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 
 	@Override
 	public void propagateAction(GameAction action) {
+		Level currentLevel = game.getCurrentLevel();
+		
 		List<EntityActionManager> managers = null;
 		if (currentLevel != null)
 			managers = currentLevel.getManager().getEntity("keyboard");
@@ -97,7 +102,8 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				break; // do nothing
 			case 1: // generate new level
 			{
-				currentLevel = rg.generateLevel(MAP_SIZE);
+				game.generateNewLevel(app.getLevelGenerator());
+				currentLevel = game.getCurrentLevel();
 				EntityManager m = currentLevel.getManager();
 				Action chaser = new ChaseMainCharacter(m);
 				for (EntityActionManager monster : m.getEntity("monster")) {
@@ -107,11 +113,12 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 			}
 				break;
 			case 2: // save current level
-				sm.saveLevel(currentLevel);
+				app.getSaveManager().saveGame(this.game);
 				break;
 			case 3: // load saved level
 			{
-				currentLevel = sm.loadLevel();
+				game = app.getSaveManager().loadGame();
+				currentLevel = game.getCurrentLevel();
 				EntityManager m = currentLevel.getManager();
 				Action chaser = new ChaseMainCharacter(m);
 				for (EntityActionManager monster : m.getEntity("monster")) {
@@ -178,6 +185,8 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 
 	
 	private void checkReveal() {
+		Level currentLevel = game.getCurrentLevel();
+
 		List<EntityActionManager> mainMangr = currentLevel.getManager().getEntity("main");
 		if(mainMangr.size() < 1) 
 			return;
