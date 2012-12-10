@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import cs195n.Vec2i;
-
 import edu.brown.cs.roguelike.engine.level.Direction;
 import edu.brown.cs.roguelike.engine.level.Tile;
 import edu.brown.cs.roguelike.engine.save.Saveable;
@@ -19,10 +17,15 @@ public class LocalEntityActionManager implements EntityActionManager, Saveable {
 	 */
 	private static final long serialVersionUID = 7307174231891885328L;
 	
+	protected int actionPoints;
+	
+	protected Action nextAction;
+	
 	Combatable entity = null;
 
 	public LocalEntityActionManager(Combatable entity) {
 		this.entity = entity;
+		this.actionPoints = 0;
 	}
 
 	@Override
@@ -126,8 +129,50 @@ public class LocalEntityActionManager implements EntityActionManager, Saveable {
 	public UUID getId() {
 		return this.id;
 	}
-
-
+	
 	/*** END Saveable ***/
 
+	@Override
+	public int getActionPoints() {
+		return this.actionPoints;
+	}
+
+	@Override
+	public void useActionPoints(int ap) {
+		this.actionPoints -= ap;
+	}
+	
+	@Override
+	public void addActionPoints(int ap) {
+		this.actionPoints += ap;
+	}
+	
+	@Override
+	final public Action getNextAction() {
+		if (nextAction != null) { 
+			return nextAction;
+		} else {
+			// ask the Entity for the next action to take
+			this.nextAction = entity.generateNextAction();
+			return nextAction;
+		}
+	}
+	
+	@Override
+	final public void takeNextAction() {
+		this.nextAction.apply(this); // take action
+		// clear nextAction
+		this.nextAction = null;
+	}
+	
+	@Override
+	final public void setNextAction(Action nextAction) {
+		this.nextAction = nextAction;
+	}
+	
+	@Override
+	final public boolean hasNextAction() {
+		return this.nextAction != null;
+	}
+	
 }

@@ -71,12 +71,13 @@ public class ProgressiveMonsterGenerator implements MonsterGenerator {
             // TODO: Actually place main character at UP_STAIRS
             roomNum = rand.getRandom(level.getRooms().size());
             Room r = level.getRooms().get(roomNum);
-            Combatable m = new MainCharacter();
+            // TODO: Grab name from somewhere
+            Combatable m = new MainCharacter("Robert the Rogue");
             addMonster(level,r, m);
         }
 	}
 
-	/**Gets a random monster that is pplicable to the level:
+	/**Gets a random monster that is applicable to the level:
 	 * 
 	 * Roll Order:
 	 * 	lower tier;
