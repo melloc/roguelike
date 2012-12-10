@@ -90,7 +90,7 @@ public class InventoryLayer implements Layer{
 	@Override
 	public void doDraw(Section s) {
 		
-		s = s.moveUpperLeft(new Vec2i(size.x - 30, 0));
+		s = s.moveUpperLeft(new Vec2i(size.x - 50, 0));
 		
 		Set<Stackable> inventory;
 		List<EntityActionManager> mains = currentLevel.getManager().getEntity("main");

@@ -14,15 +14,19 @@ public class Weapon extends Stackable{
 	protected Stats stats;
 	private final Action wieldAction;
 	private final Action unwieldAction;
+	private String description;
+	private DamageType damageType;
 
 	
-	public Weapon(Stats stats) {
+	public Weapon(Stats stats, String description, DamageType dt) {
 		this.stats = stats;
 		wieldAction = new ChangeStats(stats);
 		unwieldAction = new ChangeStats(stats.invert());
 		color = Color.WHITE;
 		character = ')';
 		type = ItemType.WEAPON;
+		this.description = description;
+		this.damageType = dt;
 	}
 	
 	public Stats getStats() {
@@ -31,9 +35,11 @@ public class Weapon extends Stackable{
 	
 	@Override
 	public String getDescription() {
-		return "A sword";
+		return description;
 	}
 
+	public DamageType getDamageType() {return damageType;}
+	
 	public Action getWieldAction() {
 		return wieldAction;
 	}
