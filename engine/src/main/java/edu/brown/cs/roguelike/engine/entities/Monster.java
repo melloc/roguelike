@@ -6,6 +6,7 @@ import java.util.List;
 import com.googlecode.lanterna.terminal.Terminal.Color;
 
 import edu.brown.cs.roguelike.engine.config.MonsterTemplate;
+import edu.brown.cs.roguelike.engine.entities.events.Wait;
 
 public class Monster extends Combatable {
 
@@ -19,8 +20,6 @@ public class Monster extends Combatable {
 		categories = new ArrayList<String>();
 		categories.add("monster");
 	}
-
-	private String name;
 
 	public Monster(char c, Color color) {
 		this.character = c;
@@ -37,7 +36,6 @@ public class Monster extends Combatable {
 		this.team = 0;
 		this.name = mt.name;
 	}
-	
 
 	@Override
 	protected void die() {
@@ -59,5 +57,13 @@ public class Monster extends Combatable {
 	public String getDescription() {
 		return name;
 	}
+
 	
+	/**
+	 * TODO: Make FSM responsible for generating next actions
+	 */
+	@Override
+	protected Action generateNextAction() {
+		return new Wait();
+	}
 }

@@ -1,3 +1,4 @@
+
 package edu.brown.cs.roguelike.engine.entities;
 
 public enum ItemType {

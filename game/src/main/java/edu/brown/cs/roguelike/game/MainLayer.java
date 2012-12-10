@@ -8,12 +8,15 @@ import com.googlecode.lanterna.input.Key;
 import cs195n.Vec2i;
 
 import edu.brown.cs.roguelike.engine.entities.Action;
+import edu.brown.cs.roguelike.engine.entities.Combatable;
 import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
 import edu.brown.cs.roguelike.engine.entities.EntityManager;
 import edu.brown.cs.roguelike.engine.entities.Event;
 import edu.brown.cs.roguelike.engine.entities.events.ChaseMainCharacter;
+import edu.brown.cs.roguelike.engine.entities.events.Move;
 import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.events.GameAction;
+import edu.brown.cs.roguelike.engine.game.CumulativeTurnManager;
 import edu.brown.cs.roguelike.engine.graphics.DefaultMainLayer;
 import edu.brown.cs.roguelike.engine.graphics.LookLayer;
 import edu.brown.cs.roguelike.engine.graphics.PotionLayer;
@@ -22,9 +25,7 @@ import edu.brown.cs.roguelike.engine.level.Direction;
 import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.level.Room;
 import edu.brown.cs.roguelike.engine.level.Tile;
-import edu.brown.cs.roguelike.engine.proc.BSPLevelGenerator;
 import edu.brown.cs.roguelike.engine.save.SaveLoadException;
-import edu.brown.cs.roguelike.engine.save.SaveManager;
 
 /**
  * A simple demo layer that shows basic rendering of levels, saving/loading, and
@@ -87,15 +88,32 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 
 	@Override
 	public void propagateAction(GameAction action) {
+		
 		Level currentLevel = game.getCurrentLevel();
+		CumulativeTurnManager tm = app.getTurnManager();
+		
+		EntityActionManager mainManager = null;
+		
+		Move moveAction;
+		Combatable c = null;
 		
 		List<EntityActionManager> managers = null;
-		if (currentLevel != null)
+		
+		// if there is a current level, 
+		// then get the keyboard-controlled managers
+		// (just the player)
+		if (currentLevel != null) {
 			managers = currentLevel.getManager().getEntity("keyboard");
+			mainManager = managers.get(0);
+			c = mainManager.getEntity();
+		}
+		
 		if (managers == null)
 			managers = new ArrayList<EntityActionManager>();
+		
 		if (action.getContextClassifier() != 1)
 			throw new Error("Received an action for a non-gameplay context.");
+		
 		try {
 			switch (action.getActionClassifier()) {
 			case 0:
@@ -105,7 +123,7 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				game.generateNewLevel(app.getLevelGenerator());
 				currentLevel = game.getCurrentLevel();
 				EntityManager m = currentLevel.getManager();
-				Action chaser = new ChaseMainCharacter(m);
+				Action chaser = new ChaseMainCharacter(10, m);
 				for (EntityActionManager monster : m.getEntity("monster")) {
 					monster.on(Event.ATTACKED, chaser);
 				}
@@ -120,7 +138,7 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				game = app.getSaveManager().loadGame();
 				currentLevel = game.getCurrentLevel();
 				EntityManager m = currentLevel.getManager();
-				Action chaser = new ChaseMainCharacter(m);
+				Action chaser = new ChaseMainCharacter(10, m);
 				for (EntityActionManager monster : m.getEntity("monster")) {
 					monster.on(Event.ATTACKED, chaser);
 				}
@@ -130,23 +148,39 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				app.shutdown();
 				break;
 			case 5:
-				for (EntityActionManager manager : managers)
-					manager.sendMove(Direction.LEFT);
+				if (c != null) { 
+					moveAction = new Move(10, c, Direction.LEFT);
+					tm.takeTurn(moveAction);
+				}
+//				for (EntityActionManager manager : managers)
+//					manager.sendMove(Direction.LEFT);
 				checkReveal();
 				break;
 			case 6:
-				for (EntityActionManager manager : managers)
-					manager.sendMove(Direction.UP);
+				if (c != null) {
+					moveAction = new Move(10, c, Direction.UP);
+					tm.takeTurn(moveAction);
+				}
+//				for (EntityActionManager manager : managers)
+//					manager.sendMove(Direction.UP);
 				checkReveal();
 				break;
 			case 7:
-				for (EntityActionManager manager : managers)
-					manager.sendMove(Direction.DOWN);
+				if (c != null) {
+					moveAction = new Move(10, c, Direction.DOWN);
+					tm.takeTurn(moveAction);
+				}
+//				for (EntityActionManager manager : managers)
+//					manager.sendMove(Direction.DOWN);
 				checkReveal();
 				break;
 			case 8:
-				for (EntityActionManager manager : managers)
-					manager.sendMove(Direction.RIGHT);
+				if (c != null) {
+					moveAction = new Move(10, c, Direction.RIGHT);
+					tm.takeTurn(moveAction);					
+				}
+//				for (EntityActionManager manager : managers)
+//					manager.sendMove(Direction.RIGHT);
 				checkReveal();
 				break;
 			case 9:

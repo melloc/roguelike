@@ -34,16 +34,14 @@ public abstract class DefaultMainLayer<A extends Application> implements Layer {
 
 	protected String statusMsg;
 	protected String name;
-
-	protected SaveManager sm;
-
+	
 	protected Vec2i size;
 	protected A app;
 
-	public DefaultMainLayer(A app, Game game, Vec2i screenSize, String startMessage) {
+	public DefaultMainLayer(A app, Game game, 
+			Vec2i screenSize, String startMessage) {
 		this.game = game;
 		this.app = app;
-		this.sm = new SaveManager("defaultSave");
 		this.size = screenSize;
 		this.name = "A Roguelike";
 		statusMsg = startMessage;

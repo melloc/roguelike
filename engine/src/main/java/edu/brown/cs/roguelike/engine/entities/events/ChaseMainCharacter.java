@@ -10,7 +10,7 @@ import edu.brown.cs.roguelike.engine.level.Direction;
 import edu.brown.cs.roguelike.engine.level.Tile;
 import edu.brown.cs.roguelike.engine.save.Saveable;
 
-public class ChaseMainCharacter implements Action, Saveable {
+public class ChaseMainCharacter extends Action implements Saveable {
 
 	/**
 	 * Generated
@@ -19,7 +19,8 @@ public class ChaseMainCharacter implements Action, Saveable {
 	
 	EntityManager manager = null;
 
-	public ChaseMainCharacter(EntityManager manager) {
+	public ChaseMainCharacter(int cost, EntityManager manager) {
+		super(cost);
 		this.manager = manager;
 	}
 

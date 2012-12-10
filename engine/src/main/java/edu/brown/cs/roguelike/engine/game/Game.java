@@ -6,7 +6,6 @@ import cs195n.Vec2i;
 
 import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.level.Level;
-import edu.brown.cs.roguelike.engine.proc.BSPLevelGenerator;
 import edu.brown.cs.roguelike.engine.proc.LevelGenerator;
 import edu.brown.cs.roguelike.engine.save.Saveable;
 
@@ -57,11 +56,12 @@ public abstract class Game implements Saveable {
      * @return
      * @throws ConfigurationException
      */
-    		
     public Level generateNewLevel(LevelGenerator lg) throws ConfigurationException {
     	this.currentLevel = lg.generateLevel(MAP_SIZE);
     	return currentLevel;
     }
+    
+    
     
 	/*** BEGIN Saveable ***/
 

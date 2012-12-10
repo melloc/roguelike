@@ -21,7 +21,8 @@ public class MainCharacter extends Combatable {
 		categories.add("main");
 	}
 
-	public MainCharacter() {
+	public MainCharacter(String name) {
+		this.name = name;
 		this.character = '@';
 		this.color = Color.DEFAULT;
 		this.HP = 100;
@@ -58,6 +59,12 @@ public class MainCharacter extends Combatable {
 	public String getDescription() {
 		return "You.";
 	}
-
+	
+	/**
+	 * Main Character's next action is dependent on user input, and thus cannot
+	 * generate a next action
+	 */
+	@Override
+	protected Action generateNextAction() { return null; } 
 	
 }
