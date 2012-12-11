@@ -5,7 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
+import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
 import edu.brown.cs.roguelike.engine.entities.EntityManager;
+import edu.brown.cs.roguelike.engine.entities.MainCharacter;
 import edu.brown.cs.roguelike.engine.save.Saveable;
 
 
@@ -16,12 +18,25 @@ public class Level implements Saveable {
 	 */
 	private static final long serialVersionUID = 1187760172149150039L;
 
+	private static final int TIER_STEP_SIZE = 5;
+
 	public final Tile[][] tiles;
 	private List<Room> rooms;
 	private List<Hallway> hallways;
 	protected EntityManager manager = new EntityManager();
-	public int depth; //The depth of the level
+	private int depth; //The depth of the level
 	public HashSet<Room> revealedRooms = new HashSet<Room>();
+	
+	public Tile upStairs;
+	public Tile downStairs;
+	
+	public int getTier() {
+		 return (1 + (this.depth/TIER_STEP_SIZE));
+	}
+	
+	public int getTierDiff() {
+		 return this.depth + 1 -  TIER_STEP_SIZE*(getTier()-1);
+	}
 	
 	/**
 	 * @return The entity manager for this {@link Level}.
@@ -125,5 +140,39 @@ public class Level implements Saveable {
 			}
 		}
 	}
+
+	/**Removes the player from the world and returns it
+	 * Allows for world to be simulated while the player is not there.
+	 * @return The main character of the level
+	 */
+	public MainCharacter removePlayer() {
+		List<EntityActionManager> mains = manager.getEntity("main");
+		if(mains.size() >0) {
+			MainCharacter mc = (MainCharacter) mains.get(0).getEntity();
+			mc.getLocation().setEntity(null);
+			manager.unregister(mc);
+			return mc;
+		}
+		else
+			return null;
+	}
+
+	/**Places the character onto the map on the stairs indicated by the boolean argument
+	 * @param mc The main character to place
+	 *
+	 * @param up: If true, place on the down stairs, else, the up stairs
+	 */
+	public void placeCharacter(MainCharacter mc, boolean up) {
+		if(up)
+			upStairs.setEntity(mc);
+		else
+			downStairs.setEntity(mc);
+		
+		LinkedList<String> attr = new LinkedList<String>();
+		attr.add("main");
+		attr.add("keyboard");
+		manager.register(mc.getManager(),attr);
+	}
+
 
 }

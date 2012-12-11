@@ -24,7 +24,6 @@ public class ProgressiveMonsterGenerator implements MonsterGenerator {
 	private static final float lowerChance = 0.05f;
 	private static final float higherChance = 0.02f;
 	
-	private static final int tierStepSize = 5;
 	//END CONSTANTS
 	
 	ArrayList<MonsterTemplate> templates;
@@ -67,16 +66,10 @@ public class ProgressiveMonsterGenerator implements MonsterGenerator {
 			}
 		}
 
-        {
-            // TODO: Actually place main character at UP_STAIRS
-            roomNum = rand.getRandom(level.getRooms().size());
-            Room r = level.getRooms().get(roomNum);
-            Combatable m = new MainCharacter();
-            addMonster(level,r, m);
-        }
+      
 	}
 
-	/**Gets a random monster that is pplicable to the level:
+	/**Gets a random monster that is applicable to the level:
 	 * 
 	 * Roll Order:
 	 * 	lower tier;
@@ -88,8 +81,8 @@ public class ProgressiveMonsterGenerator implements MonsterGenerator {
 	 */
 	private Monster getRandomMonster(Level level) {
 		
-		int tier = (1 + (level.depth/tierStepSize));
-		int tierDiff =level.depth + 1 -  tierStepSize*(tier-1);
+		int tier = level.getTier();
+		int tierDiff = level.getTierDiff();
 
 		
 		if(Math.random() <= lowerChance/tierDiff)

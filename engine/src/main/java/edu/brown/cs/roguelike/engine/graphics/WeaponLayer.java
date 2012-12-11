@@ -4,7 +4,6 @@ import cs195n.Vec2i;
 import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
 import edu.brown.cs.roguelike.engine.entities.EquipType;
 import edu.brown.cs.roguelike.engine.entities.ItemType;
-import edu.brown.cs.roguelike.engine.entities.Potion;
 import edu.brown.cs.roguelike.engine.entities.Stackable;
 import edu.brown.cs.roguelike.engine.entities.Weapon;
 import edu.brown.cs.roguelike.engine.level.Level;

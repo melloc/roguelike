@@ -183,4 +183,8 @@ public class Tile implements Saveable, Drawable {
         return "Tile" + location.toString();
     }
 
+	public boolean getReveal() {
+		return this.reveal;
+	}
+
 }

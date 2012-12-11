@@ -39,7 +39,7 @@ public class EntityManager implements Saveable {
 	 * Convenience method that creates an EntityActionManager for entity
 	 * and adds it to map and everything
 	 * 
-	 * @param entity the Compatable to be registered
+	 * @param entity the Combatable to be registered
 	 * @return the EntityActionManager created for entity and then added
 	 */
 	public EntityActionManager register(Combatable entity) {

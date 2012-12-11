@@ -10,12 +10,9 @@ import cs195n.Vec2i;
 import edu.brown.cs.roguelike.engine.entities.Combatable;
 import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
 import edu.brown.cs.roguelike.engine.events.GameAction;
+import edu.brown.cs.roguelike.engine.game.Game;
 import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.level.Tile;
-import edu.brown.cs.roguelike.engine.proc.BSPLevelGenerator;
-import edu.brown.cs.roguelike.engine.proc.LevelGenerator;
-import edu.brown.cs.roguelike.engine.save.SaveManager;
-
 
 /**
  * A default layer that displays levels. Games should extend this Layer
@@ -31,25 +28,22 @@ public abstract class DefaultMainLayer<A extends Application> implements Layer {
 	protected final static int ANNOUNCE_OFFSET = 1;
 	protected final static Vec2i MAP_SIZE = new Vec2i(80, 24);
 	protected final static int MAX_NAME_LENGTH = 30;
+	
+	protected Game game;
 
-	protected Level currentLevel;
-	protected LevelGenerator rg;
-	protected SaveManager sm;
 	protected String statusMsg;
 	protected String name;
-
+	
 	protected Vec2i size;
 	protected A app;
 
-	public DefaultMainLayer(A app, Vec2i size, String name) {
+	public DefaultMainLayer(A app, Game game, 
+			Vec2i screenSize, String startMessage) {
+		this.game = game;
 		this.app = app;
-		this.size = size;
-		this.name = name;
-		currentLevel = null;
-		rg = new BSPLevelGenerator();
-		sm = new SaveManager("demoSave");
-		statusMsg = "No level. Press 'N' to generate a level, or press "
-				+ "'S' to load the last saved level";
+		this.size = screenSize;
+		this.name = "A Roguelike";
+		statusMsg = startMessage;
 	}
 	
 	@Override
@@ -62,7 +56,7 @@ public abstract class DefaultMainLayer<A extends Application> implements Layer {
 
 		Vec2i middle = size.sdiv(2);
 
-		if (currentLevel == null) { // draw status message
+		if (game == null || game.getCurrentLevel() == null) { // draw status message
 			sw.drawString(middle.x - statusMsg.length() / 2, 0, statusMsg);
 		} else { // otherwise draw level
 			drawLevel(sw);
@@ -71,6 +65,9 @@ public abstract class DefaultMainLayer<A extends Application> implements Layer {
 	}
 
 	private void drawStats(ScreenWriter sw) {
+		
+		Level currentLevel = game.getCurrentLevel();
+		
 		// Draw the divider
 		String divider = "";
 		for (int i = 0; i < size.x; i++) {
@@ -80,9 +77,9 @@ public abstract class DefaultMainLayer<A extends Application> implements Layer {
 		int statStart = ANNOUNCE_OFFSET + MAP_SIZE.y + 1;
 
 		// CHECK FOR WIN/LOSE
-		List<EntityActionManager> monsters = this.currentLevel.getManager()
+		List<EntityActionManager> monsters = currentLevel.getManager()
 				.getEntity("monster");
-		List<EntityActionManager> main = this.currentLevel.getManager()
+		List<EntityActionManager> main = currentLevel.getManager()
 				.getEntity("main");
 
 		if (monsters.isEmpty()) {
@@ -115,7 +112,8 @@ public abstract class DefaultMainLayer<A extends Application> implements Layer {
 	}
 
 	private void drawLevel(Section sw) {
-		Tile[][] tiles = currentLevel.tiles;
+		
+		Tile[][] tiles = game.getCurrentLevel().tiles;
 
 		Tile t;
 		for (int c = 0; c < tiles.length; c++) {

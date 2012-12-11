@@ -12,6 +12,7 @@ import edu.brown.cs.roguelike.engine.level.Level;
 public interface LevelGenerator {
 	
 	/**Generates a level whose size is levelSize
+	 * @param depth 
 	 * @throws ConfigurationException **/
-	public Level generateLevel(Vec2i levelSize) throws ConfigurationException;
+	public Level generateLevel(Vec2i levelSize, int depth) throws ConfigurationException;
 }

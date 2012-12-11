@@ -21,18 +21,24 @@ public abstract class Entity implements Drawable, Mappable, Saveable {
 	protected char character;
 	protected Color color;
 	protected Set<Stackable> inventory = new HashSet<Stackable>();
-
+	
+	protected String name = "No Name";
+	protected Action nextAction;
+	
 	@Override
 	public char getCharacter() {
 		return character;
 	}
 
 	@Override
-	public Color getColor() {
+	public Color getColor() {	
 		return color;
 	}
 	
+	protected abstract Action generateNextAction();
+	
 	public abstract String getDescription();
+	public String getName() { return this.name; }
 	
 	public Set<Stackable> getInventory() {return inventory;}
 	public void addToInventory(Stackable item) {inventory.add(item);}

@@ -5,20 +5,20 @@ import edu.brown.cs.roguelike.engine.entities.Action;
 import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
 import edu.brown.cs.roguelike.engine.entities.EntityManager;
 import edu.brown.cs.roguelike.engine.entities.Stats;
-import edu.brown.cs.roguelike.engine.save.Saveable;
 
-public class ChangeStats implements Action,Saveable {
-
+public class ChangeStats extends Action {
 
 	/**
 	 * Generated
 	 */
 	private static final long serialVersionUID = 187342592937715063L;
+	
 	EntityManager manager = null;
 
 	private Stats delta;
 
 	public ChangeStats(Stats delta) {
+		super(0);
 		this.delta = delta;
 	}
 
