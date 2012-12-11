@@ -13,7 +13,6 @@ import edu.brown.cs.roguelike.engine.events.GameAction;
 import edu.brown.cs.roguelike.engine.game.Game;
 import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.level.Tile;
-import edu.brown.cs.roguelike.engine.save.SaveManager;
 
 /**
  * A default layer that displays levels. Games should extend this Layer

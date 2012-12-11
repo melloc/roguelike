@@ -8,7 +8,6 @@ import java.util.Set;
 import com.googlecode.lanterna.input.Key;
 
 import cs195n.Vec2i;
-
 import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
 import edu.brown.cs.roguelike.engine.entities.Stackable;
 import edu.brown.cs.roguelike.engine.events.GameAction;
@@ -25,7 +24,6 @@ import edu.brown.cs.roguelike.engine.level.Level;
  */
 public class InventoryLayer implements Layer{
 
-	private int page = 0;
 	private Vec2i size;
 	private GUIApp app;
 	private Level currentLevel;

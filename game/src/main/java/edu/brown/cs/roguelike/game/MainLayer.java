@@ -6,7 +6,7 @@ import java.util.List;
 import com.googlecode.lanterna.input.Key;
 
 import cs195n.Vec2i;
-
+import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.entities.Action;
 import edu.brown.cs.roguelike.engine.entities.Combatable;
 import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
@@ -14,7 +14,6 @@ import edu.brown.cs.roguelike.engine.entities.EntityManager;
 import edu.brown.cs.roguelike.engine.entities.Event;
 import edu.brown.cs.roguelike.engine.entities.events.ChaseMainCharacter;
 import edu.brown.cs.roguelike.engine.entities.events.Move;
-import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.events.GameAction;
 import edu.brown.cs.roguelike.engine.game.CumulativeTurnManager;
 import edu.brown.cs.roguelike.engine.graphics.DefaultMainLayer;
@@ -38,6 +37,7 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 	
 	public MainLayer(GUIApp guiApp, RogueGame game, Vec2i size, String startMessage) {
 		super(guiApp, game, size, startMessage);
+		checkReveal();
 	}
 
 	@Override
@@ -120,7 +120,7 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				break; // do nothing
 			case 1: // generate new level
 			{
-				game.generateNewLevel(app.getLevelGenerator());
+				game.gotoLevel(currentLevel.getDepth()+1, app.getLevelGenerator());
 				currentLevel = game.getCurrentLevel();
 				EntityManager m = currentLevel.getManager();
 				Action chaser = new ChaseMainCharacter(10, m);
