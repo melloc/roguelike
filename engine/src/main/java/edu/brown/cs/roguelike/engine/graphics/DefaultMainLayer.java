@@ -56,7 +56,7 @@ public abstract class DefaultMainLayer<A extends Application> implements Layer {
 
 		Vec2i middle = size.sdiv(2);
 
-		if (game.getCurrentLevel() == null) { // draw status message
+		if (game == null || game.getCurrentLevel() == null) { // draw status message
 			sw.drawString(middle.x - statusMsg.length() / 2, 0, statusMsg);
 		} else { // otherwise draw level
 			drawLevel(sw);
