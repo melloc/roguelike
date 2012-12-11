@@ -39,6 +39,7 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 		super(guiApp, game, size, startMessage);
 		if(game != null && game.getCurrentLevel() != null)
 			checkReveal();
+
 	}
 
 	@Override
@@ -184,8 +185,7 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 //					manager.sendMove(Direction.RIGHT);
 				checkReveal();
 				break;
-			case 9:r.java:40)
-			at edu.brown.cs.roguelike.game.GUIApp.initialize(GUIApp.j
+			case 9:
 				app.getLayers().push(
 						new InventoryLayer(app, size, currentLevel));
 				break;
