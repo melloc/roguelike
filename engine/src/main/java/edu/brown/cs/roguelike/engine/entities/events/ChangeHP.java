@@ -5,9 +5,13 @@ import java.util.UUID;
 import edu.brown.cs.roguelike.engine.entities.Action;
 import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
 import edu.brown.cs.roguelike.engine.entities.EntityManager;
-import edu.brown.cs.roguelike.engine.save.Saveable;
 
 public class ChangeHP extends Action {
+
+	/**
+	 * Generated
+	 */
+	private static final long serialVersionUID = -1008201197765156541L;
 
 	EntityManager manager = null;
 	

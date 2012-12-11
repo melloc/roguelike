@@ -1,11 +1,15 @@
 package edu.brown.cs.roguelike.engine.game;
 
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.LinkedList;
 import java.util.UUID;
 
 import cs195n.Vec2i;
-
 import edu.brown.cs.roguelike.engine.config.ConfigurationException;
+import edu.brown.cs.roguelike.engine.entities.MainCharacter;
 import edu.brown.cs.roguelike.engine.level.Level;
+import edu.brown.cs.roguelike.engine.proc.BSPLevelGenerator;
 import edu.brown.cs.roguelike.engine.proc.LevelGenerator;
 import edu.brown.cs.roguelike.engine.save.Saveable;
 
@@ -18,6 +22,8 @@ public abstract class Game implements Saveable {
 
 	protected GameState gameState;
 	
+	protected Hashtable<Integer,Level> levels = new Hashtable<Integer,Level>();
+;
 	protected Level currentLevel;
 	protected Vec2i levelSize;
 	protected final Vec2i MAP_SIZE;
@@ -25,6 +31,46 @@ public abstract class Game implements Saveable {
     public Game(Vec2i mapSize) {
     	this.MAP_SIZE = mapSize;
     	this.init();
+    }
+    
+    /**Initalizes the first level
+     * @throws ConfigurationException **/
+	public void createInitalLevel(BSPLevelGenerator lg) throws ConfigurationException {
+		this.currentLevel = lg.generateLevel(MAP_SIZE, 1);
+		levels.put(1, currentLevel);
+		
+		//TODO: Get character name
+		MainCharacter mc = new MainCharacter("Robert the Rogue");
+		currentLevel.getManager().register(mc);
+		
+		LinkedList<String> attr = new LinkedList<String>();
+		attr.add("main");
+		attr.add("keyboard");
+		currentLevel.getManager().register(mc.getManager(),attr);
+		
+		currentLevel.placeCharacter(mc, true);
+	}
+    
+    /**
+     * Moves the player to the level indicated by depth
+     * @param depth - The depth the player is moving to
+     * @param levelGen - The level generator to use if new levels are needed
+     * @throws ConfigurationException - A configuration problem exists
+     */
+    public void gotoLevel(int depth, LevelGenerator levelGen) throws ConfigurationException {
+    	if(levels.get(depth) == null) {
+    		Level newLevel = levelGen.generateLevel(MAP_SIZE, depth);
+    		
+    		MainCharacter mc = currentLevel.removePlayer();
+    		newLevel.placeCharacter(mc, currentLevel.getDepth() < depth);
+    		levels.put(depth,newLevel);
+    		currentLevel = newLevel;
+    	}
+    	else {
+    		MainCharacter mc = currentLevel.removePlayer();
+    		levels.get(depth).placeCharacter(mc, currentLevel.getDepth() < depth);
+    		currentLevel = levels.get(depth);
+    	}
     }
     
     private void init() {
@@ -49,15 +95,18 @@ public abstract class Game implements Saveable {
     
     public Level getCurrentLevel() { return this.currentLevel; }
 
+    
     /**
      * Takes a LevelGenerator to prevent the need to serialize a local copy
+     * 
+     * @deprecated Use gotoLevel
      * 
      * @param lg
      * @return
      * @throws ConfigurationException
      */
     public Level generateNewLevel(LevelGenerator lg) throws ConfigurationException {
-    	this.currentLevel = lg.generateLevel(MAP_SIZE);
+    	this.currentLevel = lg.generateLevel(MAP_SIZE, 3);
     	return currentLevel;
     }
     

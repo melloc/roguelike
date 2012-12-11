@@ -46,7 +46,7 @@ public class BSPLevelGenerator implements LevelGenerator{
 	 * Generates a full level whose size is levelSize
 	 * @throws ConfigurationException 
 	 */
-	public Level generateLevel(Vec2i levelSize) throws ConfigurationException {
+	public Level generateLevel(Vec2i levelSize, int depth) throws ConfigurationException {
 		rand = new RandomGen(System.nanoTime());
 		tiles = new Tile[levelSize.x][levelSize.y];
 
@@ -57,20 +57,50 @@ public class BSPLevelGenerator implements LevelGenerator{
 		splitAndBuild(fullLevel);
 
 		Level level = new Level(tiles,fullLevel.rooms,fullLevel.hallways);
-		
-		
-		//TESTING PURPOSES: ALWAYS CONSTANT DEPTH
-		level.setDepth(3); 
 
-		//TESTING
-		
+		createStairs(level);
+
+		level.setDepth(depth); 
 		MonsterGenerator mg = new ProgressiveMonsterGenerator();
 		mg.populateLevel(level);
 
-		ItemGenerator ig = new RandomItemGenerator(); 
+		ItemGenerator ig = new ProgressiveItemGenerator(); 
 		ig.populateLevel(level);
-		
+
 		return level;
+	}
+
+
+
+	/**Creates the up and down stairs**/
+	private void createStairs(Level level) {
+
+		Room r = level.getRooms().get(rand.getRandom(level.getRooms().size()));
+		int mX = rand.getRandom(r.min.x, r.max.x);
+		int mY = rand.getRandom(r.min.y, r.max.y);
+		Tile t = level.getTiles()[mX][mY];	
+		level.upStairs = t;
+		t.setType(TileType.UP_STAIRS);
+
+		Room r2;
+		Tile t2;
+
+		if(level.getRooms().size() == 1) {
+			r2 = r;
+		}
+		else {
+			do {
+				r2 = level.getRooms().get(rand.getRandom(level.getRooms().size()));
+			}
+			while (r2 == r);
+		}
+
+		int x = rand.getRandom(r2.min.x, r2.max.x);
+		int y = rand.getRandom(r2.min.y, r2.max.y);
+		t2 = level.getTiles()[x][y];	
+
+		level.downStairs = t2;
+		t2.setType(TileType.DOWN_STAIRS);
 	}
 
 
@@ -277,7 +307,7 @@ public class BSPLevelGenerator implements LevelGenerator{
 						makeDoor(hp1.point,s,true);
 					if(hp2.space.needDoor())
 						makeDoor(hp2.point,s,false);
-					
+
 					curr.hallways.add(new_hallway1);
 					curr.hallways.add(new_hallway2);
 				}

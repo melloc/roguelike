@@ -36,7 +36,7 @@ public class LevelGenTester extends Application {
 	public LevelGenTester(String title, boolean fullscreen) throws ConfigurationException {
 		super(title, fullscreen);
 		rg = new BSPLevelGenerator();
-		level = rg.generateLevel(new Vec2i(SIZEX,SIZEY));
+		level = rg.generateLevel(new Vec2i(SIZEX,SIZEY), 4);
 		scalex = DEFAULT_WINDOW_SIZE.x / SIZEX;
 		scaley =  DEFAULT_WINDOW_SIZE.y / SIZEY;
 	}
@@ -104,7 +104,7 @@ public class LevelGenTester extends Application {
 	@Override
 	protected void onKeyPressed(KeyEvent e) {
 		try {
-			level = rg.generateLevel(new Vec2i(SIZEX,SIZEY));
+			level = rg.generateLevel(new Vec2i(SIZEX,SIZEY), 4);
 		} catch (ConfigurationException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

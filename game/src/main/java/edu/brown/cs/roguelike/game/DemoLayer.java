@@ -102,7 +102,7 @@ public class DemoLayer implements Layer {
             case 0:
                 break; // do nothing
             case 1: // generate new level
-                currentLevel = rg.generateLevel(levelSize);
+                currentLevel = rg.generateLevel(levelSize,5);
                 break;
             case 2: // save current level
                 sm.saveLevel(currentLevel);

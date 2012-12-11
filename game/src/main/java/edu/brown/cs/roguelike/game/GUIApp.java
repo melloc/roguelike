@@ -1,6 +1,7 @@
 package edu.brown.cs.roguelike.game;
 
 import cs195n.Vec2i;
+import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.game.CumulativeTurnManager;
 import edu.brown.cs.roguelike.engine.game.Game;
 import edu.brown.cs.roguelike.engine.graphics.Application;
@@ -26,7 +27,7 @@ public class GUIApp extends Application {
 	public CumulativeTurnManager getTurnManager() { return tm; }
 
 	@Override
-	protected boolean initialize(Vec2i screenSize) {
+	protected boolean initialize(Vec2i screenSize)  {
 		
 		this.sm = new SaveManager("mainSave");
 		this.lg = new BSPLevelGenerator();
@@ -36,7 +37,7 @@ public class GUIApp extends Application {
 			// Attempt to load a save game
 			Game g = sm.loadGame();
 			if (g instanceof RogueGame) rg = (RogueGame)g;
-			
+						
 			tm = new CumulativeTurnManager(rg, POINTS_PER_TURN);
 			
 			this.layers.push(new MainLayer(
@@ -44,11 +45,18 @@ public class GUIApp extends Application {
 			return true;
 		} catch (Exception e) {
 			rg = new RogueGame();
+			try {
+				rg.createInitalLevel(lg);
+				
+			} catch (ConfigurationException e1) {
+				this.layers.push(new MainLayer(this, null, SCREEN_SIZE,
+						"Configuration error exists, fix your setup"));
+			}
 			
 			tm = new CumulativeTurnManager(rg, POINTS_PER_TURN);
 			
 			this.layers.push(new MainLayer(this, rg, SCREEN_SIZE,
-					"No save game found. Press 'N' to generate a new level."));
+					"Error: Couldn't create the game"));
 			
 			return false;
 		}

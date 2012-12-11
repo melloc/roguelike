@@ -3,6 +3,7 @@ package edu.brown.cs.roguelike.engine.proc;
 import com.googlecode.lanterna.terminal.Terminal.Color;
 
 import edu.brown.cs.roguelike.engine.config.ConfigurationException;
+import edu.brown.cs.roguelike.engine.entities.DamageType;
 import edu.brown.cs.roguelike.engine.entities.Jewel;
 import edu.brown.cs.roguelike.engine.entities.Potion;
 import edu.brown.cs.roguelike.engine.entities.Stackable;
@@ -35,7 +36,7 @@ public class RandomItemGenerator implements ItemGenerator {
 		case 1:
 			return new Potion(Color.RED,new ChangeHP(5));
 		case 2: 
-			return new Weapon(new Stats(0,10,0));
+			return new Weapon(new Stats(0,10,0),"A sword", DamageType.SLASH);
 		default:
 			return new Jewel();
 		}

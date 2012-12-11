@@ -8,11 +8,9 @@ import com.googlecode.lanterna.terminal.Terminal.Color;
 
 import edu.brown.cs.roguelike.engine.config.Config;
 import edu.brown.cs.roguelike.engine.config.ConfigurationException;
-import edu.brown.cs.roguelike.engine.config.MonsterTemplate;
 import edu.brown.cs.roguelike.engine.config.WeaponNameTemplate;
 import edu.brown.cs.roguelike.engine.config.WeaponTemplate;
 import edu.brown.cs.roguelike.engine.entities.Jewel;
-import edu.brown.cs.roguelike.engine.entities.Monster;
 import edu.brown.cs.roguelike.engine.entities.Potion;
 import edu.brown.cs.roguelike.engine.entities.Stackable;
 import edu.brown.cs.roguelike.engine.entities.Stats;
@@ -98,7 +96,7 @@ public class ProgressiveItemGenerator implements ItemGenerator {
 		if(tier == 0) {
 			tier = 1;
 		}
-		if(tier > weaponNameTiers.size()) {
+		if(tier > Math.min(weaponNameTiers.size(),weaponTiers.size())) {
 			tier = weaponNameTiers.size();
 		}
 		WeaponNameTemplate adjs = weaponNameTiers.get(tier);

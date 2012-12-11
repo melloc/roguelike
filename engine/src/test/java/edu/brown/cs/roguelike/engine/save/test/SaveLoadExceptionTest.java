@@ -25,7 +25,7 @@ public class SaveLoadExceptionTest {
 		
 		BSPLevelGenerator rg = new BSPLevelGenerator();
 		
-		Level level = rg.generateLevel(new Vec2i(50,200));
+		Level level = rg.generateLevel(new Vec2i(50,200),5);
 		
 		sm.saveLevel(level);
 		
