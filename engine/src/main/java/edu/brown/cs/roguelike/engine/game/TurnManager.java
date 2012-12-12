@@ -3,6 +3,7 @@ package edu.brown.cs.roguelike.engine.game;
 import java.util.UUID;
 
 import edu.brown.cs.roguelike.engine.entities.Action;
+import edu.brown.cs.roguelike.engine.graphics.Application;
 import edu.brown.cs.roguelike.engine.save.Saveable;
 
 
@@ -23,10 +24,12 @@ public abstract class TurnManager implements Saveable {
 	
 	protected Game game;
 	protected final int waitCost;
+	protected Application app;
 	
-	public TurnManager(Game game, int waitCost) {
+	public TurnManager(Application app, Game game, int waitCost) {
 		this.game = game;
 		this.waitCost = waitCost;
+		this.app = app;
 	}
 	
 	public int getWaitCost() { return this.waitCost; }
@@ -35,7 +38,14 @@ public abstract class TurnManager implements Saveable {
 	 * Every turn starts with the player's Action
 	 * @param playerAction
 	 */
+	
 	public abstract void takeTurn(Action playerAction);
+	
+	public void takeTurnAndAnnounce(Action playerAction) {
+		takeTurn(playerAction);
+		Announcer.displayAnnouncements(app);
+	}
+	
 	
 	/*** BEGIN Saveable ***/
 
