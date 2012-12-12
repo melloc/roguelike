@@ -105,7 +105,8 @@ public abstract class LanternaFrontend {
         screen.startScreen();
         {
             TerminalSize size = screen.getTerminalSize();
-            onResize(new Vec2i(size.getColumns(),size.getRows()));
+            //onResize(new Vec2i(size.getColumns(),size.getRows()));
+            onResize(screenSize);
         }
 
 
@@ -113,11 +114,11 @@ public abstract class LanternaFrontend {
         while (running) {
 			try {
 				// First do anything that we need to do for updating screen size.
-				if (screen.resizePending()) {
+				/* if (screen.resizePending()) {
 					screen.refresh();
 					TerminalSize size = screen.getTerminalSize();
 					onResize(new Vec2i(size.getColumns(),size.getRows()));
-				}
+				} */
 
 				// First do anything that we need to do for updating screen size.
 				// Then we draw the screen.
