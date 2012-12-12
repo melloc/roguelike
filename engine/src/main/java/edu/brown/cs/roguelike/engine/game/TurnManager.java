@@ -39,10 +39,10 @@ public abstract class TurnManager implements Saveable {
 	 * @param playerAction
 	 */
 	
-	public abstract void takeTurn(Action playerAction);
+	public abstract void takeTurnWithoutAnnounce(Action playerAction);
 	
-	public void takeTurnAndAnnounce(Action playerAction) {
-		takeTurn(playerAction);
+	public void takeTurn(Action playerAction) {
+		takeTurnWithoutAnnounce(playerAction);
 		Announcer.displayAnnouncements(app);
 	}
 	

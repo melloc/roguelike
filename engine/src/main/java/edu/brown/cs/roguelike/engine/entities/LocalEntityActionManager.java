@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import edu.brown.cs.roguelike.engine.game.Announcer;
 import edu.brown.cs.roguelike.engine.level.Direction;
 import edu.brown.cs.roguelike.engine.level.Tile;
 import edu.brown.cs.roguelike.engine.save.Saveable;
@@ -16,6 +17,8 @@ public class LocalEntityActionManager implements EntityActionManager, Saveable {
 	 * Generated
 	 */
 	private static final long serialVersionUID = 7307174231891885328L;
+
+	private static final int MAX_DROP_SIZE = 26;
 	
 	protected int actionPoints;
 	
@@ -28,6 +31,7 @@ public class LocalEntityActionManager implements EntityActionManager, Saveable {
 		this.actionPoints = 0;
 	}
 
+	
 	@Override
 	public Tile getLocation() {
 		return entity.getLocation();
@@ -47,7 +51,6 @@ public class LocalEntityActionManager implements EntityActionManager, Saveable {
 	public void changeStats(Stats delta) {
 		Stats s = entity.getStats();
 		entity.setStats(new Stats (
-				s.hitChance + delta.hitChance,
 				s.attack + delta.attack,
 				s.defense + delta.defense
 				));
@@ -56,6 +59,17 @@ public class LocalEntityActionManager implements EntityActionManager, Saveable {
 	@Override
 	public void changeHP(int delta) {
 		entity.HP += delta;
+	}
+	
+	@Override
+	public void drop(Stackable s) {
+		if(entity.getLocation().getStackables().size() < MAX_DROP_SIZE) {
+			entity.getInventory().remove(s);
+			entity.getLocation().getStackables().add(s);
+		}
+		else {
+			Announcer.announce("No room to drop here.");
+		}
 	}
 	
 

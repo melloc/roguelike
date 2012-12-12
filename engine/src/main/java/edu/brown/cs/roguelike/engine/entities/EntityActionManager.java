@@ -27,6 +27,7 @@ public interface EntityActionManager {
 	public void changeHP(int delta);
 	public void toggleVisibility();
 	public void changeStats(Stats delta);
+	public void drop(Stackable s);
 	// public void modify(???);
 	// public void timed(???);
 

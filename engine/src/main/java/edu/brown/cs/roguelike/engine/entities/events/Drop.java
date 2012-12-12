@@ -1,27 +1,35 @@
-package edu.brown.cs.roguelike.engine.entities;
+package edu.brown.cs.roguelike.engine.entities.events;
 
 import java.util.UUID;
 
-import edu.brown.cs.roguelike.engine.save.Saveable;
+import edu.brown.cs.roguelike.engine.entities.Action;
+import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
+import edu.brown.cs.roguelike.engine.entities.EntityManager;
+import edu.brown.cs.roguelike.engine.entities.Stackable;
+import edu.brown.cs.roguelike.engine.game.Announcer;
 
-/**The Stats of a Combatable Entity. Affects player combat**/
-public class Stats implements Saveable {
-	
+/**An action to drop an item**/
+public class Drop extends Action {
+
 	/**
 	 * Generated
 	 */
-	private static final long serialVersionUID = -3044267314709997781L;
-	
-	protected int   attack;	   //Attack power
-	protected int	defense;   //Defense toughness
+	private static final long serialVersionUID = 742417767054537974L;
 
-	public Stats(int atk, int def) {
-		this.attack = atk;
-		this.defense = def;
-	}
+
 	
-	public int getAttack() 	 {return attack;}
-	public int getDefense()  {return defense;}
+	EntityManager manager = null;
+	
+	private Stackable item;
+
+	public Drop(Stackable item) {
+		super(0);
+		this.item = item;
+	}
+
+	public void apply(EntityActionManager queue) {
+		queue.drop(item);
+	};
 	
 	/*** BEGIN Saveable ***/
 
@@ -48,7 +56,7 @@ public class Stats implements Saveable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Stats other = (Stats) obj;
+		Drop other = (Drop) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -63,14 +71,6 @@ public class Stats implements Saveable {
 		return this.id;
 	}
 
-	public Stats invert() {
-		return new Stats (
-				attack *1,
-				defense *1
-				);
-	}
-
 	/*** END Saveable ***/
-
 
 }
