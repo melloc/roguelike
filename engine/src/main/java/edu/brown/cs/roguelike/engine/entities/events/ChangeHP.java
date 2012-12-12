@@ -5,6 +5,7 @@ import java.util.UUID;
 import edu.brown.cs.roguelike.engine.entities.Action;
 import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
 import edu.brown.cs.roguelike.engine.entities.EntityManager;
+import edu.brown.cs.roguelike.engine.game.Announcer;
 
 public class ChangeHP extends Action {
 
@@ -24,6 +25,11 @@ public class ChangeHP extends Action {
 
 	public void apply(EntityActionManager queue) {
 		queue.changeHP(delta);
+		
+		if(delta > 0) 
+			Announcer.announce("You feel healthier.");
+		else 
+			Announcer.announce("You feel weaker.");
 	};
 	
 	/*** BEGIN Saveable ***/

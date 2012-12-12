@@ -38,7 +38,7 @@ public class GUIApp extends Application {
 			Game g = sm.loadGame();
 			if (g instanceof RogueGame) rg = (RogueGame)g;
 						
-			tm = new CumulativeTurnManager(rg, POINTS_PER_TURN);
+			tm = new CumulativeTurnManager(this, rg, POINTS_PER_TURN);
 			
 			this.layers.push(new MainLayer(
 					this, rg, SCREEN_SIZE, "Succesful Load"));
@@ -53,7 +53,7 @@ public class GUIApp extends Application {
 						"Configuration error exists, fix your setup"));
 			}
 			
-			tm = new CumulativeTurnManager(rg, POINTS_PER_TURN);
+			tm = new CumulativeTurnManager(this, rg, POINTS_PER_TURN);
 			
 			this.layers.push(new MainLayer(this, rg, SCREEN_SIZE,
 					"Error: Couldn't create the game"));

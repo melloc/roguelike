@@ -9,16 +9,20 @@ import edu.brown.cs.roguelike.engine.entities.Combatable;
 import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
 import edu.brown.cs.roguelike.engine.entities.Stackable;
 import edu.brown.cs.roguelike.engine.events.GameAction;
+import edu.brown.cs.roguelike.engine.game.CumulativeTurnManager;
+import edu.brown.cs.roguelike.engine.game.TurnManager;
 import edu.brown.cs.roguelike.engine.level.Level;
 public abstract class UseItemLayer<A extends Application> implements Layer  {
 	private A app;
 	private Vec2i size;
 	private Level currentLevel;
+	protected TurnManager tm;
 
-	public UseItemLayer(A app, Vec2i size, Level currentLevel) {
+	public UseItemLayer(TurnManager tm, A app, Vec2i size, Level currentLevel) {
 		this.app = app;
 		this.size = size;
 		this.currentLevel = currentLevel;
+		this.tm = tm;
 	}
 
 	@Override
@@ -44,9 +48,16 @@ public abstract class UseItemLayer<A extends Application> implements Layer  {
 		}
 		else if(isValidSlot(action.getActionClassifier())){
 			useItem(action.getActionClassifier());
+			
+			Layer top = app.getLayers().peek();
+		
 			app.getLayers().pop(); //Remove this layer from stack
 			app.getLayers().pop(); //Remove Inventory layer from stack
 
+			if(top != this) {
+				app.getLayers().pop();
+				app.getLayers().push(top);
+			}
 		}
 		else {
 			throw new Error("This shouldn't happen and indicates an unhandled case. Received: "

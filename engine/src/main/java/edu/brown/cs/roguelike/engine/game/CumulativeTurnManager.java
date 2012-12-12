@@ -6,6 +6,7 @@ import edu.brown.cs.roguelike.engine.entities.Action;
 import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
 import edu.brown.cs.roguelike.engine.entities.EntityManager;
 import edu.brown.cs.roguelike.engine.entities.events.Wait;
+import edu.brown.cs.roguelike.engine.graphics.Application;
 
 /**
  * A TurnManager that gives every Entity a certain number of points
@@ -30,8 +31,8 @@ public class CumulativeTurnManager extends TurnManager {
 	private final int minPtsPerTurn;
 	
 
-	public CumulativeTurnManager(Game game, int pointsPerTurn) {
-		super(game, pointsPerTurn);
+	public CumulativeTurnManager(Application app, Game game, int pointsPerTurn) {
+		super(app, game, pointsPerTurn);
 		this.pointsPerTurn = pointsPerTurn;
 		this.minPtsPerTurn = pointsPerTurn/2;
 	}
