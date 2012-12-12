@@ -21,6 +21,9 @@ public class GUIApp extends Application {
 	public GUIApp(Arguments args) {
 		super("demo");
 		configDir = args.getConfig();
+		isTTY = args.getTty();
+		if (isTTY)
+			System.setProperty("java.awt.headless","true");
 	}
 	
 	public SaveManager getSaveManager() { return sm; }
@@ -65,7 +68,7 @@ public class GUIApp extends Application {
 
 	@Override
 	public Vec2i getSize() {
-		return new Vec2i(80,30);
+		return new Vec2i(100,30);
 	}
 	
 }

@@ -92,13 +92,15 @@ public abstract class LanternaFrontend {
 		}
 	}
 
+	protected boolean isTTY = false;
+
     /**
      * Contains the main event loop that drives the game. This method will not 
      * return until {@link LanternaFrontend#shutdown} is called.
      */
     final void doStartup() {
 		Vec2i screenSize = getSize();
-		System.out.print("\033[8;" + screenSize.y + ";" + screenSize.x + "t");
+		if (isTTY) System.out.print("\033[8;" + screenSize.y + ";" + screenSize.x + "t");
         Screen screen = TerminalFacade.createScreen();
         screen.startScreen();
         {
@@ -132,7 +134,7 @@ public abstract class LanternaFrontend {
 				long currentTime = new Date().getTime();
 				onTick(currentTime - time);
 				time = currentTime;
-			} catch (Exception e) {
+			} catch (NullPointerException e) {
 				// For now, ignore it.
 			}
         }
