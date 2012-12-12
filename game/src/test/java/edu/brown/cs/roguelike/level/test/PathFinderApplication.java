@@ -15,4 +15,9 @@ public class PathFinderApplication extends Application {
 		return true;
 	}
 
+	@Override
+	public Vec2i getSize() {
+		return new Vec2i(80,30);
+	}
+
 }

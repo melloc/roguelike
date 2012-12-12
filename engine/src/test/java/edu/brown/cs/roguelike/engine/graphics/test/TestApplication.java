@@ -33,4 +33,9 @@ public class TestApplication extends Application {
         // This exists so that we can create an interactive test.
     }
 
+	@Override
+	public Vec2i getSize() {
+		return new Vec2i(80,30);
+	}
+
 }

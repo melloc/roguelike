@@ -29,7 +29,7 @@ public class Section extends ScreenWriter {
 	 */
 	public Section(Screen screen) {
 		this(screen, new Vec2i(0, 0), new Vec2i(screen.getTerminalSize()
-				.getColumns() - 1, screen.getTerminalSize().getRows() - 1));
+				.getColumns(), screen.getTerminalSize().getRows()));
 	}
 
 	public void drawString(int x, int y, String string,

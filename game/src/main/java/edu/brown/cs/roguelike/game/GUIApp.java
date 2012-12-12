@@ -61,5 +61,10 @@ public class GUIApp extends Application {
 			return false;
 		}
 	}
+
+	@Override
+	public Vec2i getSize() {
+		return new Vec2i(80,30);
+	}
 	
 }
