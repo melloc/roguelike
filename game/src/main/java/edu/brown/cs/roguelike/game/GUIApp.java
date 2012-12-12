@@ -74,5 +74,10 @@ public class GUIApp extends Application {
 	public Vec2i getSize() {
 		return new Vec2i(100,30);
 	}
+
+	@Override
+	public void deleteSaveFile() {
+		sm.deleteSave();
+	}
 	
 }

@@ -1,5 +1,6 @@
 package edu.brown.cs.roguelike.engine.save;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -38,10 +39,18 @@ public class SaveManager {
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			
 			oos.writeObject(l);
+			fos.close();
 			oos.close();
 		} catch (Exception e) {
 			throw new SaveLoadException(e);
 		}
+	}
+	
+	public void deleteSave() {
+		File f = new File(saveFile);
+		if(f.exists()) 
+			f.delete();
+		
 	}
 
 	/**

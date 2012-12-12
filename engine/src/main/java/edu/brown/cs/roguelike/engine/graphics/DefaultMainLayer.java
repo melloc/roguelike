@@ -78,19 +78,13 @@ public abstract class DefaultMainLayer<A extends Application> implements Layer {
 		int statStart = ANNOUNCE_OFFSET + MAP_SIZE.y + 1;
 
 		// CHECK FOR WIN/LOSE
-		List<EntityActionManager> monsters = currentLevel.getManager()
-				.getEntity("monster");
 		List<EntityActionManager> main = currentLevel.getManager()
 				.getEntity("main");
-
-		if (monsters.isEmpty()) {
-			sw.drawString(0, statStart, "You win!");
-			return;
-		} else if (main.isEmpty()) {
-			sw.drawString(0, statStart, "You lost!");
+		
+		if(main.size() == 0) {
+			sw.drawString(0, statStart, "You lose!");
 			return;
 		}
-
 		MainCharacter player = (MainCharacter) main.get(0).getEntity();
 
 		// DRAW THE STATS
