@@ -23,7 +23,7 @@ public class Potion extends Stackable {
 	
 	@Override
 	public String getDescription() {
-		return "A " + color +" potion";
+		return color +" potion";
 	}
 
 	public Action getQuaffAction() {

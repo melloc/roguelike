@@ -24,6 +24,7 @@ import edu.brown.cs.roguelike.engine.level.Direction;
 import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.level.Room;
 import edu.brown.cs.roguelike.engine.level.Tile;
+import edu.brown.cs.roguelike.engine.level.TileType;
 import edu.brown.cs.roguelike.engine.save.SaveLoadException;
 
 /**
@@ -71,6 +72,10 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				return new GameAction(1, 11); // Wield
 			case 'o':
 				return new GameAction(1, 12); // observe
+			case '<':
+				return new GameAction(1, 13); // up stairs
+			case '>':
+				return new GameAction(1, 14); // down stairs
 			default:
 				return new GameAction(1, 0); // do nothing
 			}
@@ -152,7 +157,7 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 			case 5:
 				if (c != null) { 
 					moveAction = new Move(10, c, Direction.LEFT);
-					tm.takeTurn(moveAction);
+					tm.takeTurnAndAnnounce(moveAction);
 				}
 //				for (EntityActionManager manager : managers)
 //					manager.sendMove(Direction.LEFT);
@@ -161,7 +166,7 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 			case 6:
 				if (c != null) {
 					moveAction = new Move(10, c, Direction.UP);
-					tm.takeTurn(moveAction);
+					tm.takeTurnAndAnnounce(moveAction);
 				}
 //				for (EntityActionManager manager : managers)
 //					manager.sendMove(Direction.UP);
@@ -170,7 +175,7 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 			case 7:
 				if (c != null) {
 					moveAction = new Move(10, c, Direction.DOWN);
-					tm.takeTurn(moveAction);
+					tm.takeTurnAndAnnounce(moveAction);
 				}
 //				for (EntityActionManager manager : managers)
 //					manager.sendMove(Direction.DOWN);
@@ -179,9 +184,9 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 			case 8:
 				if (c != null) {
 					moveAction = new Move(10, c, Direction.RIGHT);
-					tm.takeTurn(moveAction);					
+					tm.takeTurnAndAnnounce(moveAction);					
 				}
-//				for (EntityActionManager manager : managers)
+//				for  manager : managers)
 //					manager.sendMove(Direction.RIGHT);
 				checkReveal();
 				break;
@@ -193,17 +198,36 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				app.getLayers().push(
 						new InventoryLayer(app, size, currentLevel));
 				app.getLayers().push(
-						new PotionLayer<GUIApp>(app, size, currentLevel));
+						new PotionLayer<GUIApp>(tm, app, size, currentLevel));
 				break;
 			case 11:
 				app.getLayers().push(
 						new InventoryLayer(app, size, currentLevel));
 				app.getLayers().push(
-						new WeaponLayer<GUIApp>(app, size, currentLevel));
+						new WeaponLayer<GUIApp>(tm, app, size, currentLevel));
 				break;
 			case 12:
 				app.getLayers().push(
 						new LookLayer<GUIApp>(app, size, currentLevel));
+				break;
+			case 13: //Up Stairs
+				if(c != null) {
+					if (c.getLocation().getType() == TileType.UP_STAIRS) {
+						//TODO: Handle going to surface
+						if(currentLevel.getDepth() != 1) {
+							game.gotoLevel(currentLevel.getDepth()-1, app.getLevelGenerator());
+							checkReveal();
+						}
+					}
+				}
+				break;
+			case 14: //Up Stairs
+				if(c != null) {
+					if (c.getLocation().getType() == TileType.DOWN_STAIRS) {
+							game.gotoLevel(currentLevel.getDepth()+1, app.getLevelGenerator());
+							checkReveal();
+					}
+				}
 				break;
 			default:
 				throw new Error(

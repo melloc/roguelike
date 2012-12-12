@@ -5,9 +5,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
+import edu.brown.cs.roguelike.engine.entities.Combatable;
+import edu.brown.cs.roguelike.engine.entities.Entity;
 import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
 import edu.brown.cs.roguelike.engine.entities.EntityManager;
 import edu.brown.cs.roguelike.engine.entities.MainCharacter;
+import edu.brown.cs.roguelike.engine.proc.RandomGen;
 import edu.brown.cs.roguelike.engine.save.Saveable;
 
 
@@ -163,6 +166,25 @@ public class Level implements Saveable {
 	 * @param up: If true, place on the down stairs, else, the up stairs
 	 */
 	public void placeCharacter(MainCharacter mc, boolean up) {
+		
+		Entity current = (up ? upStairs.getEntity() : downStairs.getEntity());
+		if(current != null) {
+			RandomGen rand = new RandomGen(System.nanoTime());
+		Room r = this.rooms.get(rand.getRandom(rooms.size()));
+		boolean placedMonster = false;
+		do {
+			int mX = rand.getRandom(r.min.x, r.max.x);
+			int mY = rand.getRandom(r.min.y, r.max.y);
+			Tile t = tiles[mX][mY];
+			if(t.getEntity() == null) {
+				t.setEntity(current);
+				current.setLocation(t);
+				placedMonster = true;
+			}
+		}
+		while(!placedMonster);
+		}
+		
 		if(up)
 			upStairs.setEntity(mc);
 		else

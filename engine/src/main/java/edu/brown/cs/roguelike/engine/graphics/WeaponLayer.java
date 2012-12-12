@@ -6,12 +6,15 @@ import edu.brown.cs.roguelike.engine.entities.EquipType;
 import edu.brown.cs.roguelike.engine.entities.ItemType;
 import edu.brown.cs.roguelike.engine.entities.Stackable;
 import edu.brown.cs.roguelike.engine.entities.Weapon;
+import edu.brown.cs.roguelike.engine.game.Announcer;
+import edu.brown.cs.roguelike.engine.game.CumulativeTurnManager;
+import edu.brown.cs.roguelike.engine.game.TurnManager;
 import edu.brown.cs.roguelike.engine.level.Level;
 
 public class WeaponLayer<A extends Application> extends UseItemLayer<A> {
 
-	public WeaponLayer(A app, Vec2i size, Level currentLevel) {
-		super(app, size, currentLevel);
+	public WeaponLayer(TurnManager tm, A app, Vec2i size, Level currentLevel) {
+		super(tm, app, size, currentLevel);
 	}
 
 	@Override
@@ -29,7 +32,8 @@ public class WeaponLayer<A extends Application> extends UseItemLayer<A> {
 				oldWeap.getUnwieldAction().apply(target);
 				target.getEntity().getInventory().add(oldWeap);
 			}
-			w.getWieldAction().apply(target);
+			Announcer.announce("You wield the " + w.getDescription());
+			tm.takeTurnAndAnnounce(w.getWieldAction());
 			target.getEntity().getEquipment().put(EquipType.WEAPON, w);
 			target.getEntity().getInventory().remove(item);
 		}

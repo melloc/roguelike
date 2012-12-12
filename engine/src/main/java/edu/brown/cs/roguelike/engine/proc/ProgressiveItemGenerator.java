@@ -122,7 +122,7 @@ public class ProgressiveItemGenerator implements ItemGenerator {
 		List<WeaponTemplate> weaponList = weaponTiers.get(tier);
 		WeaponTemplate  w = weaponList.get(rand.getRandom(weaponList.size()));
 		
-		String desc = "A " + (prefix == "" ? prefix : prefix+" ") + 
+		String desc = (prefix == "" ? prefix : prefix+" ") + 
 				(material == "" ? material : material+" ") + w.name + (suffix == "" ? suffix : " "+suffix);
 		
 		return new Weapon(new Stats(10,0,0), desc, w.damageType);
