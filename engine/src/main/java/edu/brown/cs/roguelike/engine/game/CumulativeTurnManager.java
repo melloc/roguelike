@@ -89,7 +89,7 @@ public class CumulativeTurnManager extends TurnManager {
 					if (cost <= mgr.getActionPoints()) {
 						mgr.takeNextAction();
 						mgr.useActionPoints(cost);
-					}
+					} else { break; }
 				} 
 			} 
 			// until we have too few points to try again

@@ -12,7 +12,6 @@ import edu.brown.cs.roguelike.engine.entities.events.Wait;
 import edu.brown.cs.roguelike.engine.fsm.State;
 import edu.brown.cs.roguelike.engine.level.Direction;
 import edu.brown.cs.roguelike.engine.level.Level;
-import edu.brown.cs.roguelike.engine.level.Pathfinder;
 import edu.brown.cs.roguelike.engine.level.Tile;
 import edu.brown.cs.roguelike.engine.pathfinding.AStar;
 

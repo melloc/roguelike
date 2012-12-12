@@ -24,7 +24,7 @@ public class Monster extends Combatable {
 	
 	// The Level I'm in
 	private Level level;
-	private final int moveCost = 10;
+	private final int moveCost;
 	private Action nextAction;
 	
 	// My brainz
@@ -40,6 +40,7 @@ public class Monster extends Combatable {
 		this.character = c;
 		this.color = color;
 		nextAction = null;
+		this.moveCost = 10;
 		buildBrainz();
 	}
 	
@@ -53,6 +54,7 @@ public class Monster extends Combatable {
 		baseStats = stats;
 		this.team = 0;
 		this.name = mt.name;
+		this.moveCost = mt.moveCost;
 		buildBrainz();
 	}
 	

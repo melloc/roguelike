@@ -20,6 +20,7 @@ public class MonsterTemplate {
 	public final int attack;
 	public final int defense;
 	public final int tier;
+	public final int moveCost;
 
 	@JsonCreator
 	public MonsterTemplate(
@@ -29,7 +30,8 @@ public class MonsterTemplate {
 			@JsonProperty("startHp") int startHp,
 			@JsonProperty("attack") int attack,
 			@JsonProperty("defense") int defense,
-			@JsonProperty("tier") int tier) {
+			@JsonProperty("tier") int tier,
+			@JsonProperty("moveCost") int moveCost) {
 		this.name = name;
 		this.character = character;
 		
@@ -50,6 +52,7 @@ public class MonsterTemplate {
 		this.attack = attack;
 		this.defense = defense;
 		this.tier = tier;
+		this.moveCost = moveCost;
 	}
 	
 
