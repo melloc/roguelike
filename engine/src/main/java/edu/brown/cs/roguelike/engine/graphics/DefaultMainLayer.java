@@ -100,6 +100,9 @@ public abstract class DefaultMainLayer<A extends Application> implements Layer {
 		line1 += "/";
 		line1 += player.getStartHP();
 		sw.drawString(0, statStart, line1);
+		
+		String depthString = "Dungeon Level: " + currentLevel.getDepth();
+		sw.drawString(size.x - depthString.length() -2, statStart, depthString);
 
 		// LINE 2
 		String line2 = "";
