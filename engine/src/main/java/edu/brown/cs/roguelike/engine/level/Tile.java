@@ -1,6 +1,8 @@
 package edu.brown.cs.roguelike.engine.level;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 import com.googlecode.lanterna.terminal.Terminal.Color;
@@ -10,6 +12,7 @@ import edu.brown.cs.roguelike.engine.entities.Entity;
 import edu.brown.cs.roguelike.engine.entities.MainCharacter;
 import edu.brown.cs.roguelike.engine.entities.Stackable;
 import edu.brown.cs.roguelike.engine.graphics.Drawable;
+import edu.brown.cs.roguelike.engine.pathfinding.AStarNode;
 import edu.brown.cs.roguelike.engine.save.Saveable;
 
 /**
@@ -18,7 +21,10 @@ import edu.brown.cs.roguelike.engine.save.Saveable;
  * @author jte
  *
  */
-public class Tile implements Saveable, Drawable {
+public class Tile extends AStarNode<Tile> implements Saveable, Drawable {
+	
+	// The Space I belong to
+	protected Space space;
 
 	protected Vec2i location = null;
 	protected Level level = null;
@@ -38,6 +44,11 @@ public class Tile implements Saveable, Drawable {
 		this.type = type;
 	}
 	
+	public Tile(TileType type, Space space) {
+		this.type = type;
+		this.space = space;
+	}
+	
 	private LinkedList<Stackable> stackables = new LinkedList<Stackable>();
 
 	/**
@@ -46,6 +57,9 @@ public class Tile implements Saveable, Drawable {
 	public Vec2i getLocation() {
 		return location;
 	}
+	
+	public Space getSpace() { return space; }
+	public void setSpace(Space space) { this.space = space; }
 
 	/**
 	 * @param location the location to set
@@ -116,6 +130,54 @@ public class Tile implements Saveable, Drawable {
 	public void setType(TileType type) {
 		this.type = type;
 	}
+	
+    @Override
+    public String toString() {
+        return "Tile" + location.toString();
+    }
+
+	public boolean getReveal() {
+		return this.reveal;
+	}
+
+	@Override
+	protected int getHScore(Tile goal) {
+		return 10*calcManhattan(goal);
+	}
+	
+	@Override 
+	public ArrayList<Tile> getNeighbors() {
+		
+		List<Tile> trueNeighbors = level.getNeighbors(this);
+		
+		ArrayList<Tile> passableNeighbors = new ArrayList<Tile>();
+		
+		for (Tile t : trueNeighbors) 
+			if ( t.getType().passable ) passableNeighbors.add(t);
+		
+		return passableNeighbors;
+	}
+	
+	// Convenience method to calculate the Manhattan distance
+	protected int calcManhattan(Tile goal) {
+		
+		int rows = Math.abs(location.y-goal.location.y);
+		int cols = Math.abs(location.x-goal.location.x);
+		
+		return rows + cols;
+	}
+
+	@Override
+	public int distance(Tile neighbor) {
+		int penalty = 0;
+		
+		Entity occupant = neighbor.getEntity();
+		
+		// Don't move into other Monsters, silly
+		if (occupant != null && !(occupant instanceof MainCharacter)) penalty = 100; 
+		
+		return 10 + penalty;
+	}
 
 	/*** BEGIN Saveable ***/
 
@@ -178,13 +240,6 @@ public class Tile implements Saveable, Drawable {
 			return getType();
 	}
 
-    @Override
-    public String toString() {
-        return "Tile" + location.toString();
-    }
 
-	public boolean getReveal() {
-		return this.reveal;
-	}
 
 }

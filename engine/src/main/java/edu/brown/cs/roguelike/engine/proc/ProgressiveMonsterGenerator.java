@@ -105,7 +105,7 @@ public class ProgressiveMonsterGenerator implements MonsterGenerator {
 		}
 		List<MonsterTemplate> tierList = tiers.get(tier);
 		
-		return (new Monster(tierList.get(rand.getRandom(tierList.size()))));
+		return (new Monster(tierList.get(rand.getRandom(tierList.size())), level));
 	}
 
 	/**Produces the number of rooms to populate**/
