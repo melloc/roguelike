@@ -191,9 +191,7 @@ public class Level implements Saveable {
 			downStairs.setEntity(mc);
 		
 		LinkedList<String> attr = new LinkedList<String>();
-		attr.add("main");
-		attr.add("keyboard");
-		manager.register(mc.getManager(),attr);
+		manager.register(mc);
 	}
 
 

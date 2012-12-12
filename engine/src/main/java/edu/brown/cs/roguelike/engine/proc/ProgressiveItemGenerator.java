@@ -27,6 +27,12 @@ public class ProgressiveItemGenerator implements ItemGenerator {
 	private static final float prefixChance = .75f;
 	private static final float suffixChance = .75f;
 
+	//Weapon Constants
+	private static final int MIN_DAMAGE = 1;
+	private static final int MAX_DAMAGE = 5;
+	private static final int MIN_DAMAGE_TIER = 2;
+	private static final int MAX_DAMAGE_TIER = 3;
+	
 	
 	RandomGen rand = new RandomGen(System.nanoTime());
 	ArrayList<WeaponNameTemplate> weaponNameTemplates;
@@ -125,7 +131,10 @@ public class ProgressiveItemGenerator implements ItemGenerator {
 		String desc = (prefix == "" ? prefix : prefix+" ") + 
 				(material == "" ? material : material+" ") + w.name + (suffix == "" ? suffix : " "+suffix);
 		
-		return new Weapon(new Stats(10,0,0), desc, w.damageType);
+		int minDamage = MIN_DAMAGE + MIN_DAMAGE_TIER * (tier-1);
+		int maxDamage = MAX_DAMAGE + MAX_DAMAGE_TIER * (tier-1);
+		int damage = rand.getRandom(minDamage, maxDamage);
+		return new Weapon(new Stats(damage,0), desc, w.damageType);
 	}
 
 

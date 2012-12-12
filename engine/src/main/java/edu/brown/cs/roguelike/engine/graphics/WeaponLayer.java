@@ -33,7 +33,7 @@ public class WeaponLayer<A extends Application> extends UseItemLayer<A> {
 				target.getEntity().getInventory().add(oldWeap);
 			}
 			Announcer.announce("You wield the " + w.getDescription());
-			tm.takeTurnAndAnnounce(w.getWieldAction());
+			tm.takeTurn(w.getWieldAction());
 			target.getEntity().getEquipment().put(EquipType.WEAPON, w);
 			target.getEntity().getInventory().remove(item);
 		}

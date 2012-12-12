@@ -38,7 +38,7 @@ public class CumulativeTurnManager extends TurnManager {
 	}
 	
 	@Override
-	public void takeTurn(Action playerAction) {
+	public void takeTurnWithoutAnnounce(Action playerAction) {
 		
 		Action nextAction = null;
 		int cost;

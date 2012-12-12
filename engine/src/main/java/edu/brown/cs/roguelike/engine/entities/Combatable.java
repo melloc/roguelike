@@ -3,6 +3,7 @@ package edu.brown.cs.roguelike.engine.entities;
 import java.util.HashMap;
 
 import cs195n.Vec2i;
+import edu.brown.cs.roguelike.engine.game.Announcer;
 import edu.brown.cs.roguelike.engine.level.Direction;
 import edu.brown.cs.roguelike.engine.level.Tile;
 
@@ -36,6 +37,9 @@ public abstract class Combatable extends Entity implements Movable {
 		if(tryHit(opp)) {
 			dealDamage(opp);
 		}
+		else {
+			Announcer.announce(this.getDescription() + " misses.");
+		}
 		this.manager.call(Event.ATTACK);
 	}
 	
@@ -51,9 +55,8 @@ public abstract class Combatable extends Entity implements Movable {
 	 */
 	private void dealDamage(Combatable opp) {
 		int attackPower = (int) Math.round(Math.random()*stats.attack);
-		
+		Announcer.announce(this.getDescription() +" hits " + opp.getDescription() + ", dealing " + attackPower + " damage.");
 		//System.out.println(attackPower);
-		
 		opp.takeDamage(new Attack(this,attackPower));
 	}
 

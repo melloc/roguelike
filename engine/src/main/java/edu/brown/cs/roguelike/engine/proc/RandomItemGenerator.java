@@ -36,7 +36,7 @@ public class RandomItemGenerator implements ItemGenerator {
 		case 1:
 			return new Potion(Color.RED,new ChangeHP(5));
 		case 2: 
-			return new Weapon(new Stats(0,10,0),"A sword", DamageType.SLASH);
+			return new Weapon(new Stats(10,0),"A sword", DamageType.SLASH);
 		default:
 			return new Jewel();
 		}

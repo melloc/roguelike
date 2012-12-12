@@ -14,6 +14,7 @@ import edu.brown.cs.roguelike.engine.entities.Monster;
 import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.level.Room;
 import edu.brown.cs.roguelike.engine.level.Tile;
+import edu.brown.cs.roguelike.engine.level.TileType;
 
 public class ProgressiveMonsterGenerator implements MonsterGenerator {
 

@@ -17,6 +17,7 @@ import edu.brown.cs.roguelike.engine.entities.events.Move;
 import edu.brown.cs.roguelike.engine.events.GameAction;
 import edu.brown.cs.roguelike.engine.game.CumulativeTurnManager;
 import edu.brown.cs.roguelike.engine.graphics.DefaultMainLayer;
+import edu.brown.cs.roguelike.engine.graphics.DropLayer;
 import edu.brown.cs.roguelike.engine.graphics.LookLayer;
 import edu.brown.cs.roguelike.engine.graphics.PotionLayer;
 import edu.brown.cs.roguelike.engine.graphics.WeaponLayer;
@@ -76,6 +77,8 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				return new GameAction(1, 13); // up stairs
 			case '>':
 				return new GameAction(1, 14); // down stairs
+			case 'd':
+				return new GameAction(1, 15); // drop
 			default:
 				return new GameAction(1, 0); // do nothing
 			}
@@ -157,7 +160,7 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 			case 5:
 				if (c != null) { 
 					moveAction = new Move(10, c, Direction.LEFT);
-					tm.takeTurnAndAnnounce(moveAction);
+					tm.takeTurn(moveAction);
 				}
 //				for (EntityActionManager manager : managers)
 //					manager.sendMove(Direction.LEFT);
@@ -166,7 +169,7 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 			case 6:
 				if (c != null) {
 					moveAction = new Move(10, c, Direction.UP);
-					tm.takeTurnAndAnnounce(moveAction);
+					tm.takeTurn(moveAction);
 				}
 //				for (EntityActionManager manager : managers)
 //					manager.sendMove(Direction.UP);
@@ -175,7 +178,7 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 			case 7:
 				if (c != null) {
 					moveAction = new Move(10, c, Direction.DOWN);
-					tm.takeTurnAndAnnounce(moveAction);
+					tm.takeTurn(moveAction);
 				}
 //				for (EntityActionManager manager : managers)
 //					manager.sendMove(Direction.DOWN);
@@ -184,7 +187,7 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 			case 8:
 				if (c != null) {
 					moveAction = new Move(10, c, Direction.RIGHT);
-					tm.takeTurnAndAnnounce(moveAction);					
+					tm.takeTurn(moveAction);					
 				}
 //				for  manager : managers)
 //					manager.sendMove(Direction.RIGHT);
@@ -228,6 +231,11 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 							checkReveal();
 					}
 				}
+			case 15:
+				app.getLayers().push(
+						new InventoryLayer(app, size, currentLevel));
+				app.getLayers().push(
+						new DropLayer<GUIApp>(tm, app, size, currentLevel));
 				break;
 			default:
 				throw new Error(

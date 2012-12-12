@@ -31,7 +31,7 @@ public class Monster extends Combatable {
 		this.color = mt.color;
 		this.HP = mt.startHp;
 		this.startHP = mt.startHp;
-		this.stats = new Stats(.75f,mt.attack,mt.defense); 
+		this.stats = new Stats(mt.attack,mt.defense); 
 		baseStats = stats;
 		this.team = 0;
 		this.name = mt.name;
