@@ -133,10 +133,6 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				game.gotoLevel(currentLevel.getDepth()+1, app.getLevelGenerator());
 				currentLevel = game.getCurrentLevel();
 				EntityManager m = currentLevel.getManager();
-				Action chaser = new ChaseMainCharacter(10, m);
-				for (EntityActionManager monster : m.getEntity("monster")) {
-					monster.on(Event.ATTACKED, chaser);
-				}
 				checkReveal();
 			}
 				break;
@@ -148,10 +144,6 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				game = app.getSaveManager().loadGame();
 				currentLevel = game.getCurrentLevel();
 				EntityManager m = currentLevel.getManager();
-				Action chaser = new ChaseMainCharacter(10, m);
-				for (EntityActionManager monster : m.getEntity("monster")) {
-					monster.on(Event.ATTACKED, chaser);
-				}
 			}
 				break;
 			case 4: // quit
