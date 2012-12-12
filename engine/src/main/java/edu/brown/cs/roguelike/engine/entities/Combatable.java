@@ -124,6 +124,7 @@ public abstract class Combatable extends Entity implements Movable {
 
 	public void changeHP(int delta) {
 		this.HP += delta;
+		this.HP = Math.min(HP, startHP);
 	}
 	
 	/**

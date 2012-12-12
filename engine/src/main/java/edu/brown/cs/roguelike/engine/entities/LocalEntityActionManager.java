@@ -58,7 +58,7 @@ public class LocalEntityActionManager implements EntityActionManager, Saveable {
 	
 	@Override
 	public void changeHP(int delta) {
-		entity.HP += delta;
+		entity.changeHP(delta);
 	}
 	
 	@Override
