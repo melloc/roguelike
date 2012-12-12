@@ -49,11 +49,9 @@ public class Chasing extends State<MonsterInput> {
 		
 		List<EntityActionManager> players = 
 				l.getManager().getEntity("main");
-		
 		if(players.size() == 0) {
-			return new Move(0, me, Direction.RIGHT);
+			return new Move(100, me, Direction.RIGHT);
 		}
-		
 		EntityActionManager player = players.get(0);
 		
 		Tile myTile = me.getLocation();

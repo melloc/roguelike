@@ -19,4 +19,10 @@ public class DemoApplication extends Application {
 	public Vec2i getSize() {
 		return new Vec2i(80,30);
 	}
+
+	@Override
+	public void deleteSaveFile() {
+		// TODO Auto-generated method stub
+		
+	}
 }

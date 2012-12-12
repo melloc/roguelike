@@ -37,13 +37,14 @@ import edu.brown.cs.roguelike.engine.save.SaveLoadException;
  *
  */
 public class MainLayer extends DefaultMainLayer<GUIApp> {
-	
+
 	public MainLayer(GUIApp guiApp, RogueGame game, Vec2i size, String startMessage) {
 		super(guiApp, game, size, startMessage);
 		if(game != null && game.getCurrentLevel() != null)
 			checkReveal();
-
 	}
+
+
 
 	@Override
 	public GameAction getActionForKey(Key k) {
@@ -54,7 +55,7 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				return new GameAction(1, 1); // generate new level
 			case 'S':
 				return new GameAction(1, 2); // save current level
-// 			case 'L':
+				// 			case 'L':
 				// return new GameAction(1, 3); // load saved level
 			case 'Q':
 				return new GameAction(1, 4); // quit
@@ -99,36 +100,52 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 		}
 	}
 
+	// CHECK FOR WIN/LOSE
+	private void checkLose() {
+		List<EntityActionManager> main = game.getCurrentLevel().getManager().getEntity("main");
+		if (main.isEmpty()) {
+			app.deleteSaveFile();
+			return;
+		}
+	}
+
 	@Override
 	public void propagateAction(GameAction action) {
-		
+
 		Level currentLevel = game.getCurrentLevel();
 		CumulativeTurnManager tm = app.getTurnManager();
-		
+
 		EntityActionManager mainManager = null;
-		
+
 		Move moveAction;
 		Combatable c = null;
-		
+
 		List<EntityActionManager> managers = null;
-		
+
 		// if there is a current level, 
 		// then get the keyboard-controlled managers
 		// (just the player)
 		if (currentLevel != null) {
 			managers = currentLevel.getManager().getEntity("keyboard");
-			
-			if(managers.size() == 0) {return;}
+
+			int a = action.getActionClassifier();
+			if(managers.size() == 0) {
+				if(a != 1 && a != 4) {
+					return;
+				}
+			}
+			else {
 			mainManager = managers.get(0);
 			c = mainManager.getEntity();
+			}
 		}
-		
+
 		if (managers == null)
 			managers = new ArrayList<EntityActionManager>();
-		
+
 		if (action.getContextClassifier() != 1)
 			throw new Error("Received an action for a non-gameplay context.");
-		
+
 		try {
 			switch (action.getActionClassifier()) {
 			case 0:
@@ -137,20 +154,19 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 			{
 				this.game = app.makeNewGame();
 				app.getSaveManager().saveGame(game);
-				
 				checkReveal();
 			}
-				break;
+			break;	
 			case 2: // save current level
 				app.getSaveManager().saveGame(this.game);
 				break;
-//			case 3: // load saved level
-//			{
-//				game = app.getSaveManager().loadGame();
-//				currentLevel = game.getCurrentLevel();
-//				EntityManager m = currentLevel.getManager();
-//			}
-//				break;
+				//			case 3: // load saved level
+				//			{
+				//				game = app.getSaveManager().loadGame();
+				//				currentLevel = game.getCurrentLevel();
+				//				EntityManager m = currentLevel.getManager();
+				//			}
+				//				break;
 			case 4: // save and quit
 				app.getSaveManager().saveGame(game);
 				app.shutdown();
@@ -159,37 +175,42 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				if (c != null) { 
 					moveAction = new Move(10, c, Direction.LEFT);
 					tm.takeTurn(moveAction);
+					 checkLose();
 				}
-//				for (EntityActionManager manager : managers)
-//					manager.sendMove(Direction.LEFT);
+				//				for (EntityActionManager manager : managers)
+				//					manager.sendMove(Direction.LEFT);
 				checkReveal();
 				break;
 			case 6:
 				if (c != null) {
 					moveAction = new Move(10, c, Direction.UP);
 					tm.takeTurn(moveAction);
+					 checkLose();
 				}
-//				for (EntityActionManager manager : managers)
-//					manager.sendMove(Direction.UP);
+				//				for (EntityActionManager manager : managers)
+				//					manager.sendMove(Direction.UP);
 				checkReveal();
 				break;
 			case 7:
 				if (c != null) {
 					moveAction = new Move(10, c, Direction.DOWN);
 					tm.takeTurn(moveAction);
+					 checkLose();
 				}
-//				for (EntityActionManager manager : managers)
-//					manager.sendMove(Direction.DOWN);
+				//				for (EntityActionManager manager : managers)
+				//					manager.sendMove(Direction.DOWN);
 				checkReveal();
 				break;
 			case 8:
 				if (c != null) {
 					moveAction = new Move(10, c, Direction.RIGHT);
-					tm.takeTurn(moveAction);					
+					tm.takeTurn(moveAction);
 				}
-//				for  manager : managers)
-//					manager.sendMove(Direction.RIGHT);
+				//				for  manager : managers)
+				//					manager.sendMove(Direction.RIGHT);
 				checkReveal();
+				 checkLose();
+
 				break;
 			case 9:
 				app.getLayers().push(
@@ -225,8 +246,8 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 			case 14: //Up Stairs
 				if(c != null) {
 					if (c.getLocation().getType() == TileType.DOWN_STAIRS) {
-							game.gotoLevel(currentLevel.getDepth()+1, app.getLevelGenerator());
-							checkReveal();
+						game.gotoLevel(currentLevel.getDepth()+1, app.getLevelGenerator());
+						checkReveal();
 					}
 				}
 				break;
@@ -253,22 +274,22 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 		}
 	}
 
-	
+
 	private void checkReveal() {
 		Level currentLevel = game.getCurrentLevel();
 
 		List<EntityActionManager> mainMangr = currentLevel.getManager().getEntity("main");
 		if(mainMangr.size() < 1) 
 			return;
-		
+
 		Tile playerLoc = mainMangr.get(0).getLocation();
-		
+
 		for(Room r : currentLevel.getRooms()) {
 			if(r.containsTile(playerLoc)) {
 				currentLevel.revealRoom(r);
 			}
 		}
-		
+
 		currentLevel.revealAround(playerLoc);
 	}
 

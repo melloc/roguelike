@@ -60,6 +60,9 @@ public abstract class Application extends LanternaFrontend {
 		}
 	}
 	
+	public abstract void deleteSaveFile();
+	
+	
 	private boolean initialized = false;
 
 	@Override

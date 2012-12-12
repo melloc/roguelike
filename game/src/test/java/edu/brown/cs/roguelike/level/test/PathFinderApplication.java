@@ -20,4 +20,10 @@ public class PathFinderApplication extends Application {
 		return new Vec2i(80,30);
 	}
 
+	@Override
+	public void deleteSaveFile() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

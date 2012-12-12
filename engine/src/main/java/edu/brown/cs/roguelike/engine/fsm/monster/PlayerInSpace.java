@@ -1,9 +1,13 @@
 package edu.brown.cs.roguelike.engine.fsm.monster;
 
+import java.util.List;
+
 import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
 import edu.brown.cs.roguelike.engine.entities.Monster;
+import edu.brown.cs.roguelike.engine.entities.events.Move;
 import edu.brown.cs.roguelike.engine.fsm.State;
 import edu.brown.cs.roguelike.engine.fsm.Transition;
+import edu.brown.cs.roguelike.engine.level.Direction;
 import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.level.Space;
 
@@ -26,8 +30,12 @@ public class PlayerInSpace extends Transition<MonsterInput> {
 		
 		Level l = i.getLevel();
 		
-		EntityActionManager player = 
-				l.getManager().getEntity("main").get(0);
+		List<EntityActionManager> players = 
+				l.getManager().getEntity("main");
+		if(players.size() == 0) {
+			return false;
+		}
+		EntityActionManager player = players.get(0);
 		
 		Space mySpace = me.getLocation().getSpace();
 		Space playerSpace = player.getEntity().getLocation().getSpace();
