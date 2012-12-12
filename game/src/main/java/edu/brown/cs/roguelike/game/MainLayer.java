@@ -18,6 +18,7 @@ import edu.brown.cs.roguelike.engine.events.GameAction;
 import edu.brown.cs.roguelike.engine.game.CumulativeTurnManager;
 import edu.brown.cs.roguelike.engine.graphics.DefaultMainLayer;
 import edu.brown.cs.roguelike.engine.graphics.DropLayer;
+import edu.brown.cs.roguelike.engine.graphics.HelpLayer;
 import edu.brown.cs.roguelike.engine.graphics.LookLayer;
 import edu.brown.cs.roguelike.engine.graphics.PotionLayer;
 import edu.brown.cs.roguelike.engine.graphics.WeaponLayer;
@@ -79,6 +80,8 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				return new GameAction(1, 14); // down stairs
 			case 'd':
 				return new GameAction(1, 15); // drop
+			case '?':
+				return new GameAction(1, 16); // help
 			default:
 				return new GameAction(1, 0); // do nothing
 			}
@@ -231,11 +234,15 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 							checkReveal();
 					}
 				}
+				break;
 			case 15:
 				app.getLayers().push(
 						new InventoryLayer(app, size, currentLevel));
 				app.getLayers().push(
 						new DropLayer<GUIApp>(tm, app, size, currentLevel));
+				break;
+			case 16:
+				app.getLayers().push(new HelpLayer(app,size));
 				break;
 			default:
 				throw new Error(
