@@ -124,18 +124,6 @@ public abstract class DefaultMainLayer<A extends Application> implements Layer {
 
 	private void drawLevel(Section sw) {
 		game.getCurrentLevel().doDraw(sw.moveUpperLeft(new Vec2i(0, ANNOUNCE_OFFSET)));
-
-		/*Tile t;
-		for (int c = 0; c < tiles.length; c++) {
-			for (int r = tiles[0].length - 1; r >= 0; r--) { // flip y
-				t = tiles[c][r];
-
-				sw.setForegroundColor(t.getColor());
-				sw.drawString(c, r + ANNOUNCE_OFFSET,
-						String.valueOf(t.getCharacter()),
-						ScreenCharacterStyle.Bold);
-			}
-		}*/
 	}
 
 	public abstract GameAction getActionForKey(Key k);

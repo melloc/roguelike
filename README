@@ -2,13 +2,13 @@ cs195n
 
 Roguelike final project
 
-Week 3
+Week 4
 
 cody, jte, lelberty
 
 === Current bugs: ===
 
-- Terminal close isn't supported from eclipse. You need to either press 'q' to quit or
+- Terminal close isn't supported from eclipse. You need to either press 'Q' to quit or
   use eclipse to stop the process
 
 === Package structure: === 
@@ -28,6 +28,9 @@ This is code for the engine, which should be code more general to roguelikes:
 * engine.level - all classes that collectively make up a Level
 * engine.proc - procedural content generation
 * engine.save - all save-game logic
+* engine.fsm -  Finite state machine
+* engine.fsm.monster - FSM's for monsters
+* engine.pathfinding - A* pathfinding logic
 
 Testing:
 
@@ -50,18 +53,16 @@ Then we also have some support classes, all located in (with no prefix):
 
 Engine requirements
 ========================================
-[ ] - Engine has some concept of an item	|Stackables are the parent item class, they have an ItemType
-[ ] - Engine has some concept of an inventory	|Combatables have inventory of Stackables
-[ ] - Engine has some concept of stats		|Combatables have stats objects for hit chance, attack, defense
+| Engine supports transitions between two levels  | GoToLevel provides means for transporting player to other level
+| Engine has some concept of equipment            | Stackables
 
 Game requirements
 ========================================
-[ ] - Items are generated on the floor of the level		|Potions and Swords generated { ! and ) } 
-[ ] - Player can pick up items and store them in an inventory	|Pick up items by moving onto them
-[ ] - Player can use items from the inventory			|'q' for quaff and 'w' for wield
-[ ] - Player has a set of stats					|Base player stats displayed on bottom of screen.
+| Player can equip items from inventory           | Weapons can be picked up and wielded.
+| Player can move between levels                  | Stairs provide means to access other levels
+| No serious bugs exist in gameplay               | Not that we know of.
 
 Approximate number of hours:
 
-30-35 collectively
+40 hours collectively
 

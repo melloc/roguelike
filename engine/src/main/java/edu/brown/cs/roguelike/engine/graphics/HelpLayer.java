@@ -33,6 +33,9 @@ public class HelpLayer<A extends Application> implements Layer{
 		s.drawString(1, 6, "- Quaff potions with q");
 		s.drawString(1, 7, "- Wield weapons with w");
 		s.drawString(1, 8, "- Drop items with d");
+		s.drawString(1, 9, "- Bring up inventory with i (quit with space)");
+		s.drawString(1, 10, "- Create a new game with N");
+		s.drawString(1, 11, "- Save and Quit with Q");
 	}
 
 	@Override
