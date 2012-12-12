@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>roguelike</groupId>
+        <artifactId>roguelike-parent</artifactId>
+        <version>1</version>
+    </parent>
+    <artifactId>game</artifactId>
+
+    <name>Roguelike (Game)</name>
+    <description>This is the actual roguelike game</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>engine</artifactId>
+        </dependency>
+		<dependency>
+			<groupId>com.lexicalscope.jewelcli</groupId>
+			<artifactId>jewelcli</artifactId>
+		</dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>edu.brown.cs.roguelike.game.Roguelike</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration> 
+            </plugin>
+            <plugin>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build> 
+</project>

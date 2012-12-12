@@ -25,8 +25,8 @@ public class MainCharacter extends Combatable {
 
 	public MainCharacter(String name) {
 		this.name = name;
-		this.character = '@';
 		this.color = Color.DEFAULT;
+		this.character = '\u2603';
 		this.HP = 100;
 		this.startHP = this.HP;
 		this.stats = new Stats(10,4);
