@@ -15,14 +15,32 @@ public class MainCharacter extends Combatable {
 	 */
 	private static final long serialVersionUID = -4240615722468534343L;
 	private static final int MAX_INVENTORY_SIZE = 26;
+	private static final float EXP_CURVE = 2.2f;
 	
 	List<String> categories = null;
+	private int XP;
+	private int nextLevelXP;
+	private int playerLevel;
+	
 	{
 		categories = new ArrayList<String>();
 		categories.add("keyboard");
 		categories.add("main");
 	}
 
+	public int getXP() {
+		return XP;
+	} 
+	
+	public int getNextLevelXP() {
+		return nextLevelXP;
+	}
+
+	public int getPlayerLevel() {
+		return playerLevel;
+	}
+
+	
 	public MainCharacter(String name) {
 		this.name = name;
 		this.color = Color.DEFAULT;
@@ -32,6 +50,9 @@ public class MainCharacter extends Combatable {
 		this.stats = new Stats(10,4);
 		baseStats = stats;
 		this.team = 1;
+		this.XP = 0;
+		nextLevelXP = 6;
+		playerLevel = 1;
 	}
 
 	@Override
@@ -42,8 +63,28 @@ public class MainCharacter extends Combatable {
 
 	@Override
 	protected void onKillEntity(Combatable combatable) {
-		// TODO Auto-generated method stub
-		
+		Announcer.announce("You defeated the " + combatable.getDescription());
+		Monster m  = (Monster) combatable;
+		this.XP += m.tier;
+		if(XP >= nextLevelXP) {
+			XP -=nextLevelXP;
+			levelUp();
+			Announcer.announce("Welcome to level " + playerLevel);
+		}
+	}
+
+	
+	private final int HP_GROWTH = 10;
+	private final int ATTACK_GROWTH = 3;
+	private final int DEFENSE_GROWTH = 1;
+
+	private void levelUp() {
+		playerLevel++;
+		this.startHP += HP_GROWTH;
+		this.HP = startHP;
+		this.baseStats = new Stats(baseStats.attack+ATTACK_GROWTH, baseStats.defense+DEFENSE_GROWTH);
+		this.stats = new Stats(stats.attack+ATTACK_GROWTH, stats.defense+DEFENSE_GROWTH);
+		nextLevelXP =  (int) Math.ceil(nextLevelXP*EXP_CURVE);
 	}
 
 	public List<String> getCategories() {
@@ -75,6 +116,8 @@ public class MainCharacter extends Combatable {
 	 * generate a next action
 	 */
 	@Override
-	protected Action generateNextAction() { return null; } 
+	protected Action generateNextAction() { return null; }
+
+
 	
 }

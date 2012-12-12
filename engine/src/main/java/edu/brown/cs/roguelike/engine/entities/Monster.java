@@ -36,12 +36,14 @@ public class Monster extends Combatable {
 		categories.add("monster");
 	}
 
+	public final int tier;
 	public Monster(char c, Color color, Level level) {
 		this.character = c;
 		this.color = color;
 		nextAction = null;
 		this.moveCost = 10;
 		buildBrainz();
+		tier = 1;
 	}
 	
 	public Monster(MonsterTemplate mt, Level level) {
@@ -55,6 +57,7 @@ public class Monster extends Combatable {
 		this.team = 0;
 		this.name = mt.name;
 		this.moveCost = mt.moveCost;
+		this.tier = mt.tier;
 		buildBrainz();
 	}
 	

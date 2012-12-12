@@ -165,4 +165,5 @@ public abstract class Combatable extends Entity implements Movable {
 	public void moveTo(Tile tile) {
 
 	}
+
 }

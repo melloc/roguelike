@@ -65,8 +65,8 @@ public class Stats implements Saveable {
 
 	public Stats invert() {
 		return new Stats (
-				attack *1,
-				defense *1
+				attack *-1,
+				defense *-1
 				);
 	}
 

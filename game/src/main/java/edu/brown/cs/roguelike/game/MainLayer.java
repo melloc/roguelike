@@ -114,6 +114,8 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 		// (just the player)
 		if (currentLevel != null) {
 			managers = currentLevel.getManager().getEntity("keyboard");
+			
+			if(managers.size() == 0) {return;}
 			mainManager = managers.get(0);
 			c = mainManager.getEntity();
 		}

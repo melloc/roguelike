@@ -41,8 +41,6 @@ public abstract class Game implements Saveable {
 		//TODO: Get character name
 		MainCharacter mc = new MainCharacter("Robert the Rogue");
 		
-		currentLevel.getManager().register(mc);
-	
 		currentLevel.placeCharacter(mc, true);
 	}
     

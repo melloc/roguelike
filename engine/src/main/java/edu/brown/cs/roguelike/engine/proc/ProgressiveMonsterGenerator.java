@@ -9,12 +9,10 @@ import edu.brown.cs.roguelike.engine.config.Config;
 import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.config.MonsterTemplate;
 import edu.brown.cs.roguelike.engine.entities.Combatable;
-import edu.brown.cs.roguelike.engine.entities.MainCharacter;
 import edu.brown.cs.roguelike.engine.entities.Monster;
 import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.level.Room;
 import edu.brown.cs.roguelike.engine.level.Tile;
-import edu.brown.cs.roguelike.engine.level.TileType;
 
 public class ProgressiveMonsterGenerator implements MonsterGenerator {
 

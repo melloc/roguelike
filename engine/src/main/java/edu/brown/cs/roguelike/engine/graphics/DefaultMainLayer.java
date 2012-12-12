@@ -9,6 +9,7 @@ import com.googlecode.lanterna.screen.ScreenWriter;
 import cs195n.Vec2i;
 import edu.brown.cs.roguelike.engine.entities.Combatable;
 import edu.brown.cs.roguelike.engine.entities.EntityActionManager;
+import edu.brown.cs.roguelike.engine.entities.MainCharacter;
 import edu.brown.cs.roguelike.engine.events.GameAction;
 import edu.brown.cs.roguelike.engine.game.Game;
 import edu.brown.cs.roguelike.engine.level.Level;
@@ -90,7 +91,7 @@ public abstract class DefaultMainLayer<A extends Application> implements Layer {
 			return;
 		}
 
-		Combatable player = main.get(0).getEntity();
+		MainCharacter player = (MainCharacter) main.get(0).getEntity();
 
 		// DRAW THE STATS
 		String line1 = "";
@@ -99,6 +100,11 @@ public abstract class DefaultMainLayer<A extends Application> implements Layer {
 		line1 += player.getHP();
 		line1 += "/";
 		line1 += player.getStartHP();
+		line1 += "   XP: ";
+		line1 += player.getXP();
+		line1 += "/";
+		line1 += player.getNextLevelXP();
+		line1 += "       ";
 		sw.drawString(0, statStart, line1);
 		
 		String depthString = "Dungeon Level: " + currentLevel.getDepth();
@@ -106,10 +112,12 @@ public abstract class DefaultMainLayer<A extends Application> implements Layer {
 
 		// LINE 2
 		String line2 = "";
-		line2 += "Attack: ";
+		line2 = "Level: " + player.getPlayerLevel();
+		line2 += "  Attack: ";
 		line2 += player.getStats().getAttack();
 		line2 += "  Defense: ";
 		line2 += String.valueOf(player.getStats().getDefense());
+		line2 += "       ";
 		sw.drawString(0, statStart + 1, line2);
 
 	}
