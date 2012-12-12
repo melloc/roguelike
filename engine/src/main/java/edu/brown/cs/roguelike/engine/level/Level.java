@@ -13,8 +13,12 @@ import edu.brown.cs.roguelike.engine.entities.MainCharacter;
 import edu.brown.cs.roguelike.engine.proc.RandomGen;
 import edu.brown.cs.roguelike.engine.save.Saveable;
 
+import com.googlecode.lanterna.screen.ScreenWriter;
+import com.googlecode.lanterna.screen.ScreenCharacterStyle;
+import edu.brown.cs.roguelike.engine.graphics.Artist;
 
-public class Level implements Saveable {
+
+public class Level implements Saveable, Artist {
 
 	/**
 	 * Generated
@@ -194,5 +198,17 @@ public class Level implements Saveable {
 		manager.register(mc);
 	}
 
+	public void doDraw(ScreenWriter sw) {
+		Tile t;
+		for (int c = 0; c < tiles.length; c++) {
+			for (int r = tiles[0].length - 1; r >= 0; r--) { // flip y
+				t = tiles[c][r];
+				sw.setForegroundColor(t.getColor());
+				sw.drawString(c, r,
+						String.valueOf(t.getCharacter()),
+						ScreenCharacterStyle.Bold);
+			}
+		}
+	}
 
 }

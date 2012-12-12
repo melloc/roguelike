@@ -123,10 +123,9 @@ public abstract class DefaultMainLayer<A extends Application> implements Layer {
 	}
 
 	private void drawLevel(Section sw) {
-		
-		Tile[][] tiles = game.getCurrentLevel().tiles;
+		game.getCurrentLevel().doDraw(sw.moveUpperLeft(new Vec2i(0, ANNOUNCE_OFFSET)));
 
-		Tile t;
+		/*Tile t;
 		for (int c = 0; c < tiles.length; c++) {
 			for (int r = tiles[0].length - 1; r >= 0; r--) { // flip y
 				t = tiles[c][r];
@@ -136,7 +135,7 @@ public abstract class DefaultMainLayer<A extends Application> implements Layer {
 						String.valueOf(t.getCharacter()),
 						ScreenCharacterStyle.Bold);
 			}
-		}
+		}*/
 	}
 
 	public abstract GameAction getActionForKey(Key k);
