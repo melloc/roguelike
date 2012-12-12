@@ -29,6 +29,27 @@ public class GUIApp extends Application {
 	public SaveManager getSaveManager() { return sm; }
 	public BSPLevelGenerator getLevelGenerator() { return lg; }
 	public CumulativeTurnManager getTurnManager() { return tm; }
+	
+	private void newGame() {
+		RogueGame rg = new RogueGame();
+		
+		this.sm = new SaveManager("mainSave");
+		this.lg = new BSPLevelGenerator(configDir);
+		
+		try {
+			rg.createInitalLevel(lg);
+			
+		} catch (ConfigurationException e1) {
+			this.layers.push(new MainLayer(this, null, SCREEN_SIZE,
+					"Configuration error exists, fix your setup"));
+		}
+		
+		tm = new CumulativeTurnManager(this, rg, POINTS_PER_TURN);
+		
+		this.layers.push(new MainLayer(this, rg, SCREEN_SIZE,
+				"Error: Couldn't create the game"));
+		
+	}
 
 	@Override
 	protected boolean initialize(Vec2i screenSize)  {
@@ -48,21 +69,8 @@ public class GUIApp extends Application {
 					this, rg, SCREEN_SIZE, "Succesful Load"));
 			return true;
 		} catch (Exception e) {
-			rg = new RogueGame();
-			try {
-				rg.createInitalLevel(lg);
-				
-			} catch (ConfigurationException e1) {
-				this.layers.push(new MainLayer(this, null, SCREEN_SIZE,
-						"Configuration error exists, fix your setup"));
-			}
-			
-			tm = new CumulativeTurnManager(this, rg, POINTS_PER_TURN);
-			
-			this.layers.push(new MainLayer(this, rg, SCREEN_SIZE,
-					"Error: Couldn't create the game"));
-			
-			return false;
+			this.newGame();
+			return true;
 		}
 	}
 

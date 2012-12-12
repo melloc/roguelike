@@ -53,8 +53,8 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				return new GameAction(1, 1); // generate new level
 			case 'S':
 				return new GameAction(1, 2); // save current level
-			case 'L':
-				return new GameAction(1, 3); // load saved level
+// 			case 'L':
+				// return new GameAction(1, 3); // load saved level
 			case 'Q':
 				return new GameAction(1, 4); // quit
 			case 'h':
@@ -130,23 +130,29 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				break; // do nothing
 			case 1: // generate new level
 			{
-				game.gotoLevel(currentLevel.getDepth()+1, app.getLevelGenerator());
+				// make a new game, generate a first level, and save
+				this.game = new RogueGame(); 
+				game.createInitalLevel(app.getLevelGenerator());
+				
 				currentLevel = game.getCurrentLevel();
-				EntityManager m = currentLevel.getManager();
+				
+				app.getSaveManager().saveGame(game);
+				
 				checkReveal();
 			}
 				break;
 			case 2: // save current level
 				app.getSaveManager().saveGame(this.game);
 				break;
-			case 3: // load saved level
-			{
-				game = app.getSaveManager().loadGame();
-				currentLevel = game.getCurrentLevel();
-				EntityManager m = currentLevel.getManager();
-			}
-				break;
-			case 4: // quit
+//			case 3: // load saved level
+//			{
+//				game = app.getSaveManager().loadGame();
+//				currentLevel = game.getCurrentLevel();
+//				EntityManager m = currentLevel.getManager();
+//			}
+//				break;
+			case 4: // save and quit
+				app.getSaveManager().saveGame(game);
 				app.shutdown();
 				break;
 			case 5:
