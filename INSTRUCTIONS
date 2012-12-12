@@ -5,6 +5,10 @@ Run game by:
 
         java -Djava.awt.headless=true -jar target/game-1.jar
 
+NOTE: If running in Eclipse, you may need to set your working directory to:
+
+	${workspace_loc:rogue}/game
+
 Commands:
 'o' - observe the world, move the cursor to see what is on a tile
 'q' - quaff potion, press the letter key of the potion
