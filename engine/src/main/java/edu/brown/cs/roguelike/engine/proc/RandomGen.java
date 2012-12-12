@@ -10,7 +10,7 @@ public class RandomGen {
 	}
 
 	//Returns an int between [0,n)
-	int getRandom(int n){
+	public int getRandom(int n){
 		if(n == 0)
 			return 0;
 		else 
@@ -18,7 +18,7 @@ public class RandomGen {
 	}
 
 	//Returns a number between min and max, inclusive
-	int getRandom(int min, int max){
+	public int getRandom(int min, int max){
 		return min+getRandom(max-min+1);
 	}
 }
