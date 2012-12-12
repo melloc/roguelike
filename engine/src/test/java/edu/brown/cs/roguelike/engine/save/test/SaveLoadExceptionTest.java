@@ -23,7 +23,7 @@ public class SaveLoadExceptionTest {
 		
 		SaveManager sm = new SaveManager(saveFile);
 		
-		BSPLevelGenerator rg = new BSPLevelGenerator();
+		BSPLevelGenerator rg = new BSPLevelGenerator("../config");
 		
 		Level level = rg.generateLevel(new Vec2i(50,200),5);
 		

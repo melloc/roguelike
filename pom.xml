@@ -87,11 +87,18 @@
                 <version>2.1.1</version>
             </dependency>
 
-            <dependency>
-              <groupId>com.fasterxml.jackson.core</groupId>
-              <artifactId>jackson-databind</artifactId>
+				<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
               <version>2.1.1</version>
             </dependency>
+
+			<dependency>
+				<groupId>com.lexicalscope.jewelcli</groupId>
+				<artifactId>jewelcli</artifactId>
+				<version>0.8.3</version>
+			</dependency>
+
 
         </dependencies>
     </dependencyManagement>

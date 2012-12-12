@@ -15,6 +15,10 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>engine</artifactId>
         </dependency>
+		<dependency>
+			<groupId>com.lexicalscope.jewelcli</groupId>
+			<artifactId>jewelcli</artifactId>
+		</dependency>
     </dependencies>
 
     <build>

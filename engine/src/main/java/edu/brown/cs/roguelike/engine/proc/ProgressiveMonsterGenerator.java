@@ -32,11 +32,17 @@ public class ProgressiveMonsterGenerator implements MonsterGenerator {
 	
 	RandomGen rand = new RandomGen(System.nanoTime());
 
+	private String configDir;
+
+	public ProgressiveMonsterGenerator(String configDir) {
+		this.configDir = configDir;
+	}
+
 	@Override
 	public void populateLevel(Level level) throws ConfigurationException {
 		int roomNum;
 
-		Config c = new Config("../config");
+		Config c = new Config(configDir);
 		templates = c.loadMonsterTemplate();
 		
 		//Divide into tiers

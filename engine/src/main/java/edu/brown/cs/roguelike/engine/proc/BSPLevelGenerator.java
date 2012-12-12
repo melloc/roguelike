@@ -41,6 +41,11 @@ public class BSPLevelGenerator implements LevelGenerator{
 	Tile[][] tiles;
 	RandomGen rand;
 
+	private String configDir;
+
+	public BSPLevelGenerator(String configDir) {
+		this.configDir = configDir;
+	}
 
 	/**
 	 * Generates a full level whose size is levelSize
@@ -61,10 +66,10 @@ public class BSPLevelGenerator implements LevelGenerator{
 		createStairs(level);
 
 		level.setDepth(depth); 
-		MonsterGenerator mg = new ProgressiveMonsterGenerator();
+		MonsterGenerator mg = new ProgressiveMonsterGenerator(configDir);
 		mg.populateLevel(level);
 
-		ItemGenerator ig = new ProgressiveItemGenerator(); 
+		ItemGenerator ig = new ProgressiveItemGenerator(configDir); 
 		ig.populateLevel(level);
 
 		return level;

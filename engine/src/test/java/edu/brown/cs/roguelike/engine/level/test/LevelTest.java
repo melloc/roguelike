@@ -25,7 +25,7 @@ public class LevelTest {
 	
 	@Before
 	public void setUp() throws ConfigurationException {
-		BSPLevelGenerator rg = new BSPLevelGenerator();
+		BSPLevelGenerator rg = new BSPLevelGenerator("../config");
 		l1 = rg.generateLevel(new Vec2i(100,150),5);
 	}
 	

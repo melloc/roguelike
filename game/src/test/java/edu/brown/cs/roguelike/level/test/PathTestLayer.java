@@ -42,7 +42,7 @@ public class PathTestLayer implements Layer {
         this.size = size;
         currentLevel = null;
         levelSize = size;
-        rg = new BSPLevelGenerator();
+        rg = new BSPLevelGenerator("../config");
         sm = new SaveManager("demoSave");
         statusMsg = "No level. Press 'N' to generate a level, or press "
                 + "'S' to load the last saved level";

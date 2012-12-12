@@ -16,10 +16,11 @@ public class GUIApp extends Application {
 	private SaveManager sm;
 	private CumulativeTurnManager tm;
 	private BSPLevelGenerator lg;
+	private String configDir;
 	
-	public GUIApp() {
+	public GUIApp(Arguments args) {
 		super("demo");
-
+		configDir = args.getConfig();
 	}
 	
 	public SaveManager getSaveManager() { return sm; }
@@ -30,7 +31,7 @@ public class GUIApp extends Application {
 	protected boolean initialize(Vec2i screenSize)  {
 		
 		this.sm = new SaveManager("mainSave");
-		this.lg = new BSPLevelGenerator();
+		this.lg = new BSPLevelGenerator(configDir);
 		
 		RogueGame rg = null;
 		try {

@@ -35,11 +35,17 @@ public class ProgressiveItemGenerator implements ItemGenerator {
 	Hashtable<Integer,WeaponNameTemplate> weaponNameTiers = new Hashtable<Integer,WeaponNameTemplate>();
 	Hashtable<Integer,List<WeaponTemplate>> weaponTiers = new Hashtable<Integer,List<WeaponTemplate>>();
 
+	private String configDir;
+
+	public ProgressiveItemGenerator(String configDir) {
+		this.configDir = configDir;
+	}
+
 	
 	@Override
 	public void populateLevel(Level level) throws ConfigurationException {
 
-		Config c = new Config("../config");
+		Config c = new Config(configDir);
 		weaponNameTemplates = c.loadWeaponNameTemplate();
 		weaponTemplates = c.loadWeaponTemplate();
 
