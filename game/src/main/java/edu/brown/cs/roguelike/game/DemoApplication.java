@@ -15,4 +15,8 @@ public class DemoApplication extends Application {
 		return true;
 	}
 
+	@Override
+	public Vec2i getSize() {
+		return new Vec2i(80,30);
+	}
 }

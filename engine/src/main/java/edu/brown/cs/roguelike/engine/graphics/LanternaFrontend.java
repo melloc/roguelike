@@ -3,8 +3,10 @@ package edu.brown.cs.roguelike.engine.graphics;
 import java.util.Date;
 
 import com.googlecode.lanterna.TerminalFacade;
+import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.screen.Screen;
+import com.googlecode.lanterna.screen.ScreenWriter;
 import com.googlecode.lanterna.terminal.TerminalSize;
 
 import cs195n.Vec2i;
@@ -95,6 +97,8 @@ public abstract class LanternaFrontend {
      * return until {@link LanternaFrontend#shutdown} is called.
      */
     final void doStartup() {
+		Vec2i screenSize = getSize();
+		System.out.print("\033[8;" + screenSize.y + ";" + screenSize.x + "t");
         Screen screen = TerminalFacade.createScreen();
         screen.startScreen();
         {
@@ -102,30 +106,35 @@ public abstract class LanternaFrontend {
             onResize(new Vec2i(size.getColumns(),size.getRows()));
         }
 
+
         long time = new Date().getTime();
         while (running) {
-            // First do anything that we need to do for updating screen size.
-            if (screen.resizePending()) {
-                screen.refresh();
-                TerminalSize size = screen.getTerminalSize();
-                onResize(new Vec2i(size.getColumns(),size.getRows()));
-            }
+			try {
+				// First do anything that we need to do for updating screen size.
+				if (screen.resizePending()) {
+					screen.refresh();
+					TerminalSize size = screen.getTerminalSize();
+					onResize(new Vec2i(size.getColumns(),size.getRows()));
+				}
 
-            // First do anything that we need to do for updating screen size.
-            // Then we draw the screen.
-            screen.clear();
-            onDraw(new Section(screen));
-            screen.refresh();
-            
-            // We can now give the program any key presses
-            Key key = screen.readInput();
-            if (key != null)
-                onKeyPressed(key);
+				// First do anything that we need to do for updating screen size.
+				// Then we draw the screen.
+				screen.clear();
+				onDraw(new Section(screen, new Vec2i(0,0), screenSize));
+				screen.refresh();
 
-            // Then we take care of ticks.
-            long currentTime = new Date().getTime();
-            onTick(currentTime - time);
-            time = currentTime;
+				// We can now give the program any key presses
+				Key key = screen.readInput();
+				if (key != null)
+					onKeyPressed(key);
+
+				// Then we take care of ticks.
+				long currentTime = new Date().getTime();
+				onTick(currentTime - time);
+				time = currentTime;
+			} catch (Exception e) {
+				// For now, ignore it.
+			}
         }
         screen.stopScreen();
     }
@@ -138,5 +147,7 @@ public abstract class LanternaFrontend {
         // If logging is added at some point (such as log4j), then this should
         // set the logging level to something proper.
     }
+
+	public abstract Vec2i getSize();
 
 }

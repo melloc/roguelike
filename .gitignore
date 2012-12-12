@@ -3,6 +3,6 @@ target/
 .settings
 .classpath
 dependency-reduced-pom.xml
-
+*.swp
 *.rog
 config-test/*
