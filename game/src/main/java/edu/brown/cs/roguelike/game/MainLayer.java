@@ -135,12 +135,7 @@ public class MainLayer extends DefaultMainLayer<GUIApp> {
 				break; // do nothing
 			case 1: // generate new level
 			{
-				// make a new game, generate a first level, and save
-				this.game = new RogueGame(); 
-				game.createInitalLevel(app.getLevelGenerator());
-				
-				currentLevel = game.getCurrentLevel();
-				
+				this.game = app.makeNewGame();
 				app.getSaveManager().saveGame(game);
 				
 				checkReveal();
