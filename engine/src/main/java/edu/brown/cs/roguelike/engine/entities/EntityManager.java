@@ -72,12 +72,14 @@ public class EntityManager implements Saveable {
 	 */
 	public void unregister(Combatable entity) {
 		unregister(entity.getManager(), entity.getCategories());
-		everything.remove(entity);
+		everything.remove(entity.getManager());
 	}
 
 	public void unregister(EntityActionManager manager, List<String> categories) {
-		for (String category : categories)
-			map.get(category).remove(manager);
+		for (String category : categories) {
+			List<EntityActionManager> categoryManagers = map.get(category);
+			categoryManagers.remove(manager);
+		}
 	}
 
 	/**

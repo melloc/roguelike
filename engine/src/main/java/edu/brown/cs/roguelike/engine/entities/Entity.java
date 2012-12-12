@@ -23,8 +23,7 @@ public abstract class Entity implements Drawable, Mappable, Saveable {
 	protected Set<Stackable> inventory = new HashSet<Stackable>();
 	
 	protected String name = "No Name";
-	protected Action nextAction;
-	
+		
 	@Override
 	public char getCharacter() {
 		return character;

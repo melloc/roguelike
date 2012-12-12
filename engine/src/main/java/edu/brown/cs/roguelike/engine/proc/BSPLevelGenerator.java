@@ -5,6 +5,7 @@ import edu.brown.cs.roguelike.engine.config.ConfigurationException;
 import edu.brown.cs.roguelike.engine.level.Hallway;
 import edu.brown.cs.roguelike.engine.level.Level;
 import edu.brown.cs.roguelike.engine.level.Room;
+import edu.brown.cs.roguelike.engine.level.Space;
 import edu.brown.cs.roguelike.engine.level.Tile;
 import edu.brown.cs.roguelike.engine.level.TileType;
 
@@ -216,15 +217,15 @@ public class BSPLevelGenerator implements LevelGenerator{
 
 				Hallway new_hallway = new Hallway(hp1.point,hp2.point);
 
-				paintHallway(hp1.point,hp2.point,true, TileType.FLOOR);
+				paintHallway(hp1.point,hp2.point,true, new_hallway, TileType.FLOOR);
 
 				hp1.space.connectToHallway(new_hallway);
 				hp2.space.connectToHallway(new_hallway);
 
 				if(hp1.space.needDoor())
-					makeDoor(hp1.point,s,true);
+					makeDoor(hp1.point,s, new_hallway, true);
 				if(hp2.space.needDoor())
-					makeDoor(hp2.point,s,false);
+					makeDoor(hp2.point,s, new_hallway, false);
 
 				curr.hallways.add(new_hallway);
 			}
@@ -264,13 +265,13 @@ public class BSPLevelGenerator implements LevelGenerator{
 					new_hallway1.connectToHallway(new_hallway2);
 
 					//Paint in
-					paintHallway(hp1.point,corner,true,TileType.FLOOR);
-					paintHallway(hp2.point,corner,true,TileType.FLOOR);
+					paintHallway(hp1.point,corner,true,new_hallway1, TileType.FLOOR);
+					paintHallway(hp2.point,corner,true,new_hallway2, TileType.FLOOR);
 
 					if(hp1.space.needDoor())
-						makeDoor(hp1.point,s,true);
+						makeDoor(hp1.point,s, new_hallway1, true);
 					if(hp2.space.needDoor())
-						makeDoor(hp2.point,s,false);
+						makeDoor(hp2.point,s, new_hallway2, false);
 
 					curr.hallways.add(new_hallway1);
 					curr.hallways.add(new_hallway2);
@@ -305,13 +306,13 @@ public class BSPLevelGenerator implements LevelGenerator{
 					new_hallway1.connectToHallway(new_hallway2);
 
 					//Paint in
-					paintHallway(hp1.point,corner,true,TileType.FLOOR);
-					paintHallway(hp2.point,corner,true,TileType.FLOOR);
+					paintHallway(hp1.point,corner,true, new_hallway1, TileType.FLOOR);
+					paintHallway(hp2.point,corner,true, new_hallway2, TileType.FLOOR);
 
 					if(hp1.space.needDoor())
-						makeDoor(hp1.point,s,true);
+						makeDoor(hp1.point,s,new_hallway1, true);
 					if(hp2.space.needDoor())
-						makeDoor(hp2.point,s,false);
+						makeDoor(hp2.point,s,new_hallway2, false);
 
 					curr.hallways.add(new_hallway1);
 					curr.hallways.add(new_hallway2);
@@ -336,7 +337,7 @@ public class BSPLevelGenerator implements LevelGenerator{
 
 
 	/**Makes a door at location, using the split and side to accurately place it in the wall**/
-	private void makeDoor(Vec2i point, Split s, boolean b) {
+	private void makeDoor(Vec2i point, Split s, Space space, boolean b) {
 		int xOff=0;
 		int yOff=0;
 
@@ -351,7 +352,7 @@ public class BSPLevelGenerator implements LevelGenerator{
 
 		Tile t = tiles[point.x+xOff][point.y+yOff];
 		t.setType(TileType.DOOR);
-
+		t.setSpace(space);
 	}
 
 
@@ -385,19 +386,15 @@ public class BSPLevelGenerator implements LevelGenerator{
 		Vec2i min = curr.min.plus(minX, minY);
 		Vec2i max = curr.min.plus(maxX, maxY);
 
-
+		Room r = new Room(min,max);
 
 		//Paint room to tile array
-		paintCellRectangle(min,max,true, TileType.FLOOR);
-
-		paintCellRectangle( curr.min.plus(minX-1,minY-1), curr.min.plus(minX-1,maxY+1),false, TileType.WALL_VER);
-		paintCellRectangle( curr.min.plus(maxX+1,minY-1), curr.min.plus(maxX+1,maxY+1),false, TileType.WALL_VER);
-		paintCellRectangle( curr.min.plus(minX-1,minY-1), curr.min.plus(maxX+1,minY-1),false, TileType.WALL_HOR);
-		paintCellRectangle( curr.min.plus(minX-1,maxY+1), curr.min.plus(maxX+1,maxY+1),false, TileType.WALL_HOR);
-
-
-
-		Room r = new Room(min,max);
+		paintCellRectangle(min,max,true, r, TileType.FLOOR);
+		paintCellRectangle( curr.min.plus(minX-1,minY-1), curr.min.plus(minX-1,maxY+1),false, null, TileType.WALL_VER);
+		paintCellRectangle( curr.min.plus(maxX+1,minY-1), curr.min.plus(maxX+1,maxY+1),false, null, TileType.WALL_VER);
+		paintCellRectangle( curr.min.plus(minX-1,minY-1), curr.min.plus(maxX+1,minY-1),false, null, TileType.WALL_HOR);
+		paintCellRectangle( curr.min.plus(minX-1,maxY+1), curr.min.plus(maxX+1,maxY+1),false, null, TileType.WALL_HOR);
+		
 		curr.rooms.add(r);
 
 		//Hallways dont got to ends of rooms
@@ -413,10 +410,12 @@ public class BSPLevelGenerator implements LevelGenerator{
 	 * Puts a cell with the given attributes in the rectangle given by
 	 * min,max inclusive.
 	 */
-	private void paintCellRectangle(Vec2i min, Vec2i max, boolean passable, TileType t) {
+	private void paintCellRectangle(Vec2i min, Vec2i max, boolean passable,
+			Space space, TileType t) {
 		for(int i = min.x; i <= max.x; i++) {
 			for(int j = min.y; j <= max.y; j++) {
 				Tile x = tiles[i][j];
+				x.setSpace(space);
 				x.setType(t);
 			}
 		}
@@ -453,9 +452,10 @@ public class BSPLevelGenerator implements LevelGenerator{
 	}
 
 	/**Paints a hallway onto the tile array**/
-	private void paintHallway(Vec2i a, Vec2i b, boolean passable, TileType t) {
+	private void paintHallway(Vec2i a, Vec2i b, boolean passable, 
+			Space space, TileType t) {
 		if(a.x > b.x || a.y > b.y) {
-			paintHallway(b,a,passable,t);
+			paintHallway(b,a,passable, space, t);
 		}
 		for(int i = a.x; i <= b.x; i++) {
 			for(int j = a.y; j <= b.y; j++) {

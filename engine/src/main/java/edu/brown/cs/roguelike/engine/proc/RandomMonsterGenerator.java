@@ -26,12 +26,12 @@ public class RandomMonsterGenerator implements MonsterGenerator {
 		for (int i = 0 ; i < getMonsterCount(); i++) {
 			roomNum = rand.getRandom(level.getRooms().size());
 			Room r = level.getRooms().get(roomNum);
-			addMonster(level,r,getRandomMonster());
+			addMonster(level,r,getRandomMonster(level));
 		}
 	}
 	
-	private Monster getRandomMonster() {
-		return (new Monster(templates.get(rand.getRandom(templates.size()))));
+	private Monster getRandomMonster(Level level) {
+		return (new Monster(templates.get(rand.getRandom(templates.size())), level));
 	}
 	
 	private int getMonsterCount() {
