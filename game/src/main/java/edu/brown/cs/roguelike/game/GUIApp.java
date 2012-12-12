@@ -30,12 +30,11 @@ public class GUIApp extends Application {
 	public BSPLevelGenerator getLevelGenerator() { return lg; }
 	public CumulativeTurnManager getTurnManager() { return tm; }
 	
-	private void newGame() {
+	public RogueGame makeNewGame() {
 		RogueGame rg = new RogueGame();
-		
 		this.sm = new SaveManager("mainSave");
 		this.lg = new BSPLevelGenerator(configDir);
-		
+		tm = new CumulativeTurnManager(this, rg, POINTS_PER_TURN);
 		try {
 			rg.createInitalLevel(lg);
 			
@@ -43,12 +42,7 @@ public class GUIApp extends Application {
 			this.layers.push(new MainLayer(this, null, SCREEN_SIZE,
 					"Configuration error exists, fix your setup"));
 		}
-		
-		tm = new CumulativeTurnManager(this, rg, POINTS_PER_TURN);
-		
-		this.layers.push(new MainLayer(this, rg, SCREEN_SIZE,
-				"Error: Couldn't create the game"));
-		
+		return rg;
 	}
 
 	@Override
@@ -69,7 +63,9 @@ public class GUIApp extends Application {
 					this, rg, SCREEN_SIZE, "Succesful Load"));
 			return true;
 		} catch (Exception e) {
-			this.newGame();
+			rg = this.makeNewGame();
+			this.layers.push(new MainLayer(this, rg, SCREEN_SIZE,
+					"Error: Couldn't create the game"));
 			return true;
 		}
 	}

@@ -62,7 +62,7 @@ public class Chasing extends State<MonsterInput> {
 		
 		AStar<Tile> pathfinder = new AStar<Tile>();
 		
-		List<Tile> path = pathfinder.computePath(myTile, playerTile);
+		List<Tile> path = pathfinder.computePath(	myTile, playerTile);
 		
 		if (path.size() <= 1) return new Wait();
 		
