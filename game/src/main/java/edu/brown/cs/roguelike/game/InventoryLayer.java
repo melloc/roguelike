@@ -3,6 +3,7 @@ package edu.brown.cs.roguelike.game;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Set;
 
 import com.googlecode.lanterna.input.Key;
@@ -97,16 +98,32 @@ public class InventoryLayer implements Layer{
 		else
 			inventory = new HashSet<Stackable>();
 		Iterator<Stackable> iter = inventory.iterator();
+		List<String> items = new ArrayList<String>();
 		int i;
+		int longest = 0;
 		for(i = 0; i < Math.min(size.y-1,inventory.size()); i++) {
 			String line = "";
 			line += "(";
 			line += getLetter(i);
 			line += ") ";
 			line +=  iter.next().getDescription();
+			longest = line.length() > longest ? line.length() : longest;
+			items.add(line);
 			s.drawString(0, i, line);
 		}
-		s.drawString(0, i, "Press Space to continue");
+		String line = "Press Space to continue";
+		items.add(line);
+		longest = line.length() > longest ? line.length() : longest;
+		for (i = 0; i < items.size(); i++) {
+			s.drawString(0,i, fillTo(items.get(i), longest, ' '));
+		}
+	}
+
+	private String fillTo(String line, int size, char c) {
+		while (line.length() < size) {
+			line += c;
+		}
+		return line;
 	}
 
 	private char getLetter(int i) {
