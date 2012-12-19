@@ -32,7 +32,7 @@ public class GUIApp extends Application {
 	
 	public RogueGame makeNewGame() {
 		RogueGame rg = new RogueGame();
-		this.sm = new SaveManager("mainSave");
+		this.sm = new SaveManager(System.getProperty("user.home")+"/mainSave");
 		this.lg = new BSPLevelGenerator(configDir);
 		tm = new CumulativeTurnManager(this, rg, POINTS_PER_TURN);
 		try {
