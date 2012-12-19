@@ -48,7 +48,7 @@ public class GUIApp extends Application {
 	@Override
 	protected boolean initialize(Vec2i screenSize)  {
 		
-		this.sm = new SaveManager("mainSave");
+		this.sm = new SaveManager(System.getProperty("user.home")+"/mainSave");
 		this.lg = new BSPLevelGenerator(configDir);
 		
 		RogueGame rg = null;
