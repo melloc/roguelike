@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.brown.cs.roguelike.engine.config.Config;
 import edu.brown.cs.roguelike.engine.config.Config.ConfigType;
 import edu.brown.cs.roguelike.engine.config.ConfigurationException;
+import edu.brown.cs.roguelike.engine.config.ContextTemplate;
 import edu.brown.cs.roguelike.engine.config.MonsterTemplate;
 
 public class ConfigTest {
@@ -51,5 +52,23 @@ public class ConfigTest {
 		
 		assertEquals(mts_loaded, mts);
 	}
+
+    @Test
+    public void testLoadKeys() throws ConfigurationException, 
+	JsonGenerationException, JsonMappingException, IOException {
+		
+		Config c = new Config("../config-test");
+		
+		// load the monster template
+		ArrayList<ContextTemplate> ctx_loaded = c.loadContextTemplate();
+        ContextTemplate game = ctx_loaded.get(0);
+		
+		assertEquals(game.context, "game");
+        assertEquals(game.bindings.get("h"), "left");
+        assertEquals(game.bindings.get("j"), "down");
+        assertEquals(game.bindings.get("k"), "up");
+        assertEquals(game.bindings.get("l"), "right");
+	}
+
 
 }

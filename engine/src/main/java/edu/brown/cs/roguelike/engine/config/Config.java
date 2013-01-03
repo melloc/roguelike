@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 public class Config {
 
 	public enum ConfigType {
-		MONSTER,WEAPON_ADJ,WEAPON_TYPE
+		MONSTER,WEAPON_ADJ,WEAPON_TYPE,KEY_BINDING
 	}
 
 	public static final String CFG_EXT = ".cfg";
@@ -35,6 +35,7 @@ public class Config {
 		REQUIRED_FILES.put(ConfigType.MONSTER, "monsters");
 		REQUIRED_FILES.put(ConfigType.WEAPON_ADJ, "weapon_adjs");
 		REQUIRED_FILES.put(ConfigType.WEAPON_TYPE, "weapon_types");
+		REQUIRED_FILES.put(ConfigType.KEY_BINDING, "key_bindings");
 	}
 
 	private File dir;
@@ -89,6 +90,26 @@ public class Config {
 
 	}
 
+    public <E> ArrayList<E> loadTemplate(Class<E> clazz, File file) throws ConfigurationException {
+
+		ObjectMapper om = new ObjectMapper();
+
+		ArrayList<E> ret = null;
+
+		try {
+
+			TypeFactory t = TypeFactory.defaultInstance();
+
+			ret = om.readValue(
+					file, t.constructCollectionType(ArrayList.class,clazz));
+
+		} catch (Exception e) {
+			throw new ConfigurationException(e);
+		}
+		return ret;
+	}
+
+
 	/**
 	 * Build an array of MonsterTemplates used for the instantiation of 
 	 * monsters
@@ -98,75 +119,43 @@ public class Config {
 	 * @throws ConfigurationException 
 	 */
 	public ArrayList<MonsterTemplate> loadMonsterTemplate() throws ConfigurationException {
-
-		ObjectMapper om = new ObjectMapper();
-
-		ArrayList<MonsterTemplate> ret = null;
-
-		try {
-
-			TypeFactory t = TypeFactory.defaultInstance();
-
-			String file = dir.getAbsolutePath() + "/" +
-					REQUIRED_FILES.get(ConfigType.MONSTER).concat(CFG_EXT);
-
-			ret = om.readValue(
-					new File(file), t.constructCollectionType(ArrayList.class,MonsterTemplate.class));
-
-		} catch (Exception e) {
-			throw new ConfigurationException(e);
-		}
-		return ret;
+        File file = new File(dir.getAbsolutePath() + "/" +
+                REQUIRED_FILES.get(ConfigType.MONSTER).concat(CFG_EXT));
+        return loadTemplate(MonsterTemplate.class, file);
 	}
 
 
-	/**Builds an array of WeaponTemplates used for the instantion of Weapons 
-	 *	Wepon templates represent the type of weapon and its damage type
-	 **/
-	public ArrayList<WeaponTemplate> loadWeaponTemplate() throws ConfigurationException {
+	/**
+     * Builds an array of WeaponTemplates used for the instantion of Weapons 
+     * Weapon templates represent the type of weapon and its damage type
+     * @throws ConfigurationException 
+     */
+    public ArrayList<WeaponTemplate> loadWeaponTemplate() throws ConfigurationException {
+        File file = new File(dir.getAbsolutePath() + "/" +
+                REQUIRED_FILES.get(ConfigType.WEAPON_TYPE).concat(CFG_EXT));
+        return loadTemplate(WeaponTemplate.class, file);
+    }
 
-		ObjectMapper om = new ObjectMapper();
+    /**
+     * Builds an array of WeaponNameTemplates used for the instantion of Weapons 
+     */
+    public ArrayList<WeaponNameTemplate> loadWeaponNameTemplate() throws ConfigurationException {
+        File file = new File(dir.getAbsolutePath() + "/" +
+                REQUIRED_FILES.get(ConfigType.WEAPON_ADJ).concat(CFG_EXT));
+        return loadTemplate(WeaponNameTemplate.class, file);
+    }
 
-		ArrayList<WeaponTemplate> ret = null;
+    /**
+     * Build an array of ContextTemplates used for generating keybindings
+     * 
+     * @return ArrayList<ContextTemplate> array of context templates for
+     * each context that exists in the game.
+     * @throws ConfigurationException 
+     */
+    public ArrayList<ContextTemplate> loadContextTemplate() throws ConfigurationException {
+        File file = new File(dir.getAbsolutePath() + "/" +
+                REQUIRED_FILES.get(ConfigType.KEY_BINDING).concat(CFG_EXT));
+        return loadTemplate(ContextTemplate.class, file);
+    }
 
-		try {
-
-			TypeFactory t = TypeFactory.defaultInstance();
-
-			String file = dir.getAbsolutePath() + "/" +
-					REQUIRED_FILES.get(ConfigType.WEAPON_TYPE).concat(CFG_EXT);
-
-			ret = om.readValue(
-					new File(file), t.constructCollectionType(ArrayList.class,WeaponTemplate.class));
-
-		} catch (Exception e) {
-			throw new ConfigurationException(e);
-		}
-		return ret;
-	}
-
-	/**Builds an array of WeaponNameTemplates used for the instantion of Weapons 
-	 *
-	 **/
-	public ArrayList<WeaponNameTemplate> loadWeaponNameTemplate() throws ConfigurationException {
-
-		ObjectMapper om = new ObjectMapper();
-
-		ArrayList<WeaponNameTemplate> ret = null;
-
-		try {
-
-			TypeFactory t = TypeFactory.defaultInstance();
-
-			String file = dir.getAbsolutePath() + "/" +
-					REQUIRED_FILES.get(ConfigType.WEAPON_ADJ).concat(CFG_EXT);
-
-			ret = om.readValue(
-					new File(file), t.constructCollectionType(ArrayList.class,WeaponNameTemplate.class));
-
-		} catch (Exception e) {
-			throw new ConfigurationException(e);
-		}
-		return ret;
-	}
 }
