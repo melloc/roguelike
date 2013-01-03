@@ -25,6 +25,10 @@ public abstract class AStarNode<N extends AStarNode<N>>
   public int getGScore() {
     return this.gScore;
   }
+
+  public int getFScore() {
+    return this.fScore;
+  }
   
   /**
    * Calculate the distance between this node and a neighbor
@@ -32,7 +36,7 @@ public abstract class AStarNode<N extends AStarNode<N>>
   public abstract int distance(N neighbor);
 
   public int compareTo(N node1) {
-    return this.fScore - node1.fScore;
+    return this.fScore - node1.getFScore();
   }
   
 }
